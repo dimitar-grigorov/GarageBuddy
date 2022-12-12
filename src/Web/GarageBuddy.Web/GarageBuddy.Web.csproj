@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>aspnet-GarageBuddy-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="..\..\stylecop.json" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<InternalsVisibleTo Include="GarageBuddy.Web.Tests" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\GarageBuddy.Common\GarageBuddy.Common.csproj" />
+    <ProjectReference Include="..\..\Data\GarageBuddy.Data.Models\GarageBuddy.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\GarageBuddy.Data\GarageBuddy.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GarageBuddy.Services.Data\GarageBuddy.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GarageBuddy.Services.Mapping\GarageBuddy.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\GarageBuddy.Services.Messaging\GarageBuddy.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\GarageBuddy.Services\GarageBuddy.Services.csproj" />
+    <ProjectReference Include="..\GarageBuddy.Web.Infrastructure\GarageBuddy.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\GarageBuddy.Web.ViewModels\GarageBuddy.Web.ViewModels.csproj" />
+  </ItemGroup>
+</Project>
