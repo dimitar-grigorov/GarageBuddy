@@ -2,14 +2,10 @@
 using System.Reflection;
 
 using GarageBuddy.Data;
-using GarageBuddy.Data.Common;
-using GarageBuddy.Data.Common.Repositories;
 using GarageBuddy.Data.Models;
-using GarageBuddy.Data.Repositories;
 using GarageBuddy.Data.Seeding;
-using GarageBuddy.Services.Data;
 using GarageBuddy.Services.Mapping;
-using GarageBuddy.Services.Messaging;
+using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
 
 using Microsoft.AspNetCore.Builder;
@@ -22,11 +18,8 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-if (connectionString == null)
-{
-    throw new InvalidOperationException("Connection string not found");
-}
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
+                       ?? throw new InvalidOperationException("Connection string not found");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -54,14 +47,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddSingleton(builder.Configuration);
 
-// Data repositories
-builder.Services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-builder.Services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-builder.Services.AddScoped<IDbQueryRunner, DbQueryRunner>();
-
-// Application services
-builder.Services.AddTransient<IEmailSender, NullMessageSender>();
-builder.Services.AddTransient<ISettingsService, SettingsService>();
+builder.Services.AddDataRepositories();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 

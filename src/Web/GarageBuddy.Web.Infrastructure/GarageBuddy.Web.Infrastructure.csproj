@@ -13,9 +13,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\GarageBuddy.Data\GarageBuddy.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GarageBuddy.Services.Data\GarageBuddy.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\GarageBuddy.Services.Messaging\GarageBuddy.Services.Messaging.csproj" />
   </ItemGroup>
 
 </Project>
