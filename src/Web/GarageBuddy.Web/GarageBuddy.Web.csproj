@@ -36,7 +36,6 @@
     <ProjectReference Include="..\..\Services\GarageBuddy.Services.Data\GarageBuddy.Services.Data.csproj" />
     <ProjectReference Include="..\..\Services\GarageBuddy.Services.Mapping\GarageBuddy.Services.Mapping.csproj" />
     <ProjectReference Include="..\..\Services\GarageBuddy.Services.Messaging\GarageBuddy.Services.Messaging.csproj" />
-    <ProjectReference Include="..\..\Services\GarageBuddy.Services\GarageBuddy.Services.csproj" />
     <ProjectReference Include="..\GarageBuddy.Web.Infrastructure\GarageBuddy.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\GarageBuddy.Web.ViewModels\GarageBuddy.Web.ViewModels.csproj" />
   </ItemGroup>
