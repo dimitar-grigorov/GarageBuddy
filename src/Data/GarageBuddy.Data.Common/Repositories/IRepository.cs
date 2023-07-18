@@ -16,7 +16,6 @@
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : BaseModel<TKey>
     {
-
         IQueryable<TEntity> All(bool isReadonly = false);
 
         IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false);
