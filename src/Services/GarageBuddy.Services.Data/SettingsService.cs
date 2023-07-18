@@ -9,16 +9,16 @@
 
     public class SettingsService : ISettingsService
     {
-        private readonly IDeletableEntityRepository<Setting> settingsRepository;
+        private readonly IDeletableEntityRepository<Setting, int> settingsRepository;
 
-        public SettingsService(IDeletableEntityRepository<Setting> settingsRepository)
+        public SettingsService(IDeletableEntityRepository<Setting, int> settingsRepository)
         {
             this.settingsRepository = settingsRepository;
         }
 
         public int GetCount()
         {
-            return this.settingsRepository.AllAsNoTracking().Count();
+            return this.settingsRepository.All(true).Count();
         }
 
         public IEnumerable<T> GetAll<T>()

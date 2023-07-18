@@ -2,27 +2,48 @@
 {
     using System;
     using System.Linq;
+    using System.Linq.Expressions;
 
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
 
     using Microsoft.EntityFrameworkCore;
 
-    public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
-        where TEntity : class, IDeletableEntity
+    public class EfDeletableEntityRepository<TEntity, TKey> : EfRepository<TEntity, TKey>, IDeletableEntityRepository<TEntity, TKey>
+        where TEntity : BaseDeletableModel<TKey>
     {
         public EfDeletableEntityRepository(ApplicationDbContext context)
             : base(context)
         {
         }
 
-        public override IQueryable<TEntity> All() => base.All().Where(x => !x.IsDeleted);
+        public IQueryable<TEntity> All(bool isReadonly = false, bool withDeleted = false)
+        {
+            var query = base.All(isReadonly);
 
-        public override IQueryable<TEntity> AllAsNoTracking() => base.AllAsNoTracking().Where(x => !x.IsDeleted);
+            if (!withDeleted)
+            {
+                query = query.Where(e => !e.IsDeleted);
+            }
 
-        public IQueryable<TEntity> AllWithDeleted() => base.All().IgnoreQueryFilters();
+            return query;
+        }
 
-        public IQueryable<TEntity> AllAsNoTrackingWithDeleted() => base.AllAsNoTracking().IgnoreQueryFilters();
+        public IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false, bool withDeleted = false)
+        {
+            var query = base.All(search, isReadonly);
+
+            if (!withDeleted)
+            {
+                query = query.Where(e => !e.IsDeleted);
+            }
+
+            return query;
+        }
+
+        public override IQueryable<TEntity> All(bool isReadonly = false) => base.All(isReadonly).Where(x => !x.IsDeleted);
+
+        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false) => this.All(isReadonly).Where(search);
 
         public void HardDelete(TEntity entity) => base.Delete(entity);
 

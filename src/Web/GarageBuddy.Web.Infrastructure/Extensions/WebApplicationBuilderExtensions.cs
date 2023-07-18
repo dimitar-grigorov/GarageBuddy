@@ -16,11 +16,8 @@
         public static IServiceCollection AddDataRepositories(this IServiceCollection services)
         {
             // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
-
-            // TODO: This is for Raw SQL queries - remove if not needed
-            services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+            services.AddScoped(typeof(IDeletableEntityRepository<,>), typeof(EfDeletableEntityRepository<,>));
+            services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
 
             return services;
         }
