@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarageBuddy.Web.Tests", "Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarageBuddy.Web.ViewModels", "Web\GarageBuddy.Web.ViewModels\GarageBuddy.Web.ViewModels.csproj", "{13B7AACB-9C85-4409-8D4B-95A67D0DFFF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageBuddy.Services.Data.Models", "Services\GarageBuddy.Services.Data.Models\GarageBuddy.Services.Data.Models.csproj", "{5E426012-2AAA-44E7-AD71-410D4D100BC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarageBuddy.Services.Data.Models", "Services\GarageBuddy.Services.Data.Models\GarageBuddy.Services.Data.Models.csproj", "{5E426012-2AAA-44E7-AD71-410D4D100BC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

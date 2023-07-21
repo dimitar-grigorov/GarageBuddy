@@ -89,7 +89,7 @@ app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Ind
 app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-app.Run();
+await app.RunAsync();
 
 // Added to fix Web.Tests project
 public partial class Program

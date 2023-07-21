@@ -1,5 +1,6 @@
 ﻿namespace GarageBuddy.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -9,9 +10,9 @@
 
     public class SettingsService : ISettingsService
     {
-        private readonly IDeletableEntityRepository<Setting, int> settingsRepository;
+        private readonly IDeletableEntityRepository<Setting, Guid> settingsRepository;
 
-        public SettingsService(IDeletableEntityRepository<Setting, int> settingsRepository)
+        public SettingsService(IDeletableEntityRepository<Setting, Guid> settingsRepository)
         {
             this.settingsRepository = settingsRepository;
         }

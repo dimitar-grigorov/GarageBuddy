@@ -8,14 +8,14 @@ namespace GarageBuddy.Data.Models
 
     using Microsoft.AspNetCore.Identity;
 
-    public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+    public class ApplicationUser : IdentityUser<Guid>, IAuditInfo, IDeletableEntity
     {
         public ApplicationUser()
         {
-            this.Id = Guid.NewGuid().ToString();
-            this.Roles = new HashSet<IdentityUserRole<string>>();
-            this.Claims = new HashSet<IdentityUserClaim<string>>();
-            this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Id = Guid.NewGuid();
+            this.Roles = new HashSet<IdentityUserRole<Guid>>();
+            this.Claims = new HashSet<IdentityUserClaim<Guid>>();
+            this.Logins = new HashSet<IdentityUserLogin<Guid>>();
         }
 
         // Audit info
@@ -28,10 +28,10 @@ namespace GarageBuddy.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+        public virtual ICollection<IdentityUserRole<Guid>> Roles { get; set; }
 
-        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        public virtual ICollection<IdentityUserClaim<Guid>> Claims { get; set; }
 
-        public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+        public virtual ICollection<IdentityUserLogin<Guid>> Logins { get; set; }
     }
 }

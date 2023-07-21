@@ -1,5 +1,7 @@
 ﻿namespace GarageBuddy.Web.ViewModels.Settings
 {
+    using System;
+
     using AutoMapper;
 
     using GarageBuddy.Data.Models;
@@ -7,7 +9,7 @@
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 

@@ -1,12 +1,13 @@
 ﻿namespace GarageBuddy.Data
 {
+    using System;
     using System.IO;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
     using Microsoft.Extensions.Configuration;
 
-    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+/*    public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
@@ -21,5 +22,5 @@
 
             return new ApplicationDbContext(builder.Options);
         }
-    }
+    }*/
 }

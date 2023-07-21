@@ -8,6 +8,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+    <UserSecretsId>77f7601b-ebd3-4f1f-89ba-88b859936b3f</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -42,6 +43,10 @@
     <ProjectReference Include="..\..\GarageBuddy.Common\GarageBuddy.Common.csproj" />
     <ProjectReference Include="..\GarageBuddy.Data.Common\GarageBuddy.Data.Common.csproj" />
     <ProjectReference Include="..\GarageBuddy.Data.Models\GarageBuddy.Data.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

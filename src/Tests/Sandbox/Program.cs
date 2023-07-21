@@ -5,16 +5,15 @@
     using System.IO;
     using System.Threading.Tasks;
 
+    using CommandLine;
+
     using GarageBuddy.Data;
-    using GarageBuddy.Data.Common;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
     using GarageBuddy.Data.Repositories;
     using GarageBuddy.Data.Seeding;
     using GarageBuddy.Services.Data;
     using GarageBuddy.Services.Messaging;
-
-    using CommandLine;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;

@@ -8,11 +8,13 @@
 
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Models;
+    using GarageBuddy.Data.Models.Job;
+    using GarageBuddy.Data.Models.Vehicle;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
             typeof(ApplicationDbContext).GetMethod(
@@ -23,6 +25,38 @@
             : base(options)
         {
         }
+
+        #region "Jobs"
+        public DbSet<Job> Jobs { get; set; } = null!;
+
+        public DbSet<JobDocument> JobDocuments { get; set; } = null!;
+
+        public DbSet<JobItem> JobItems { get; set; } = null!;
+
+        public DbSet<JobItemPart> JobItemParts { get; set; } = null!;
+
+        public DbSet<JobItemType> JobItemTypes { get; set; } = null!;
+
+        public DbSet<JobStatus> JobStatuses { get; set; } = null!;
+        #endregion
+
+        #region "Vehicles"
+        public DbSet<Brand> Brands { get; set; } = null!;
+
+        public DbSet<BrandModel> BrandModels { get; set; } = null!;
+
+        public DbSet<DriveType> DriveTypes { get; set; } = null!;
+
+        public DbSet<FuelType> FuelTypes { get; set; } = null!;
+
+        public DbSet<GearboxType> GearboxTypes { get; set; } = null!;
+
+        public DbSet<Vehicle> Vehicles { get; set; } = null!;
+        #endregion
+
+        public DbSet<Customer> Customers { get; set; } = null!;
+
+        public DbSet<Garage> Garages { get; set; } = null!;
 
         public DbSet<Setting> Settings { get; set; }
 

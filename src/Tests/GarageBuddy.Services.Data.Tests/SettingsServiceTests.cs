@@ -1,5 +1,6 @@
 ﻿namespace GarageBuddy.Services.Data.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -20,7 +21,7 @@
         [Fact]
         public void GetCountShouldReturnCorrectNumber()
         {
-            var repository = new Mock<IDeletableEntityRepository<Setting, int>>();
+            var repository = new Mock<IDeletableEntityRepository<Setting, Guid>>();
             repository.Setup(r => r.All(true)).Returns(new List<Setting>
                                                         {
                                                             new Setting(),
@@ -43,7 +44,7 @@
             dbContext.Settings.Add(new Setting());
             await dbContext.SaveChangesAsync();
 
-            using var repository = new EfDeletableEntityRepository<Setting, int>(dbContext);
+            using var repository = new EfDeletableEntityRepository<Setting, Guid>(dbContext);
             var service = new SettingsService(repository);
             Assert.Equal(3, service.GetCount());
         }

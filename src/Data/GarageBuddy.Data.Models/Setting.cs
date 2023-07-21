@@ -1,11 +1,19 @@
 ﻿namespace GarageBuddy.Data.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
     using GarageBuddy.Data.Common.Models;
 
-    public class Setting : BaseDeletableModel<int>
-    {
-        public string Name { get; set; }
+    using static GarageBuddy.Common.Constants.EntityValidationConstants.Setting;
 
-        public string Value { get; set; }
+    public class Setting : BaseDeletableModel<Guid>
+    {
+        [Required]
+        [MaxLength(SettingNameMaxLength)]
+        public string Name { get; set; } = null!;
+
+        [Required]
+        [MaxLength(SettingValueMaxLength)]
+        public string Value { get; set; } = null!;
     }
 }
