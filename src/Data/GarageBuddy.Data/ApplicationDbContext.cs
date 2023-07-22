@@ -81,31 +81,25 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
-            this.ConfigureUserIdentityRelations(builder);
-
-            EntityIndexesConfiguration.Configure(builder);
+            // Apply entity configurations
+            builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
+            var deletableEntityTypes = entityTypes
+                .Where(et => typeof(IDeletableEntity).IsAssignableFrom(et.ClrType)).ToList();
+
+            GlobalEntityConfiguration.AddIndexForDeletableEntities(builder, deletableEntityTypes);
 
             // Set global query filter for not deleted entities only
-            var deletableEntityTypes = entityTypes
-                .Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
             foreach (var deletableEntityType in deletableEntityTypes)
             {
                 var method = SetIsDeletedQueryFilterMethod.MakeGenericMethod(deletableEntityType.ClrType);
                 method.Invoke(null, new object[] { builder });
             }
 
-            // Disable cascade delete
-            var foreignKeys = entityTypes
-                .SelectMany(e => e.GetForeignKeys().Where(f => f.DeleteBehavior == DeleteBehavior.Cascade));
-            foreach (var foreignKey in foreignKeys)
-            {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            }
+            GlobalEntityConfiguration.DisableCascadeDelete(builder, entityTypes);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
@@ -114,17 +108,13 @@
             builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
         }
 
-        // Applies configurations
-        private void ConfigureUserIdentityRelations(ModelBuilder builder)
-             => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
-
         private void ApplyAuditInfoRules()
         {
             var changedEntries = this.ChangeTracker
                 .Entries()
                 .Where(e =>
                     e.Entity is IAuditInfo &&
-                    (e.State == EntityState.Added || e.State == EntityState.Modified));
+                    e.State is EntityState.Added or EntityState.Modified);
 
             foreach (var entry in changedEntries)
             {
