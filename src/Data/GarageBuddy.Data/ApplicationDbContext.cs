@@ -37,7 +37,7 @@
 
         public DbSet<JobItemType> JobItemTypes { get; set; } = null!;
 
-        public DbSet<JobStatus> JobStatuses { get; set; } = null!;
+        public DbSet<JobStatus> JobStatus { get; set; } = null!;
         #endregion
 
         #region "Vehicles"

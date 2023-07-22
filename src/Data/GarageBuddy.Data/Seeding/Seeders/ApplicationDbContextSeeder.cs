@@ -1,8 +1,10 @@
-﻿namespace GarageBuddy.Data.Seeding
+﻿namespace GarageBuddy.Data.Seeding.Seeders
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
+    using GarageBuddy.Data;
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
@@ -27,6 +29,7 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new JobStatusSeeder(),
                           };
 
             foreach (var seeder in seeders)

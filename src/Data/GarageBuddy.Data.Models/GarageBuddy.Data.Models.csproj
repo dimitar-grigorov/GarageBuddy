@@ -25,4 +25,8 @@
 		<ProjectReference Include="..\GarageBuddy.Data.Common\GarageBuddy.Data.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Enums\" />
+	</ItemGroup>
+
 </Project>

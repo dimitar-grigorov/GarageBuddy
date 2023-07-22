@@ -12,6 +12,7 @@
     using GarageBuddy.Data.Models;
     using GarageBuddy.Data.Repositories;
     using GarageBuddy.Data.Seeding;
+    using GarageBuddy.Data.Seeding.Seeders;
     using GarageBuddy.Services.Data;
     using GarageBuddy.Services.Messaging;
 

@@ -523,10 +523,7 @@ namespace GarageBuddy.Data.Migrations
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.JobStatus", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -549,7 +546,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("JobStatuses");
+                    b.ToTable("JobStatus");
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Setting", b =>

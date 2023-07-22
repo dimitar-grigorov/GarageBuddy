@@ -4,6 +4,7 @@ using System.Reflection;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
 using GarageBuddy.Data.Seeding;
+using GarageBuddy.Data.Seeding.Seeders;
 using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
@@ -59,7 +60,7 @@ using (var serviceScope = app.Services.CreateScope())
     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
     // dbContext.Database.Migrate();
-    // new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+     new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
 }
 
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);

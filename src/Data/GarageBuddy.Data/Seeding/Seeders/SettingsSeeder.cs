@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Data.Seeding
+﻿namespace GarageBuddy.Data.Seeding.Seeders
 {
     using System;
     using System.Linq;

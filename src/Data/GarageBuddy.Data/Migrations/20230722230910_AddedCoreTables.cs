@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageBuddy.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class AddedCoreTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -177,11 +177,10 @@ namespace GarageBuddy.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "JobStatuses",
+                name: "JobStatus",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     StatusName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -190,7 +189,7 @@ namespace GarageBuddy.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JobStatuses", x => x.Id);
+                    table.PrimaryKey("PK_JobStatus", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -436,9 +435,9 @@ namespace GarageBuddy.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Jobs_JobStatuses_JobStatusId",
+                        name: "FK_Jobs_JobStatus_JobStatusId",
                         column: x => x.JobStatusId,
-                        principalTable: "JobStatuses",
+                        principalTable: "JobStatus",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -684,8 +683,8 @@ namespace GarageBuddy.Data.Migrations
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JobStatuses_IsDeleted",
-                table: "JobStatuses",
+                name: "IX_JobStatus_IsDeleted",
+                table: "JobStatus",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
@@ -771,7 +770,7 @@ namespace GarageBuddy.Data.Migrations
                 name: "Jobs");
 
             migrationBuilder.DropTable(
-                name: "JobStatuses");
+                name: "JobStatus");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");

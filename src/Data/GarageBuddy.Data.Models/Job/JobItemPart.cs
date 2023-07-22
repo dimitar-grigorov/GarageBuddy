@@ -8,8 +8,8 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using static GarageBuddy.Common.Constants.GlobalValidationConstants;
     using static GarageBuddy.Common.Constants.EntityValidationConstants.JobItemPart;
+    using static GarageBuddy.Common.Constants.GlobalValidationConstants;
 
     public class JobItemPart : BaseDeletableModel<Guid>
     {
