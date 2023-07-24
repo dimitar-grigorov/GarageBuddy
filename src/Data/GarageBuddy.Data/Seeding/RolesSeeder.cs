@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Data.Seeding.Seeders
+﻿namespace GarageBuddy.Data.Seeding
 {
     using System;
     using System.Linq;
@@ -6,7 +6,7 @@
 
     using GarageBuddy.Common;
     using GarageBuddy.Data.Models;
-
+    using GarageBuddy.Data.Seeding.Common;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 

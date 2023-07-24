@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Data.Seeding.Seeders
+﻿namespace GarageBuddy.Data.Seeding.Common
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     using GarageBuddy.Common;
-
+    using GarageBuddy.Data.Seeding.Job;
     using Newtonsoft.Json;
 
     public static class SeedHelper

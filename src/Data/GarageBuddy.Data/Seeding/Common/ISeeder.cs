@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Data.Seeding.Seeders
+﻿namespace GarageBuddy.Data.Seeding.Common
 {
     using System;
     using System.Threading.Tasks;

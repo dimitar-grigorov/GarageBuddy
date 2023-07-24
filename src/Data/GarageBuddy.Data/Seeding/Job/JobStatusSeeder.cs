@@ -1,10 +1,10 @@
-﻿namespace GarageBuddy.Data.Seeding.Seeders
+﻿namespace GarageBuddy.Data.Seeding.Job
 {
     using System;
     using System.Threading.Tasks;
 
     using Extensions;
-
+    using GarageBuddy.Data.Seeding.Common;
     using Microsoft.EntityFrameworkCore;
 
     using Models.Enums;

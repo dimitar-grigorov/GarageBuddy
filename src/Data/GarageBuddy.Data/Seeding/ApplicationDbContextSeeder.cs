@@ -1,10 +1,13 @@
-﻿namespace GarageBuddy.Data.Seeding.Seeders
+﻿namespace GarageBuddy.Data.Seeding
 {
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using GarageBuddy.Data;
+    using GarageBuddy.Data.Seeding.Common;
+
+    using Job;
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;

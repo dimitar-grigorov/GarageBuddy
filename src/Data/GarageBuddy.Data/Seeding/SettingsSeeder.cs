@@ -1,10 +1,11 @@
-﻿namespace GarageBuddy.Data.Seeding.Seeders
+﻿namespace GarageBuddy.Data.Seeding
 {
     using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using GarageBuddy.Data.Models;
+    using GarageBuddy.Data.Seeding.Common;
 
     internal class SettingsSeeder : ISeeder
     {
