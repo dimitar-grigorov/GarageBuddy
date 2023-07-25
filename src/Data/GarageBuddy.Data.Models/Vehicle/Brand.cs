@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Data.Models.Vehicle
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using GarageBuddy.Data.Common.Models;
@@ -14,5 +15,8 @@
 
         [Required]
         public bool IsSeeded { get; set; } = false;
+
+        [Required]
+        public IEnumerable<BrandModel> BrandModels { get; set; } = new HashSet<BrandModel>();
     }
 }

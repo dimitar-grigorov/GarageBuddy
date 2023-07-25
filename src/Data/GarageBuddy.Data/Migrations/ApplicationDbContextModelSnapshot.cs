@@ -200,7 +200,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Garage", b =>
@@ -250,7 +250,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Garages");
+                    b.ToTable("Garages", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.Job", b =>
@@ -323,7 +323,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("VehicleId");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.JobDocument", b =>
@@ -363,7 +363,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("JobId");
 
-                    b.ToTable("JobDocuments");
+                    b.ToTable("JobDocuments", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.JobItem", b =>
@@ -429,7 +429,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("JobItemTypeId");
 
-                    b.ToTable("JobItems");
+                    b.ToTable("JobItems", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.JobItemPart", b =>
@@ -487,7 +487,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("JobItemId");
 
-                    b.ToTable("JobItemParts");
+                    b.ToTable("JobItemParts", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.JobItemType", b =>
@@ -517,7 +517,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("JobItemTypes");
+                    b.ToTable("JobItemTypes", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Job.JobStatus", b =>
@@ -546,7 +546,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("JobStatus");
+                    b.ToTable("JobStatus", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Setting", b =>
@@ -581,7 +581,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Settings");
+                    b.ToTable("Settings", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Vehicle.Brand", b =>
@@ -616,7 +616,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Vehicle.BrandModel", b =>
@@ -656,7 +656,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("BrandModels");
+                    b.ToTable("BrandModels", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Vehicle.DriveType", b =>
@@ -688,7 +688,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("DriveTypes");
+                    b.ToTable("DriveTypes", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Vehicle.FuelType", b =>
@@ -720,7 +720,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("FuelTypes");
+                    b.ToTable("FuelTypes", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Vehicle.GearboxType", b =>
@@ -752,7 +752,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("GearboxTypes");
+                    b.ToTable("GearboxTypes", (string)null);
                 });
 
             modelBuilder.Entity("GarageBuddy.Data.Models.Vehicle.Vehicle", b =>
@@ -829,7 +829,7 @@ namespace GarageBuddy.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Vehicles");
+                    b.ToTable("Vehicles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

@@ -11,6 +11,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using Vehicle;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
@@ -33,6 +34,9 @@
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new JobStatusSeeder(),
+                              // new JobItemTypeSeeder(),
+                              new BrandSeeder(),
+                              new BrandModelSeeder(), // Always after BrandSeeder
                           };
 
             foreach (var seeder in seeders)

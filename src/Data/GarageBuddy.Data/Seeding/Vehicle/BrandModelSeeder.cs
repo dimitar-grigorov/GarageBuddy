@@ -9,15 +9,15 @@
 
     using Models.Vehicle;
 
-    public class BrandSeeder : ISeeder
+    public class BrandModelSeeder : ISeeder
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (await dbContext.Brands.AnyAsync(b => b.IsSeeded) == false)
+            if (await dbContext.BrandModels.AnyAsync(b => b.IsSeeded) == false)
             {
-                var brands = await SeedHelper.GetSeedDataFromJson<Brand>("BrandSeed.json");
-                brands.ForEach(j => j.IsSeeded = true);
-                await dbContext.Brands.AddRangeAsync(brands);
+                var models = await SeedHelper.GetSeedDataFromJson<BrandModel>("BrandModelSeed.json");
+                models.ForEach(j => j.IsSeeded = true);
+                dbContext.BrandModels.AddRange(models);
             }
         }
     }

@@ -1,0 +1,518 @@
+[
+  {
+    "Id": "e6a9275f-101b-4396-9a4a-56cd890a746b",
+    "BrandName": "Alfa Romeo"
+  },
+  {
+    "Id": "42eb31e0-cb67-4eca-a46d-f684a2ab93e2",
+    "BrandName": "Dodge"
+  },
+  {
+    "Id": "6550bada-7682-4ec0-bcb2-434612c6934f",
+    "BrandName": "Subaru"
+  },
+  {
+    "Id": "0efe88c4-1388-4819-9cc9-ba09d7be721e",
+    "BrandName": "Toyota"
+  },
+  {
+    "Id": "e6326158-83fd-46fc-9995-cb4bd17da1cb",
+    "BrandName": "Volkswagen"
+  },
+  {
+    "Id": "dafcefea-126b-44b3-9a33-f19fe4e44dcf",
+    "BrandName": "Volvo"
+  },
+  {
+    "Id": "04909aa9-dbc8-48da-a04f-a4b11570df40",
+    "BrandName": "Audi"
+  },
+  {
+    "Id": "3c963a9f-b79c-484a-ba10-f296f9b0dd22",
+    "BrandName": "BMW"
+  },
+  {
+    "Id": "94267432-70d8-44ff-85e9-552ade238311",
+    "BrandName": "Buick"
+  },
+  {
+    "Id": "6638d0c5-7a0c-4760-9f8a-a3a7fedc4d95",
+    "BrandName": "Cadillac"
+  },
+  {
+    "Id": "b523dd63-f034-47cb-a3bd-12ef846afed7",
+    "BrandName": "Chevrolet"
+  },
+  {
+    "Id": "e5f54bef-6f6c-4da1-af65-d9fb8f52df0e",
+    "BrandName": "CX Automotive"
+  },
+  {
+    "Id": "48b2131a-3bb2-4e6d-a26c-e38773fb3a02",
+    "BrandName": "Nissan"
+  },
+  {
+    "Id": "daefa2cb-5e36-4c41-ace5-70205d215689",
+    "BrandName": "Ford"
+  },
+  {
+    "Id": "6dc123da-b7bb-4a11-afd1-3e37c78865f8",
+    "BrandName": "Hyundai"
+  },
+  {
+    "Id": "1f927ce7-75ff-47b9-b742-31bb20633661",
+    "BrandName": "Infiniti"
+  },
+  {
+    "Id": "941ae689-49c2-4f62-a0e2-022e5198ae38",
+    "BrandName": "Lexus"
+  },
+  {
+    "Id": "f48f4f1e-db9b-4946-b82d-0e974706c885",
+    "BrandName": "Mercury"
+  },
+  {
+    "Id": "e8f8e32e-59d1-482c-ae90-3a3b85e87a86",
+    "BrandName": "Mazda"
+  },
+  {
+    "Id": "603e0e02-b42f-4c00-a4f2-67bda50c66d1",
+    "BrandName": "Oldsmobile"
+  },
+  {
+    "Id": "26b2d32c-0c5c-4ef5-bda2-e72d3e652002",
+    "BrandName": "Plymouth"
+  },
+  {
+    "Id": "39095ac0-7b61-45ea-a976-8b4367d2fc74",
+    "BrandName": "Pontiac"
+  },
+  {
+    "Id": "eb3d41c9-c3f7-4e5e-8b23-f63b1a3a50f5",
+    "BrandName": "Rolls-Royce"
+  },
+  {
+    "Id": "6f30c88e-835d-42ca-96f3-04c1488f4a78",
+    "BrandName": "Chrysler"
+  },
+  {
+    "Id": "0256ea3b-7b36-4bbb-8665-e07d53fe019b",
+    "BrandName": "Eagle"
+  },
+  {
+    "Id": "50c9fe0d-3e83-48c3-994c-90d0ce1ab160",
+    "BrandName": "Lincoln"
+  },
+  {
+    "Id": "d70231ef-7a92-4416-94e8-29f3e103f3e1",
+    "BrandName": "Mercedes-Benz"
+  },
+  {
+    "Id": "73e65773-5d93-4a10-8f07-9946d006f938",
+    "BrandName": "Saab"
+  },
+  {
+    "Id": "50d37e65-56aa-4e8d-8749-ef4529922c06",
+    "BrandName": "GMC"
+  },
+  {
+    "Id": "ed1e8a4a-4a17-42ad-96fe-d53572dcf3ba",
+    "BrandName": "Honda"
+  },
+  {
+    "Id": "9e5f4972-bbc3-428a-a275-1a2a1cd3ca6f",
+    "BrandName": "Saturn"
+  },
+  {
+    "Id": "3d313a15-437a-4270-a83d-6f8e98627eb4",
+    "BrandName": "Mitsubishi"
+  },
+  {
+    "Id": "de9e8e69-eb2f-432e-9a41-d9c5813b2a2d",
+    "BrandName": "Isuzu"
+  },
+  {
+    "Id": "8e388900-34b5-4601-b5de-992dabd549ca",
+    "BrandName": "Jeep"
+  },
+  {
+    "Id": "fab5eb31-7d34-4870-b27a-0801b6f699e2",
+    "BrandName": "AM General"
+  },
+  {
+    "Id": "17ec25aa-5a19-4e4a-b038-a97eee2e5b36",
+    "BrandName": "Geo"
+  },
+  {
+    "Id": "094397b8-655b-4e6a-98d7-7e53c2c539a0",
+    "BrandName": "Suzuki"
+  },
+  {
+    "Id": "f23ed93e-e140-4aeb-9320-d6b1b4fdedc7",
+    "BrandName": "E. P. Dutton, Inc."
+  },
+  {
+    "Id": "1c8f590d-049d-4804-99de-a72908ed9903",
+    "BrandName": "Land Rover"
+  },
+  {
+    "Id": "d025babf-e784-49e5-b166-8dae97541b6e",
+    "BrandName": "Acura"
+  },
+  {
+    "Id": "35729f00-15e6-45cc-901d-6ebd1602e169",
+    "BrandName": "Ferrari"
+  },
+  {
+    "Id": "712c1354-00aa-4172-b420-419a35b00b96",
+    "BrandName": "Lotus"
+  },
+  {
+    "Id": "e2a670fe-949b-4066-9ab3-40b7701f441a",
+    "BrandName": "Porsche"
+  },
+  {
+    "Id": "b0bb36a4-2bf9-43a7-acea-0897d6b09a27",
+    "BrandName": "Grumman Olson"
+  },
+  {
+    "Id": "345973f6-f076-4681-9a11-eb16f35a0b7c",
+    "BrandName": "Jaguar"
+  },
+  {
+    "Id": "3339ef4e-d076-406b-b6fe-e74bec861c14",
+    "BrandName": "American Motors Corporation"
+  },
+  {
+    "Id": "095cb0c1-919d-432a-ab10-fd520efbb32a",
+    "BrandName": "Kia"
+  },
+  {
+    "Id": "d9da4fb5-45d1-4863-a5a7-41b4ae8fe4bf",
+    "BrandName": "Lamborghini"
+  },
+  {
+    "Id": "1dedf00b-6236-458e-a3bf-8e1341272f3c",
+    "BrandName": "Panoz Auto-Development"
+  },
+  {
+    "Id": "52776707-22d5-424a-b300-31c102dde670",
+    "BrandName": "Maserati"
+  },
+  {
+    "Id": "07ed5396-1a05-45f1-81b3-e26cd5e6f42b",
+    "BrandName": "Aston Martin"
+  },
+  {
+    "Id": "e4b56663-8618-422c-b570-e00c596b0112",
+    "BrandName": "Dabryan Coach Builders Inc"
+  },
+  {
+    "Id": "3c6aa44b-797c-4a95-b4f9-9e9c93d25c11",
+    "BrandName": "Federal Coach"
+  },
+  {
+    "Id": "16202d61-cf81-4ee4-b2af-1a3e0e55a263",
+    "BrandName": "Bentley"
+  },
+  {
+    "Id": "4b6416a9-b689-4680-9d45-34efdc99cc3e",
+    "BrandName": "Daewoo"
+  },
+  {
+    "Id": "fc23ad92-a7a1-4795-8063-8e79bb95cfcb",
+    "BrandName": "Qvale"
+  },
+  {
+    "Id": "52e9ae83-7dad-4491-927b-7c56e002678c",
+    "BrandName": "Roush Performance"
+  },
+  {
+    "Id": "545e71d9-4125-4af8-95d4-f88aa730b705",
+    "BrandName": "Bertone"
+  },
+  {
+    "Id": "7b30799f-c5bf-4fb8-8e51-8951ea0e35c8",
+    "BrandName": "Panther Car Company Limited"
+  },
+  {
+    "Id": "810e4563-5424-4969-94af-674043aef493",
+    "BrandName": "TVR Engineering Ltd"
+  },
+  {
+    "Id": "dc81859c-2796-469d-a582-94aab7db854d",
+    "BrandName": "Yugo"
+  },
+  {
+    "Id": "5dd1503a-6173-42bb-ac4c-d725fcd2b0d1",
+    "BrandName": "BMW Alpina"
+  },
+  {
+    "Id": "104a35b8-8224-4bb7-ac98-a30205b7bc08",
+    "BrandName": "Renault"
+  },
+  {
+    "Id": "f5f07e07-5d0a-469c-9d69-fb049070cae7",
+    "BrandName": "MINI"
+  },
+  {
+    "Id": "aa91d94b-00e4-4f46-b2c0-12ef88998933",
+    "BrandName": "Scion"
+  },
+  {
+    "Id": "79e43dc0-892a-490a-aba9-81476172af81",
+    "BrandName": "Maybach"
+  },
+  {
+    "Id": "3ff00b70-a3c6-4645-b8b1-d3d993d2a42e",
+    "BrandName": "Merkur"
+  },
+  {
+    "Id": "1fc98f54-b6f4-4145-9d81-3f474278ae13",
+    "BrandName": "Peugeot"
+  },
+  {
+    "Id": "f6226e83-eabe-4c9e-9bc4-07b495e449c2",
+    "BrandName": "Texas Coach Company"
+  },
+  {
+    "Id": "358e2205-b8c8-4613-bc2e-bb2974614a53",
+    "BrandName": "Spyker"
+  },
+  {
+    "Id": "a17ee64c-c07c-4f2f-8edf-19921de96e47",
+    "BrandName": "Hummer"
+  },
+  {
+    "Id": "dbc2d5f7-e3e6-4153-ae23-5405a3ec162d",
+    "BrandName": "Pininfarina"
+  },
+  {
+    "Id": "5d39b23d-3723-40d6-aa41-0875d70ac2a9",
+    "BrandName": "Shelby"
+  },
+  {
+    "Id": "8dc889e0-2c24-47fa-950f-64bbaab9bb73",
+    "BrandName": "Saleen Performance"
+  },
+  {
+    "Id": "b651265c-8e0d-4db4-994f-84058a40092e",
+    "BrandName": "smart"
+  },
+  {
+    "Id": "5868c449-3b16-4cff-aeee-fff8af716a37",
+    "BrandName": "Tecstar, LP"
+  },
+  {
+    "Id": "1e310d50-121c-46ad-b750-364fd428a122",
+    "BrandName": "Bill Dovell Motor Car Company"
+  },
+  {
+    "Id": "581071e3-1ca7-4e7b-8961-1cfaab17912c",
+    "BrandName": "Kenyon Corporation Of America"
+  },
+  {
+    "Id": "757d57d5-c3d2-43c6-808e-d098b9b29e24",
+    "BrandName": "Bitter Gmbh and Co. Kg"
+  },
+  {
+    "Id": "0cc13b33-0691-4469-908b-98d9de92c538",
+    "BrandName": "Import Foreign Auto Sales Inc"
+  },
+  {
+    "Id": "7c933f6b-275a-46ca-b15e-d3558344c2e6",
+    "BrandName": "Superior Coaches Div E.p. Dutton"
+  },
+  {
+    "Id": "357f8683-1998-4967-b143-85f109415865",
+    "BrandName": "Avanti Motor Corporation"
+  },
+  {
+    "Id": "1d961ba6-fa64-4c41-a3f9-741fd4cb0020",
+    "BrandName": "Volga Associated Automobile"
+  },
+  {
+    "Id": "0c37fcc6-b19f-4592-96f4-5e19d20b1bcd",
+    "BrandName": "Wallace Environmental"
+  },
+  {
+    "Id": "d5212751-316a-45ff-b646-4be150cf1ae3",
+    "BrandName": "Import Trade Services"
+  },
+  {
+    "Id": "ff8a25e2-bd91-4ae3-a8c8-c280bac788e1",
+    "BrandName": "J.K. Motors"
+  },
+  {
+    "Id": "8b63d017-2337-4234-a092-41b9ff45abd3",
+    "BrandName": "Autokraft Limited"
+  },
+  {
+    "Id": "a9e35e48-2eaf-4fd3-8b62-910d56f11bbf",
+    "BrandName": "Panos"
+  },
+  {
+    "Id": "9f89f5e7-10d5-4281-916f-290adcbe511e",
+    "BrandName": "Saleen"
+  },
+  {
+    "Id": "eeb35814-92a9-4cbf-84ba-6e10baf4974f",
+    "BrandName": "Quantum Technologies"
+  },
+  {
+    "Id": "9f3f8057-eeb8-4e8b-9546-d8fb18ba1b38",
+    "BrandName": "London Taxi"
+  },
+  {
+    "Id": "7cca0858-4e40-459f-ae9e-8f0334302ecb",
+    "BrandName": "Bugatti"
+  },
+  {
+    "Id": "4421abb7-ca9d-4d8c-ad48-27c4246ce4e1",
+    "BrandName": "Ruf Automobile Gmbh"
+  },
+  {
+    "Id": "81c8671b-7c5d-4bae-8897-e8a5df802a38",
+    "BrandName": "Excalibur Autos"
+  },
+  {
+    "Id": "a4ce4b7c-7a73-4230-8e54-c97d6a35fb6f",
+    "BrandName": "VPG"
+  },
+  {
+    "Id": "9974af5b-e945-4e2f-8450-872ad108d701",
+    "BrandName": "Fiat"
+  },
+  {
+    "Id": "b267d5fb-7902-4fe0-9c87-4046afaf31bc",
+    "BrandName": "Sterling"
+  },
+  {
+    "Id": "06bf25dd-b126-4eb3-8abd-d047c731bcd4",
+    "BrandName": "Azure Dynamics"
+  },
+  {
+    "Id": "478ee957-70cc-4913-801a-4a171f065df3",
+    "BrandName": "Tesla"
+  },
+  {
+    "Id": "27e11993-a0cd-4a62-84f6-ef99282ad370",
+    "BrandName": "Ram"
+  },
+  {
+    "Id": "8e372be2-aa0b-4ec7-a74f-0daf622a679d",
+    "BrandName": "BYD"
+  },
+  {
+    "Id": "ce096446-ca9e-45d7-ad3b-35228a9f34fc",
+    "BrandName": "ASC Incorporated"
+  },
+  {
+    "Id": "d591190e-6c1b-48f7-8fe8-f9cbcb6c8dfa",
+    "BrandName": "SRT"
+  },
+  {
+    "Id": "5c748941-6d1a-47c8-9ab5-5478d8843341",
+    "BrandName": "Mcevoy Motors"
+  },
+  {
+    "Id": "90b9d68d-c46c-40a6-88ef-a47d1f8e940c",
+    "BrandName": "McLaren Automotive"
+  },
+  {
+    "Id": "3a20ec5b-dc65-4c97-b162-a7594a42b858",
+    "BrandName": "Pagani"
+  },
+  {
+    "Id": "05fb073c-36f6-4521-80b8-2ab8c734aba8",
+    "BrandName": "Genesis"
+  },
+  {
+    "Id": "78efc8bc-2687-4665-a6c0-294799ce06ea",
+    "BrandName": "Mobility Ventures LLC"
+  },
+  {
+    "Id": "dcf4f493-6cdc-4814-ace7-42910550de8d",
+    "BrandName": "Karma"
+  },
+  {
+    "Id": "ebb42b40-8d14-4906-bf49-0d43c6b989e7",
+    "BrandName": "Aurora Cars Ltd"
+  },
+  {
+    "Id": "7cd1b389-6d5e-4e74-a97e-f95144616b1c",
+    "BrandName": "RUF Automobile"
+  },
+  {
+    "Id": "450fbad0-9295-46a8-b64e-7d640abd4881",
+    "BrandName": "Red Shift Ltd."
+  },
+  {
+    "Id": "19eea4a9-661a-490e-a450-ef0adf639c85",
+    "BrandName": "Dacia"
+  },
+  {
+    "Id": "704e4464-6d53-478d-bdf9-c6f4ac8bd08b",
+    "BrandName": "Daihatsu"
+  },
+  {
+    "Id": "c5323424-71e0-4182-9571-d44a464c1ec8",
+    "BrandName": "Polestar"
+  },
+  {
+    "Id": "f516d3e3-c103-4f81-97b5-f352a4e4d362",
+    "BrandName": "Kandi"
+  },
+  {
+    "Id": "35147317-56ac-4081-8a92-b201218c8f78",
+    "BrandName": "Koenigsegg"
+  },
+  {
+    "Id": "acbb5f7a-b35c-4ec4-b7cb-f89a9bf89100",
+    "BrandName": "Rivian"
+  },
+  {
+    "Id": "34bf6167-924d-49bc-bd19-6dd9d2243dfc",
+    "BrandName": "Lucid"
+  },
+  {
+    "Id": "b5086cc4-4e57-4614-97a4-3344df556af3",
+    "BrandName": "CCC Engineering"
+  },
+  {
+    "Id": "c4b7742d-61c7-4850-aa0c-7871863126d2",
+    "BrandName": "JBA Motorcars, Inc."
+  },
+  {
+    "Id": "1fabc243-172e-4b36-b358-de6f170dcf14",
+    "BrandName": "Lordstown"
+  },
+  {
+    "Id": "3773cdd7-0346-4e8e-81f8-31edc2ee80b2",
+    "BrandName": "Environmental Rsch and Devp Corp"
+  },
+  {
+    "Id": "dc786140-6ea6-4c3f-85f0-73aa1bd79838",
+    "BrandName": "Laforza Automobile Inc"
+  },
+  {
+    "Id": "ed3f453f-dd82-44d3-afc4-4a70ee58fca3",
+    "BrandName": "General Motors"
+  },
+  {
+    "Id": "24d0b9cb-a20b-4963-8cc3-28876984c65b",
+    "BrandName": "Evans Automobiles"
+  },
+  {
+    "Id": "adf59763-4b6c-4674-aa77-e8bee9ac2e6a",
+    "BrandName": "Consulier Industries Inc"
+  },
+  {
+    "Id": "c5435aa9-91ac-471d-a352-8f746dce0e98",
+    "BrandName": "PAS Inc - GMC"
+  },
+  {
+    "Id": "d85e5588-f493-405d-a6a4-62dc858927dc",
+    "BrandName": "Vector"
+  }
+]
