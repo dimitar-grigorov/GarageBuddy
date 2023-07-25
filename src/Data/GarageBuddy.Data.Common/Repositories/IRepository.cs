@@ -10,15 +10,16 @@
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
     // TODO: Consider making TEntity more generic
-    // TODO: Remove not async methods
-    // TODO: Check if we need to use EntityEntry<TEntity> or just TEntity
-    // TODO: Add AsNoTracking
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : BaseModel<TKey>
     {
-        IQueryable<TEntity> All(bool isReadonly = false);
+        IQueryable<TEntity> All();
 
-        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false);
+        IQueryable<TEntity> AllReadonly();
+
+        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search);
+
+        IQueryable<TEntity> AllReadonly(Expression<Func<TEntity, bool>> search);
 
         TEntity Find(TKey id, bool isReadonly = false);
 
@@ -47,5 +48,7 @@
         EntityEntry<TEntity> Detach(TEntity entity);
 
         Task<int> SaveChangesAsync();
+
+        public Task Truncate(string table);
     }
 }

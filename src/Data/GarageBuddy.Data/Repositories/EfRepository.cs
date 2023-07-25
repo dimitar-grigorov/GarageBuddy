@@ -13,7 +13,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-    // TODO: Check TEntity? warnings
     public class EfRepository<TEntity, TKey> : IRepository<TEntity, TKey>
     where TEntity : BaseModel<TKey>
     {
@@ -27,26 +26,29 @@
 
         protected ApplicationDbContext Context { get; set; }
 
-        public virtual IQueryable<TEntity> All(bool isReadonly = false)
+        public virtual IQueryable<TEntity> All()
         {
-            if (isReadonly)
-            {
-                return this.DbSet.AsNoTracking();
-            }
-
-            return this.DbSet;
+            return this.DbSet.AsQueryable();
         }
 
-        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false)
+        public IQueryable<TEntity> AllReadonly()
         {
-            var query = this.DbSet.Where(search);
+            return this.DbSet.AsQueryable().AsNoTracking();
+        }
 
-            if (isReadonly)
-            {
-                return query.AsNoTracking();
-            }
+        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search)
+        {
+            return this.DbSet
+                .Where(search)
+                .AsQueryable();
+        }
 
-            return query;
+        public IQueryable<TEntity> AllReadonly(Expression<Func<TEntity, bool>> search)
+        {
+            return this.DbSet
+                .Where(search)
+                .AsQueryable()
+                .AsNoTracking();
         }
 
         public virtual TEntity Find(TKey id, bool isReadonly = false)
@@ -131,7 +133,7 @@
 
         public virtual async Task UpdateAsync(TKey id)
         {
-            TEntity? entity = await this.FindAsync(id);
+            var entity = await this.FindAsync(id);
 
             if (entity == null)
             {
@@ -163,12 +165,15 @@
 
         public virtual async Task DeleteAsync(TKey id)
         {
-            TEntity entity = await this.FindAsync(id);
+            var entity = await this.FindAsync(id);
 
             this.Delete(entity);
         }
 
-        public virtual void DeleteRange(IEnumerable<TEntity> entities) => this.DbSet.RemoveRange(entities);
+        public virtual void DeleteRange(IEnumerable<TEntity> entities)
+        {
+            this.DbSet.RemoveRange(entities);
+        }
 
         public virtual EntityEntry<TEntity> Detach(TEntity entity)
         {
@@ -178,7 +183,15 @@
             return entry;
         }
 
-        public virtual Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();
+        public virtual async Task<int> SaveChangesAsync()
+        {
+            return await this.Context.SaveChangesAsync();
+        }
+
+        public async Task Truncate(string table)
+        {
+            await this.Context.Database.ExecuteSqlRawAsync($"TRUNCATE TABLE {table} RESTART IDENTITY");
+        }
 
         public void Dispose()
         {

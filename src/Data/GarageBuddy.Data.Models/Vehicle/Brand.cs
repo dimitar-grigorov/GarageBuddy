@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using GarageBuddy.Data.Common.Models;
+
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Brand;
 
     public class Brand : BaseDeletableModel<Guid>
