@@ -9,9 +9,9 @@
     public interface IDeletableEntityRepository<TEntity, in TKey> : IRepository<TEntity, TKey>
         where TEntity : BaseDeletableModel<TKey>
     {
-        IQueryable<TEntity> All(bool isReadonly, bool withDeleted);
+        IQueryable<TEntity> AllWithDeleted();
 
-        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly, bool withDeleted);
+        IQueryable<TEntity> AllAsNoTrackingWithDeleted();
 
         void HardDelete(TEntity entity);
 

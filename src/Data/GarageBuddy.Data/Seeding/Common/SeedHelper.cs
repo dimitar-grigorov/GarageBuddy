@@ -8,16 +8,15 @@
 
     using GarageBuddy.Common;
     using GarageBuddy.Data.Seeding.Job;
+
     using Newtonsoft.Json;
 
     public static class SeedHelper
     {
-
         private const string SeedPath = "Seeding\\Data";
 
         public static async Task<List<TEntity>> GetSeedDataFromJson<TEntity>(string fileName)
         {
-
             // Get the directory path from the assembly location
             var currentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(JobStatusSeeder)).Location)
                                    ?? throw new InvalidOperationException(ErrorMessageConstants.InvalidDirectoryPath);

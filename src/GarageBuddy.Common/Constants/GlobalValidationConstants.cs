@@ -7,7 +7,6 @@
 
         // public const int DefaultDecimalMinValue = 0;
         // public const int DefaultDecimalMaxValue = 1_000_000_000;
-
         public const int DefaultDescriptionMaxLength = 2000;
 
         public const int DefaultAddressMaxLength = 200;

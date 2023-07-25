@@ -29,7 +29,6 @@
         }
 
         // public static class JobItem {}
-
         public static class JobItemPart
         {
             public const int PartNameMinLength = 3;

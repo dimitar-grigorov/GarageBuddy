@@ -31,7 +31,7 @@
             return this.DbSet.AsQueryable();
         }
 
-        public IQueryable<TEntity> AllReadonly()
+        public virtual IQueryable<TEntity> AllReadonly()
         {
             return this.DbSet.AsQueryable().AsNoTracking();
         }
@@ -43,7 +43,7 @@
                 .AsQueryable();
         }
 
-        public IQueryable<TEntity> AllReadonly(Expression<Func<TEntity, bool>> search)
+        public virtual IQueryable<TEntity> AllReadonly(Expression<Func<TEntity, bool>> search)
         {
             return this.DbSet
                 .Where(search)
@@ -55,7 +55,7 @@
         {
             ArgumentNullException.ThrowIfNull(id);
 
-            TEntity? entity = this.DbSet.Find(id);
+            var entity = this.DbSet.Find(id);
 
             if (entity == null)
             {
@@ -74,7 +74,7 @@
         {
             ArgumentNullException.ThrowIfNull(id);
 
-            TEntity? entity = await this.DbSet.FindAsync(id);
+            var entity = await this.DbSet.FindAsync(id);
 
             if (entity == null)
             {

@@ -11,7 +11,6 @@
 
     internal static class GlobalEntityConfiguration
     {
-
         public static void AddIndexForDeletableEntities(ModelBuilder modelBuilder, IEnumerable<IMutableEntityType> deletableEntityTypes)
         {
             // IDeletableEntity.IsDeleted index

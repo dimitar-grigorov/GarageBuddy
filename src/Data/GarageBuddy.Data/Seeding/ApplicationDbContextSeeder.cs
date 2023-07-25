@@ -34,6 +34,7 @@
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new JobStatusSeeder(),
+
                               // new JobItemTypeSeeder(),
                               new BrandSeeder(),
                               new BrandModelSeeder(), // Always after BrandSeeder

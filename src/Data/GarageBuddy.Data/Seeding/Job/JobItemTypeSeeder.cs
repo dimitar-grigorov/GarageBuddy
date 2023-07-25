@@ -2,7 +2,9 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using GarageBuddy.Data.Seeding.Common;
+
     using Models.Job;
 
     public class JobItemTypeSeeder : ISeeder
