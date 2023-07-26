@@ -17,7 +17,7 @@ jobs:
       mssql:
         image: mcr.microsoft.com/mssql/server:2019-latest
         env:
-          # SA_PASSWORD: MyTestPassword
+          SA_PASSWORD: MyTestPassword
           ACCEPT_EULA: 'Y'
         ports:
           - 1433:1433
@@ -34,5 +34,8 @@ jobs:
       run: dotnet build --no-restore
       working-directory: ./src
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: |
+        dotnet user-secrets init --project Tests\GarageBuddy.Web.Tests\GarageBuddy.Web.Tests.csproj
+        dotnet user-secrets set "DefaultConnection:ApplicationDb" "Server=localhost,1433;Initial Catalog=GarageBuddyTest;User Id=sa;Password=MyTestPassword;" --project Tests\GarageBuddy.Web.Tests\GarageBuddy.Web.Tests.csproj        
+        dotnet test --no-build --verbosity normal
       working-directory: ./src
