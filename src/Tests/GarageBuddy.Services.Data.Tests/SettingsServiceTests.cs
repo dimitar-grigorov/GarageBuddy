@@ -11,6 +11,7 @@
     using GarageBuddy.Data.Repositories;
 
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Options;
 
     using Moq;
 
@@ -37,11 +38,24 @@
         public async Task GetCountShouldReturnCorrectNumberUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .EnableSensitiveDataLogging()
                 .UseInMemoryDatabase(databaseName: "SettingsTestDb").Options;
-            using var dbContext = new ApplicationDbContext(options);
-            dbContext.Settings.Add(new Setting());
-            dbContext.Settings.Add(new Setting());
-            dbContext.Settings.Add(new Setting());
+            await using var dbContext = new ApplicationDbContext(options);
+            dbContext.Settings.Add(new Setting()
+            {
+                Name = "Test",
+                Value = "Test",
+            });
+            dbContext.Settings.Add(new Setting()
+            {
+                Name = "Test",
+                Value = "Test",
+            });
+            dbContext.Settings.Add(new Setting()
+            {
+                Name = "Test",
+                Value = "Test",
+            });
             await dbContext.SaveChangesAsync();
 
             using var repository = new EfDeletableEntityRepository<Setting, Guid>(dbContext);
