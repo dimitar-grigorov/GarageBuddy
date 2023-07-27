@@ -7,11 +7,11 @@
     using System.Threading.Tasks;
 
     using GarageBuddy.Data.Common.Models;
+
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-    // TODO: Consider making TEntity more generic
     public interface IRepository<TEntity, in TKey> : IDisposable
-        where TEntity : BaseModel<TKey>
+        where TEntity : class, IEntity<TKey>
     {
         IQueryable<TEntity> All();
 

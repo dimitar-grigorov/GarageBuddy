@@ -2,9 +2,8 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    public abstract class BaseModel<TKey> : IAuditInfo
+    public abstract class BaseModel<TKey> : IEntity<TKey>, IAuditInfo
     {
         [Key]
         public virtual TKey Id { get; set; } = default!;
