@@ -11,11 +11,11 @@
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
-        public string Value { get; set; }
+        public string Value { get; set; } = null!;
 
-        public string NameAndValue { get; set; }
+        public string NameAndValue { get; set; } = null!;
 
         public void CreateMappings(IProfileExpression configuration)
         {

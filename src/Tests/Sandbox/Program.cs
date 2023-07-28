@@ -13,6 +13,7 @@
     using GarageBuddy.Data.Repositories;
     using GarageBuddy.Data.Seeding;
     using GarageBuddy.Services.Data;
+    using GarageBuddy.Services.Data.Contracts;
     using GarageBuddy.Services.Messaging;
 
     using Microsoft.EntityFrameworkCore;

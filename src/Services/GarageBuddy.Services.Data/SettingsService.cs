@@ -6,6 +6,7 @@
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
+    using GarageBuddy.Services.Data.Contracts;
     using GarageBuddy.Services.Mapping;
 
     public class SettingsService : ISettingsService

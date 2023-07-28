@@ -1,6 +1,6 @@
 ﻿namespace GarageBuddy.Web.Areas.Administration.Controllers
 {
-    using GarageBuddy.Common;
+    using GarageBuddy.Common.Constants;
     using GarageBuddy.Web.Controllers;
 
     using Microsoft.AspNetCore.Authorization;

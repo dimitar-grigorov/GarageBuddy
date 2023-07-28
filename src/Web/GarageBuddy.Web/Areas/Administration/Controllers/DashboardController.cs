@@ -1,6 +1,6 @@
 ﻿namespace GarageBuddy.Web.Areas.Administration.Controllers
 {
-    using GarageBuddy.Services.Data;
+    using GarageBuddy.Services.Data.Contracts;
     using GarageBuddy.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;

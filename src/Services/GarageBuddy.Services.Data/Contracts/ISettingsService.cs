@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Services.Data
+﻿namespace GarageBuddy.Services.Data.Contracts
 {
     using System.Collections.Generic;
 

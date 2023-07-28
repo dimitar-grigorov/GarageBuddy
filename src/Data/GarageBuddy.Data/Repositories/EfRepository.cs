@@ -6,7 +6,7 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Common;
+    using GarageBuddy.Common.Constants;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
 

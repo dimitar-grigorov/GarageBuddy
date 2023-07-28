@@ -9,7 +9,6 @@ using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -28,12 +27,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.Get
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.Configure<CookiePolicyOptions>(
-    options =>
-    {
-        options.CheckConsentNeeded = context => true;
-        options.MinimumSameSitePolicy = SameSiteMode.None;
-    });
+builder.Services.ConfigureCookiePolicy();
+builder.Services.ConfigureApplicationCookie();
 
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
@@ -58,7 +53,7 @@ using (var serviceScope = app.Services.CreateScope())
     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
     // dbContext.Database.Migrate();
-     new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
 }
 
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);

@@ -4,6 +4,6 @@
 
     public class SettingsListViewModel
     {
-        public IEnumerable<SettingViewModel> Settings { get; set; }
+        public IEnumerable<SettingViewModel> Settings { get; set; } = null!;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Common
+﻿namespace GarageBuddy.Common.Constants
 {
     public static class GlobalConstants
     {

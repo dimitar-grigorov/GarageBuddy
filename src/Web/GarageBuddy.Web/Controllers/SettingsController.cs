@@ -5,7 +5,7 @@
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
-    using GarageBuddy.Services.Data;
+    using GarageBuddy.Services.Data.Contracts;
     using GarageBuddy.Web.ViewModels.Settings;
 
     using Microsoft.AspNetCore.Mvc;
@@ -16,7 +16,8 @@
 
         private readonly IDeletableEntityRepository<Setting, Guid> repository;
 
-        public SettingsController(ISettingsService settingsService, IDeletableEntityRepository<Setting, Guid> repository)
+        public SettingsController(ISettingsService settingsService,
+            IDeletableEntityRepository<Setting, Guid> repository)
         {
             this.settingsService = settingsService;
             this.repository = repository;
@@ -24,8 +25,11 @@
 
         public IActionResult Index()
         {
-            var settings = this.settingsService.GetAll<SettingViewModel>();
-            var model = new SettingsListViewModel { Settings = settings };
+            var model = new SettingsListViewModel
+            {
+                Settings = settingsService.GetAll<SettingViewModel>(),
+            };
+
             return this.View(model);
         }
 

@@ -4,9 +4,10 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Common;
+    using GarageBuddy.Common.Constants;
     using GarageBuddy.Data.Models;
     using GarageBuddy.Data.Seeding.Common;
+
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
 
