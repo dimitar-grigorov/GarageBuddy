@@ -12,8 +12,8 @@
             public const int EmailMinLength = 5;
             public const int EmailMaxLength = 60;
 
-            public const int PasswordMinLength = 5;
-            public const int PasswordMaxLength = 50;
+            // public const int PasswordMinLength = 5;
+            // public const int PasswordMaxLength = 50;
         }
 
         public static class Job

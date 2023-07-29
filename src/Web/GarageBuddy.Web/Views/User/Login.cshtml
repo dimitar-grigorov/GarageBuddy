@@ -1,43 +1,61 @@
 ﻿@model LoginViewModel
 
 @{
-    // Layout = "";
+    Layout = "_CleanLayout";
     ViewData["Title"] = "Login";
 }
 
-<div class="container pt-5">
-    <div class="row justify-content-center">
-        <div class="col-xl-10 col-lg-12 col-md-9">
-            <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
-                    <div class="row">
-                        <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                        <div class="col-lg-6">
-                            <div class="p-5">
-                                <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">Welcome!</h1>
-                                </div>
-                                <form class="user" asp-controller="User" asp-action="Login" method="post">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <div class="form-group">
-                                        <input class="form-control form-control-user" asp-for="@Model.Username" placeholder="Enter Username...">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="form-control form-control-user" asp-for="@Model.Password" placeholder="Password">
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="custom-control custom-checkbox small">
-                                            <input class="custom-control-input" asp-for="@Model.RememberMe">
-                                            <label class="custom-control-label" asp-for="@Model.RememberMe">Remember Me</label>
-                                        </div>
-                                    </div>
-                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Login" />
-                                </form>
-                            </div>
+<div id="auth">
+    <div class="row h-100">
+        <div class="col-lg-5 col-12">
+            <div id="auth-left">
+                <div class="auth-logo">
+                    <a href="index.html">
+                        <img src="~/themes/mazer/dist/assets/compiled/svg/logo.svg" alt="Logo" />
+                    </a>
+                </div>
+                <h1 class="auth-title">Log in.</h1>
+                <p class="auth-subtitle mb-5">
+                    Log in with your data that you entered during registration.
+                </p>
+
+                <form asp-controller="User" asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="text" class="form-control form-control-xl" asp-for="@Model.Username" placeholder="Username" />
+                        <span class="form-text text-danger" asp-validation-for="@Model.Username"></span>
+                        <div class="form-control-icon">
+                            <i class="bi bi-person"></i>
                         </div>
                     </div>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="password" class="form-control form-control-xl" asp-for="@Model.Password" placeholder="Password" />
+                        <span class="form-text text-danger" asp-validation-for="@Model.Password"></span>
+                        <div class="form-control-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-check form-check-lg d-flex align-items-end">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault" asp-for="@Model.RememberMe" />
+                        <label class="form-check-label text-gray-600" for="flexCheckDefault" asp-for="@Model.RememberMe">
+                            Keep me logged in
+                        </label>
+                    </div>
+                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+                </form>
+                <div class="text-center mt-5 text-lg fs-4">
+                    <p class="text-gray-600">
+                        Don't have an account?
+                        <a class="font-bold" asp-controller="User" asp-action="Register">Sign up</a>
+                    </p>
+                    <p>
+                        <a class="font-bold" asp-controller="User" asp-action="ResetPassword">Forgot password?</a>
+                    </p>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-7 d-none d-lg-block">
+            <div id="auth-right"></div>
         </div>
     </div>
 </div>

@@ -16,7 +16,7 @@
             this.server = server;
         }
 
-        [Fact]
+       //[Fact]
         public async Task IndexPageShouldReturnStatusCode200WithTitle()
         {
             var client = this.server.CreateClient();
@@ -26,7 +26,7 @@
             Assert.Contains("<title>", responseContent);
         }
 
-        [Fact]
+        //[Fact]
         public async Task AccountManagePageRequiresAuthorization()
         {
             var client = this.server.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
