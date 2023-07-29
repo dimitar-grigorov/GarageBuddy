@@ -13,5 +13,11 @@
         public const string ErrorInvalidUsernameOrPassword = "Invalid username or password.";
 
         public const string ErrorAccountLockedOut = "Account locked out. Try again later";
+
+        public const string ErrorUserNotFound = "User not found.";
+
+        public const string ErrorPasswordsDoNotMatch = "Passwords do not match.";
+
+        public const string ErrorSomethingWentWrong = "Something went wrong. Please try again.";
     }
 }

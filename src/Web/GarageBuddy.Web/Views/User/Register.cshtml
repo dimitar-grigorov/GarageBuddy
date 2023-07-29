@@ -1,8 +1,8 @@
-﻿@model LoginFormModel
+﻿@model RegisterFormModel
 
 @{
     Layout = "_CleanLayout";
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Register";
 }
 
 <div id="auth">
@@ -14,44 +14,44 @@
                         <img src="~/themes/mazer/dist/assets/compiled/svg/logo.svg" alt="Logo" />
                     </a>
                 </div>
-                <h1 class="auth-title">Log in.</h1>
+                <h1 class="auth-title">@ViewData["Title"]</h1>
                 <p class="auth-subtitle mb-5">
-                    Log in with your data that you entered during registration.
+                    Input your data to register to our website.
                 </p>
 
-                <form asp-controller="User" asp-action="Login" method="post">
+                <form asp-controller="User" asp-action="Register" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group position-relative has-icon-left mb-4">
                         <input type="text" class="form-control form-control-xl" asp-for="@Model.Email"
                                placeholder="e-mail" autocomplete="email" aria-required="true" />
                         <div class="form-control-icon">
-                            <i class="bi bi-person"></i>
+                            <i class="bi bi-envelope"></i>
                         </div>
                         <span class="form-text text-danger" asp-validation-for="@Model.Email"></span>
                     </div>
                     <div class="form-group position-relative has-icon-left mb-4">
                         <input type="password" class="form-control form-control-xl" asp-for="@Model.Password"
-                               placeholder="Password" autocomplete="current-password" aria-required="true" />
+                               placeholder="Password" autocomplete="new-password" aria-required="true" />
                         <div class="form-control-icon">
                             <i class="bi bi-shield-lock"></i>
                         </div>
                         <span class="form-text text-danger" asp-validation-for="@Model.Password"></span>
                     </div>
-                    <div class="form-check form-check-lg d-flex align-items-end">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault" asp-for="@Model.RememberMe" />
-                        <label class="form-check-label text-gray-600" for="flexCheckDefault" asp-for="@Model.RememberMe">
-                            Keep me logged in
-                        </label>
+                    <div class="form-group position-relative has-icon-left mb-4">
+                        <input type="password" class="form-control form-control-xl" asp-for="@Model.ConfirmPassword"
+                               placeholder="Confirm Password" autocomplete="new-password" aria-required="true" />
+                        <div class="form-control-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <span class="form-text text-danger" asp-validation-for="@Model.ConfirmPassword"></span>
                     </div>
-                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
+                    <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Register</button>
                 </form>
+
                 <div class="text-center mt-5 text-lg fs-4">
                     <p class="text-gray-600">
-                        Don't have an account?
-                        <a class="font-bold" asp-controller="User" asp-action="Register">Register</a>
-                    </p>
-                    <p>
-                        <a class="font-bold" asp-controller="User" asp-action="ResetPassword">Forgot password?</a>
+                        Already have an account?
+                        <a asp-controller="User" asp-action="Login" class="font-bold">Log in</a>.
                     </p>
                 </div>
             </div>

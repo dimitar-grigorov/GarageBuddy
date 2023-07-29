@@ -4,12 +4,13 @@
 
     using static Common.Constants.EntityValidationConstants.ApplicationUser;
 
-    public class LoginViewModel
+    public class LoginFormModel
     {
         [Required]
-        [DataType(DataType.Text)]
-        [StringLength(UserNameMaxLength, MinimumLength = UserNameMinLength)]
-        public string Username { get; set; } = null!;
+        [EmailAddress]
+        [Display(Name = "Email")]
+        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
+        public string Email { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
@@ -17,6 +18,7 @@
 
         public bool RememberMe { get; set; } = false;
 
+        // TODO: Implement returnUrl
         public string? ReturnUrl { get; set; }
     }
 }

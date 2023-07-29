@@ -48,13 +48,12 @@ builder.Services.AddApplicationServices();
 var app = builder.Build();
 
 // Seed data on application startup
-using (var serviceScope = app.Services.CreateScope())
+/*using (var serviceScope = app.Services.CreateScope())
 {
     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-
-    // dbContext.Database.Migrate();
+    dbContext.Database.Migrate();
     new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-}
+}*/
 
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
