@@ -1,6 +1,7 @@
 # Garrage Buddy - Open Source Garage Management System
+[![CI][badge-gh-actions]][link-gh-actions]
 
-**Garrage Buddy** is a comprehensive, open source garage management system built on the ASP.NET platform. Designed to cater to the needs of auto mechanics and workshops, Garrage Buddy simplifies the process of managing service records and parts for every customer's car. Everything can be easily tracked and organized within the application.
+**Garrage Buddy** is a comprehensive, open source garage management system built on the [ASP.NET Core MVC](https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-6.0) platform. Designed to cater to the needs of auto mechanics and workshops, Garrage Buddy simplifies the process of managing service records and parts for every customer's car. Everything can be easily tracked and organized within the application.
 
 ## Key Features
 
@@ -14,6 +15,15 @@
 
 - **File Attachment**: Mechanics can attach files to service records, including pictures of repairs before and after completion. This feature enhances documentation and allows customers to see visual evidence of the work done. Additionally, warranties for parts used in repairs can be tracked, ensuring quick access to warranty details when needed.
 
+## Technologies used
+- ASP.NET Core 6
+- ASP.NET Core Identity
+- Entity Framework Core
+
+## Third-Party
+ - Based on [ASP.NET Core MVC template](https://github.com/NikolayIT/ASP.NET-Core-Template) by [Nikolay Kostov](https://github.com/NikolayIT)
+ - Theme [Mazer Dashboard](https://github.com/zuramai/mazer) by [Zuramai](https://github.com/zuramai)
+ 
 ## Contributing
 
 Garrage Buddy is an open source project, and we welcome contributions from the community. If you find any bugs, have feature suggestions, or want to help improve the system, please feel free to submit issues and pull requests.
