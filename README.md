@@ -1,5 +1,9 @@
 # Garrage Buddy - Open Source Garage Management System
-[![CI][badge-gh-actions]][link-gh-actions]
+
+[![All Contributors](https://img.shields.io/github/contributors/dimitar-grigorov/GarageBuddy)](https://github.com/dimitar-grigorov/GarageBuddy/graphs/contributors)
+![GitHub last commit](https://img.shields.io/github/last-commit/dimitar-grigorov/GarageBuddy.svg)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dimitar-grigorov/GarageBuddy)
+[![License](https://img.shields.io/github/license/dimitar-grigorov/GarageBuddy.svg)](LICENSE)
 
 **Garrage Buddy** is a comprehensive, open source garage management system built on the [ASP.NET Core MVC](https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-6.0) platform. Designed to cater to the needs of auto mechanics and workshops, Garrage Buddy simplifies the process of managing service records and parts for every customer's car. Everything can be easily tracked and organized within the application.
 
