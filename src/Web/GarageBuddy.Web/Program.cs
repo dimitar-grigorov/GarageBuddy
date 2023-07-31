@@ -35,7 +35,7 @@ builder.Services.AddControllersWithViews()
     {
         // TODO: Add model binder providers
         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-    }).AddRazorRuntimeCompilation();
+    });
 
 builder.Services.AddRazorPages();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

@@ -9,10 +9,15 @@
     <div class="row h-100">
         <div class="col-lg-5 col-12">
             <div id="auth-left">
-                <div class="auth-logo">
-                    <a asp-controller="Home" asp-action="Index">
-                        <img src="~/themes/mazer/dist/assets/compiled/svg/logo.svg" alt="Logo" />
-                    </a>
+                <div class="auth-logo row">
+                    <div class="col-md-8">
+                        <a asp-controller="Home" asp-action="Index">
+                            <img src="~/themes/mazer/dist/assets/compiled/svg/logo.svg" alt="Logo" />
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <partial name="_ThemeTogglePartial" />
+                    </div>
                 </div>
                 <h1 class="auth-title">Log in.</h1>
                 <p class="auth-subtitle mb-5">
@@ -64,4 +69,4 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+    }
