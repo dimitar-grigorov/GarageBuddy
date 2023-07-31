@@ -1,5 +1,5 @@
-﻿@using GarageBuddy.Common.Constants
-@using GarageBuddy.Data.Models
+﻿@using GarageBuddy.Data.Models
+@using GarageBuddy.Web.Infrastructure.Extensions
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -16,7 +16,7 @@
                 <img src="~/themes/mazer/dist/assets/compiled/jpg/1.jpg" alt="Avatar" />
             </div>
             <div class="text">
-                <h6 class="user-dropdown-name">@this.User.Identity?.Name!</h6>
+                <h6 class="user-dropdown-name">@this.User.GetFirstPartOfEmail()</h6>
                 <p class="user-dropdown-status text-sm text-muted">
                     Member
                 </p>
@@ -26,7 +26,7 @@
             aria-labelledby="topbarUserDropdown">
             <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">My Account</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
-            @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+            @if (this.User.IsAdmin())
             {
             <li class="dropdown-item" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</li>
             }
