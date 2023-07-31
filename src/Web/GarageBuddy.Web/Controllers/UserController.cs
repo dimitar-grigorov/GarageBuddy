@@ -116,6 +116,7 @@
             {
                 return Redirect(model.ReturnUrl);
             }
+
             return this.RedirectToAction("Index", "Home");
         }
 

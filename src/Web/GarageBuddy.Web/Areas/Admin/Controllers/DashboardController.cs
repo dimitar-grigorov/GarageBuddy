@@ -1,11 +1,11 @@
-﻿namespace GarageBuddy.Web.Areas.Administration.Controllers
+﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
     using GarageBuddy.Services.Data.Contracts;
     using GarageBuddy.Web.ViewModels.Administration.Dashboard;
 
     using Microsoft.AspNetCore.Mvc;
 
-    public class DashboardController : AdministrationController
+    public class DashboardController : AdminController
     {
         private readonly ISettingsService settingsService;
 

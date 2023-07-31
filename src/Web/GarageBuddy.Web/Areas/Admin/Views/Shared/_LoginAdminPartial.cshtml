@@ -1,0 +1,48 @@
+﻿@using GarageBuddy.Data.Models
+@using GarageBuddy.Web.Infrastructure.Extensions
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@*@inject UserManager<ApplicationUser> UserManager*@
+
+@if (this.SignInManager.IsSignedIn(this.User))
+{
+    <div class="dropdown">
+        <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="user-menu d-flex">
+                <div class="user-name text-end me-3">
+                    <h6 class="mb-0 text-gray-600">@this.User.GetFirstPartOfEmail()</h6>
+                    <p class="mb-0 text-sm text-gray-600">Administrator</p>
+                </div>
+                <div class="user-img d-flex align-items-center">
+                    <div class="avatar avatar-md">
+                        <img src="~/themes/mazer/dist/assets/compiled/jpg/1.jpg" alt="Avatar"/>
+                    </div>
+                </div>
+            </div>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="dropdownMenuButton"
+            style="min-width: 11rem">
+            <li>
+                <h6 class="dropdown-header">Hello, John!</h6>
+            </li>
+            <li>
+                <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index"><i class="icon-mid bi bi-person me-2"></i> My Profile</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#"><i class="icon-mid bi bi-gear me-2"></i> Settings</a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#"><i class="icon-mid bi bi-wallet me-2"></i> Wallet</a>
+            </li>
+            <li>
+                <hr class="dropdown-divider" />
+            </li>
+            <li>
+                <form class="dropdown-item" asp-area="" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
+                    <i class="icon-mid bi bi-box-arrow-left"></i><button type="submit" class="btn btn">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+}

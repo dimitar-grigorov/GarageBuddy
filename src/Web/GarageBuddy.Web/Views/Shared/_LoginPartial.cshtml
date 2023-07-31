@@ -2,7 +2,7 @@
 @using GarageBuddy.Web.Infrastructure.Extensions
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@inject UserManager<ApplicationUser> UserManager
+@*@inject UserManager<ApplicationUser> UserManager*@
 
 @if (this.SignInManager.IsSignedIn(this.User))
 {
@@ -28,7 +28,7 @@
             <li><a class="dropdown-item" href="#">Settings</a></li>
             @if (this.User.IsAdmin())
             {
-            <li class="dropdown-item" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</li>
+                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a></li>
             }
             <li><hr class="dropdown-divider" /></li>
             <li>
