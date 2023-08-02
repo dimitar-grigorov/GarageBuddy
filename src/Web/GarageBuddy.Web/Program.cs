@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
+using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
 using GarageBuddy.Services.Mapping;
@@ -63,10 +64,11 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    // TODO: Add custom error pages
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler($"{GlobalConstants.ErrorRoute}/500");
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithRedirects($"{GlobalConstants.ErrorRoute}/?statusCode={{0}}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

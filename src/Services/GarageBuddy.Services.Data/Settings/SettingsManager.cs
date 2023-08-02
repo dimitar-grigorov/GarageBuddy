@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Common.Core
+﻿namespace GarageBuddy.Services.Data.Settings
 {
     using Microsoft.Extensions.Configuration;
 

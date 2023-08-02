@@ -1,5 +1,6 @@
 ﻿namespace GarageBuddy.Web.Infrastructure.Extensions
 {
+    using Common.Constants;
     using GarageBuddy.Common.Core;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Repositories;
@@ -10,6 +11,8 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
+
+    using Services.Data.Settings;
 
     /// <summary>
     /// Represents extensions of IServiceCollection.
@@ -59,7 +62,7 @@
             {
                 options.LoginPath = "/User/Login";
                 options.LogoutPath = "/User/Logout";
-                options.AccessDeniedPath = "/User/AccessDenied";
+                options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
             });
 
             return services;

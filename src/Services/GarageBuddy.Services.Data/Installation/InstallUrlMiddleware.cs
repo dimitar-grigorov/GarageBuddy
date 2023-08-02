@@ -7,6 +7,8 @@
 
     using Microsoft.AspNetCore.Http;
 
+    using Settings;
+
     /// <summary>
     /// Represents middleware that checks whether database is installed and redirects to installation URL in otherwise.
     /// </summary>
@@ -34,6 +36,7 @@
         /// </summary>
         /// <param name="context">HTTP context.</param>
         /// <param name="webHelper">Web helper.</param>
+        /// <param name="settingsManager">Settings manager.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         public async Task InvokeAsync(HttpContext context, IWebHelper webHelper, ISettingsManager settingsManager)
         {
@@ -50,6 +53,10 @@
             }
 
             // or call the next middleware in the request pipeline
+            if (this.next == null)
+            {
+                return;
+            }
             await next(context);
         }
 
