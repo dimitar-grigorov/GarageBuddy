@@ -3,7 +3,7 @@
     public interface ISettingsManager
     {
         /// <summary>
-        /// Gets a value indicating whether database is already installed
+        /// Gets a value indicating whether database is already installed.
         /// </summary>
         public bool IsDatabaseInstalled();
     }
