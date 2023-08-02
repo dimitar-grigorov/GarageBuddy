@@ -12,8 +12,8 @@
     using GarageBuddy.Data.Models;
     using GarageBuddy.Data.Repositories;
     using GarageBuddy.Data.Seeding;
-    using GarageBuddy.Services.Data;
     using GarageBuddy.Services.Data.Contracts;
+    using GarageBuddy.Services.Data.Services;
     using GarageBuddy.Services.Messaging;
 
     using Microsoft.EntityFrameworkCore;

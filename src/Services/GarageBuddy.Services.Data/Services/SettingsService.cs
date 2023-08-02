@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Services.Data
+﻿namespace GarageBuddy.Services.Data.Services
 {
     using System;
     using System.Collections.Generic;
@@ -20,12 +20,12 @@
 
         public int GetCount()
         {
-            return this.settingsRepository.All().Count();
+            return settingsRepository.All().Count();
         }
 
         public IEnumerable<T> GetAll<T>()
         {
-            return this.settingsRepository.All().To<T>().ToList();
+            return settingsRepository.All().To<T>().ToList();
         }
     }
 }

@@ -1,18 +1,20 @@
 ﻿namespace GarageBuddy.Web.Infrastructure.Extensions
 {
+    using GarageBuddy.Common.Core;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Repositories;
-    using GarageBuddy.Services.Data;
     using GarageBuddy.Services.Data.Contracts;
+    using GarageBuddy.Services.Data.Services;
     using GarageBuddy.Services.Messaging;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Services.Data.Services;
-
-    public static class WebApplicationBuilderExtensions
+    /// <summary>
+    /// Represents extensions of IServiceCollection.
+    /// </summary>
+    public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddDataRepositories(this IServiceCollection services)
         {
@@ -29,6 +31,12 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();
+
+            // Web helper
+            services.AddScoped<IWebHelper, WebHelper>();
+
+            // Settings manager
+            services.AddSingleton<ISettingsManager, SettingsManager>();
 
             return services;
         }

@@ -3,7 +3,6 @@ using System.Reflection;
 
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
-using GarageBuddy.Data.Seeding;
 using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
@@ -72,8 +71,8 @@ else
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCookiePolicy();
-
 app.UseRouting();
+app.UseInstallUrl();
 
 app.UseAuthentication();
 app.UseAuthorization();

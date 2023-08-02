@@ -11,9 +11,10 @@
     using GarageBuddy.Data.Repositories;
 
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Options;
 
     using Moq;
+
+    using Services;
 
     using Xunit;
 
