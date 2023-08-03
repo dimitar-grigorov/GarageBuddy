@@ -35,6 +35,11 @@
         string GetStoreLocation(bool? useSsl = null);
 
         /// <summary>
+        /// Restart application domain.
+        /// </summary>
+        void RestartAppDomain();
+
+        /// <summary>
         /// Gets current HTTP request protocol.
         /// </summary>
         string GetCurrentRequestProtocol();

@@ -1,7 +1,6 @@
 ﻿namespace GarageBuddy.Web.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
 
     using Common.Constants;
 
@@ -10,8 +9,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.WebUtilities;
-
-    using Newtonsoft.Json.Linq;
 
     using ViewModels;
 

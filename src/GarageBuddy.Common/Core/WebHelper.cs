@@ -5,6 +5,7 @@
     using System.Net;
 
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Primitives;
 
     /// <summary>
@@ -15,14 +16,17 @@
         #region Fields
 
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IHostApplicationLifetime hostApplicationLifetime;
 
         #endregion
 
         #region Ctor
 
-        public WebHelper(IHttpContextAccessor httpContextAccessor)
+        public WebHelper(IHttpContextAccessor httpContextAccessor,
+            IHostApplicationLifetime hostApplicationLifetime)
         {
             this.httpContextAccessor = httpContextAccessor;
+            this.hostApplicationLifetime = hostApplicationLifetime;
         }
 
         #endregion
@@ -127,6 +131,14 @@
             storeLocation = $"{storeLocation.TrimEnd('/')}/";
 
             return storeLocation;
+        }
+
+        /// <summary>
+        /// Restart application domain.
+        /// </summary>
+        public virtual void RestartAppDomain()
+        {
+            hostApplicationLifetime.StopApplication();
         }
 
         /// <summary>
