@@ -71,7 +71,7 @@
 
         [AllowAnonymous]
         [HttpPost]
-        public virtual async Task<IActionResult> Index(InstallFormModel model)
+        public virtual IActionResult Index(InstallFormModel model)
         {
             if (optionsManager.IsDatabaseInstalled())
             {
