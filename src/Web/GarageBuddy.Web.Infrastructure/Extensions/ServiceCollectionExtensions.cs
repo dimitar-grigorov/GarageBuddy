@@ -1,6 +1,10 @@
-﻿namespace GarageBuddy.Web.Infrastructure.Extensions
+﻿// namespace Microsoft.Extensions.DependencyInjection
+namespace GarageBuddy.Web.Infrastructure.Extensions
 {
     using Common.Constants;
+
+    using Data.DataProvider;
+
     using GarageBuddy.Common.Core;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Repositories;
@@ -12,7 +16,7 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.DependencyInjection;
 
-    using Services.Data.Settings;
+    using Services.Data.Options;
 
     /// <summary>
     /// Represents extensions of IServiceCollection.
@@ -24,6 +28,7 @@
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<,>), typeof(EfDeletableEntityRepository<,>));
             services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
+            services.AddScoped<IDataProvider, MsSqlDataProvider>();
 
             return services;
         }
@@ -34,12 +39,13 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IInstallationService, InstallationService>();
 
             // Web helper
             services.AddScoped<IWebHelper, WebHelper>();
 
             // Settings manager
-            services.AddSingleton<ISettingsManager, SettingsManager>();
+            services.AddSingleton<IOptionsManager, OptionsManager>();
 
             return services;
         }

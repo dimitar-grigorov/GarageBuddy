@@ -19,5 +19,13 @@
         public const string ErrorPasswordsDoNotMatch = "Passwords do not match.";
 
         public const string ErrorSomethingWentWrong = "Something went wrong. Please try again.";
+
+        public const string ErrorConnectionStringWrongFormat = "Connection string is in wrong format!";
+
+        public const string ErrorDatabaseCreationFailed = "Database creation failed! Error: {0}";
+
+        public const string ErrorDatabaseNotExists = "Database does not exist!";
+
+        public const string ErrorDatabaseInstallationFailed = "Database installation failed! Error: {0}";
     }
 }

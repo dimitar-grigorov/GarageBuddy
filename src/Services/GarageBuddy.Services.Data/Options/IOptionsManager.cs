@@ -1,6 +1,6 @@
-﻿namespace GarageBuddy.Services.Data.Settings
+﻿namespace GarageBuddy.Services.Data.Options
 {
-    public interface ISettingsManager
+    public interface IOptionsManager
     {
         /// <summary>
         /// Gets a value indicating whether database is already installed.

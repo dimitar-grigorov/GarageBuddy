@@ -1,0 +1,239 @@
+﻿@using System.Text.Encodings.Web
+@using GarageBuddy.Common.Core
+@model GarageBuddy.Web.ViewModels.Install.InstallFormModel
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@GlobalConstants.SystemName</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+    <partial name="_FavIconPartial" />
+    <link href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" type="text/css" rel="stylesheet" />
+    <link href="@Url.Content("~/css/install/styles.css")" type="text/css" rel="stylesheet" />
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
+    <partial name="_ValidationScriptsPartial"/>
+
+    <script src="@Url.Content("~/js/site.js")"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="clearfix">
+            <div class="row">
+                <div class="logo-wrapper col-md-12">
+                    <div class="logo"></div>
+                </div>
+            </div>
+        </div>
+        <form asp-action="Index" asp-controller="Install" id="installation-form" method="post">
+            <div class="content">
+                <div asp-validation-summary="All" class="message-error"></div>
+                
+                <script>
+                    function showThrobber(message) {
+                        $('.throbber-header').html(message);
+                        window.setTimeout(function () {
+                            $(".throbber").show();
+                        }, 1000);
+                    }
+
+                    $(document).ready(function () {
+                        $('#installation-form').submit(function () {
+                            if ($('#installation-form').valid()) {
+                                $("html, body").animate({ scrollTop: 0 }, 400);
+                                showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode("Installing"))');
+                                $('button[type=submit]', this).attr('disabled', 'disabled');
+                            }
+                        });
+                    });
+
+                    $(document).ready(function () {
+                        $('#restart-form').submit(function () {
+                            $("html, body").animate({ scrollTop: 0 }, 400);
+                            showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode("RestartProgress"))');
+                            $('button[type=submit]', this).attr('disabled', 'disabled');
+                        });
+                    });
+
+                    $(document).ready(function () {
+                        $('#@Html.IdFor(x => x.ConnectionStringRaw)').click(toggleSqlConnectionInfo);
+
+                        toggleSqlConnectionInfo();
+                    });
+
+                    $(document).ready(function () {
+                        $('#@Html.IdFor(m => m.DataProvider)').on('change', function () {
+                            var integratedSecurityProviders = ['@((int)DataProviderType.SqlServer)']
+                            if (!integratedSecurityProviders.includes($(this).val())) {
+                                $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('checked', false);
+                                $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('disabled', true)
+
+                                toggleSqlAuthenticationType();
+                            } else {
+                                $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('disabled', false)
+                            }
+                        });
+                    });
+
+                    function toggleSqlConnectionInfo() {
+                        var connectionStringRaw = $("#@Html.IdFor(x => x.ConnectionStringRaw)").is(':checked');
+                        if (connectionStringRaw) {
+                            $('#sqlDatabaseInfo').hide();
+                            $('#sqlDatabaseConnectionString').show();
+                        } else {
+                            $('#sqlDatabaseInfo').show();
+                            $('#sqlDatabaseConnectionString').hide();
+                        }
+                    }
+
+                    @if (!string.IsNullOrEmpty(Model.RestartUrl))
+                    {
+                        <text>
+                            $(document).ready(function () {
+                                showThrobber('@Html.Raw(JavaScriptEncoder.Default.Encode("RestartProgress"))');
+                                $.ajax({
+                                    type: "GET",
+                                    url: "@Url.RouteUrl("InstallationRestartApplication")",
+                                    complete: function () {
+                                        window.setTimeout(function () {
+                                            window.location.replace('@Model.RestartUrl');
+                                        }, @GlobalConstants.RestartTimeout);
+                                    }
+                                });
+                            });
+                        </text>
+                    }
+                </script>
+
+                <div class="form-horizontal">
+                    <div class="card border-light margin-t-30">
+                        <h3 class="card-header">
+                            Garage Information
+                        </h3>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-right font-weight-bold">
+                                    Admin Email
+                                </label>
+                                <div class="col-sm-8">
+                                    <input asp-for="AdminEmail" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-right font-weight-bold">
+                                    Admin Password
+                                </label>
+                                <div class="col-sm-8">
+                                    <input asp-for="AdminPassword" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-right font-weight-bold">
+                                    Confirm Password
+                                </label>
+                                <div class="col-sm-8">
+                                    <input asp-for="ConfirmPassword" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="InstallSampleData" />
+                                        <label class="form-check-label" for="@Html.IdFor(m => m.InstallSampleData)">
+                                            Create Sample Data
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="card border-light margin-t-10">
+                        <h3 class="card-header">
+                            Database Information
+                        </h3>
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-right font-weight-bold">
+                                    Database
+                                </label>
+                                <div class="col-sm-8">
+                                    <select asp-for="DataProvider" asp-items="Model.AvailableDataProviders" class="form-control"></select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="CreateDatabaseIfNotExists" />
+                                        <label class="form-check-label" for="@Html.IdFor(m => m.CreateDatabaseIfNotExists)">
+                                            Create database if does dot exist
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" asp-for="ConnectionStringRaw" />
+                                        <label class="form-check-label" for="@Html.IdFor(m => m.ConnectionStringRaw)">
+                                            Raw connection string
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="sqlConnectionInfo">
+                                <hr />
+                                @await Html.PartialAsync("_Install.ConnectionString", Model)
+                                <div class="form-group row" id="sqlDatabaseConnectionString">
+                                    <label class="col-sm-3 col-form-label text-right font-weight-bold">
+                                        "ConnectionString"
+                                    </label>
+                                    <div class="col-sm-8">
+                                        <input asp-for="ConnectionString" class="form-control" />
+                                        <span class="hint">
+                                            "Example":<br />
+                                            Data Source=sqlServerName;Initial Catalog=dbName;Persist Security Info=True;User
+                                            ID=userName;Password=password
+                                            <br />
+                                            Find more info <a href="http://www.connectionstrings.com/" target="_blank" rel="noopener noreferrer">here</a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row margin-t-30">
+                                <div class="col-sm-12 text-center">
+                                    <button type="submit" class="btn btn-md btn-install">Install</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="content-footer">
+            <form asp-action="RestartInstall" asp-controller="Install" id="restart-form" method="post">
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <button type="submit" class="btn btn-md btn-default" title="RestartInstallationTooltip">RestartInstallation</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="throbber">
+            <div class="curtain">
+            </div>
+            <div class="curtain-content">
+                <div>
+                    <h1 class="throbber-header">Wait...</h1>
+                    <p><img src="@Url.Content("~/css/install/images/install-synchronizing.gif")" alt="" /></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

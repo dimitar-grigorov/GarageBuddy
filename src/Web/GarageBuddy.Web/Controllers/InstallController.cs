@@ -4,31 +4,48 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Data.DataProvider;
+
     using GarageBuddy.Common.Core;
-    using GarageBuddy.Services.Data.Settings;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Options;
+
+    using Services.Data.Contracts;
+    using Services.Data.Options;
 
     using ViewModels.Install;
 
+    using static Common.Constants.ErrorMessageConstants;
+
     public class InstallController : BaseController
     {
-        private readonly ISettingsManager settingsManager;
-        private readonly Lazy<IWebHelper> webHelper;
+        private readonly IOptionsManager optionsManager;
+        private readonly IWebHelper webHelper;
+        private readonly IDataProvider dataProvider;
+        private readonly IInstallationService installationService;
+        private readonly IOptions<ConnectionStringsOptions> connectionStringsOptions;
 
-        public InstallController(ISettingsManager settingsManager,
-            Lazy<IWebHelper> webHelper)
+        public InstallController(
+            IOptionsManager optionsManager,
+            IWebHelper webHelper,
+            IDataProvider dataProvider,
+            IInstallationService installationService,
+            IOptions<ConnectionStringsOptions> connectionStringsOptions)
         {
-            this.settingsManager = settingsManager;
+            this.optionsManager = optionsManager;
             this.webHelper = webHelper;
+            this.dataProvider = dataProvider;
+            this.installationService = installationService;
+            this.connectionStringsOptions = connectionStringsOptions;
         }
 
         [AllowAnonymous]
         public IActionResult Index()
         {
-            if (settingsManager.IsDatabaseInstalled())
+            if (optionsManager.IsDatabaseInstalled())
             {
                 return this.RedirectToAction("Index", "Home");
             }
@@ -36,40 +53,105 @@
             var model = new InstallFormModel()
             {
                 AdminEmail = "admin@yourStore.com",
-                InstallSampleData = false,
-                CreateDatabaseIfNotExists = false,
+                InstallSampleData = true,
+                CreateDatabaseIfNotExists = true,
                 ConnectionStringRaw = false,
                 DataProvider = DataProviderType.SqlServer,
+
+                // For debugging purposes
+                ServerName = "192.168.2.100",
+                DatabaseName = "GarageBuddy",
+                IntegratedSecurity = false,
+                Username = "sa",
+                Password = "123456",
+                AdminPassword = "123456",
+                ConfirmPassword = "123456",
             };
 
             PrepareAvailableDataProviders(model);
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public virtual async Task<IActionResult> Index(InstallFormModel model)
         {
-            if (settingsManager.IsDatabaseInstalled())
+            if (optionsManager.IsDatabaseInstalled())
             {
                 return this.RedirectToAction("Index", "Home");
             }
 
             PrepareAvailableDataProviders(model);
 
-            await Task.CompletedTask;
-            throw new NotImplementedException();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            try
+            {
+                var connectionString = model.ConnectionStringRaw
+                    ? model.ConnectionString
+                    : dataProvider.BuildConnectionString(model);
+
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new Exception(ErrorConnectionStringWrongFormat);
+                }
+
+                // Save Settings
+                connectionStringsOptions.Value.DefaultConnection = connectionString;
+
+                /* if (model.CreateDatabaseIfNotExists)
+                {
+                    try
+                    {
+                        dataProvider.Value.CreateDatabase(connectionString);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception(string.Format(ErrorDatabaseCreationFailed, ex.Message));
+                    }
+                }
+                else
+                {
+                    // check whether database exists
+                    if (!await dataProvider.Value.DatabaseExistsAsync(connectionString))
+                    {
+                        throw new Exception(ErrorDatabaseNotExists);
+                    }
+                }
+
+                // TODO: Apply migrations and check if database creation is needed
+                await installationService.Value.InstallRequiredDataAsync(model.AdminEmail, model.AdminPassword);
+
+                if (model.InstallSampleData)
+                {
+                    await installationService.Value.InstallSampleDataAsync(model.AdminEmail);
+                }*/
+
+                //return View(new InstallFormModel { RestartUrl = Url.RouteUrl("Homepage")! });
+                return RedirectToAction(nameof(RestartApplication));
+            }
+            catch (Exception exception)
+            {
+                // TODO: clear provider settings if something got wrong
+                ModelState.AddModelError(string.Empty, string.Format(ErrorDatabaseInstallationFailed, exception.Message));
+            }
+
+            return View(model);
         }
 
         [AllowAnonymous]
         public virtual IActionResult RestartApplication()
         {
-            if (settingsManager.IsDatabaseInstalled())
+            if (optionsManager.IsDatabaseInstalled())
             {
                 return this.RedirectToAction("Index", "Home");
             }
 
             // Restart application
-            webHelper.Value.RestartAppDomain();
+            webHelper.RestartAppDomain();
 
             return new EmptyResult();
         }

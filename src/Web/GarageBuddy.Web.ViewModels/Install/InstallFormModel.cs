@@ -44,12 +44,12 @@
         [DataType(DataType.Password)]
         public string Password { get; set; } = null!;
 
-        public string ConnectionString { get; set; } = null!;
+        public string? ConnectionString { get; set; }
 
         public DataProviderType DataProvider { get; set; }
 
         public List<SelectListItem> AvailableDataProviders { get; set; }
 
-        public string RestartUrl { get; set; } = null!;
+        public string? RestartUrl { get; set; }
     }
 }

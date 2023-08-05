@@ -1,9 +1,9 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
 using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
+using GarageBuddy.Services.Data.Options;
 using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
@@ -17,8 +17,12 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-                       ?? throw new InvalidOperationException("Connection string not found");
+var connectionString = builder.Configuration.GetConnectionString(nameof(ConnectionStringsOptions.DefaultConnection)); //?? throw new InvalidOperationException("Connection string not found");
+
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    connectionString = "Error";
+}
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -26,6 +30,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
     .AddRoles<ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.Configure<ConnectionStringsOptions>(
+    builder.Configuration.GetSection(ConnectionStringsOptions.ConnectionStrings));
 
 builder.Services.ConfigureCookiePolicy();
 builder.Services.ConfigureApplicationCookie();
