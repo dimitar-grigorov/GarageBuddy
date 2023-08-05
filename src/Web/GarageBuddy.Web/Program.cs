@@ -3,6 +3,7 @@
 using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
+using GarageBuddy.Data.Seeding;
 using GarageBuddy.Services.Data.Options;
 using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Infrastructure.Extensions;
@@ -17,7 +18,8 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString(nameof(ConnectionStringsOptions.DefaultConnection)); //?? throw new InvalidOperationException("Connection string not found");
+var connectionString = builder.Configuration.GetConnectionString(nameof(ConnectionStringsOptions.DefaultConnection));
+    // ?? throw new InvalidOperationException("Connection string not found");
 
 if (string.IsNullOrWhiteSpace(connectionString))
 {
@@ -55,12 +57,12 @@ builder.Services.AddApplicationServices();
 var app = builder.Build();
 
 // Seed data on application startup
-/*using (var serviceScope = app.Services.CreateScope())
+using (var serviceScope = app.Services.CreateScope())
 {
     var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     dbContext.Database.Migrate();
     new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
-}*/
+}
 
 AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 

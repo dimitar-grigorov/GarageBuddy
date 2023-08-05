@@ -130,7 +130,7 @@
                     await installationService.Value.InstallSampleDataAsync(model.AdminEmail);
                 }*/
 
-                //return View(new InstallFormModel { RestartUrl = Url.RouteUrl("Homepage")! });
+                // return View(new InstallFormModel { RestartUrl = Url.RouteUrl("Homepage")! });
                 return RedirectToAction(nameof(RestartApplication));
             }
             catch (Exception exception)

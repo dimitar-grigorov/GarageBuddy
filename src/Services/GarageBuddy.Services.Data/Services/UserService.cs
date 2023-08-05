@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Contracts;
@@ -10,6 +11,7 @@
     using Microsoft.AspNetCore.Identity;
 
     using static Common.Constants.ErrorMessageConstants;
+    using static Common.Constants.GlobalConstants;
 
     public class UserService : IUserService
     {
@@ -64,12 +66,12 @@
         {
             if (string.IsNullOrWhiteSpace(email.Trim()))
             {
-                throw new ArgumentException(String.Format(ErrorCannotBeNullOrWhitespace, "Email"), nameof(email));
+                throw new ArgumentException(string.Format(ErrorCannotBeNullOrWhitespace, "Email"), nameof(email));
             }
 
             if (string.IsNullOrWhiteSpace(password.Trim()))
             {
-                throw new ArgumentException(String.Format(ErrorCannotBeNullOrWhitespace, "Password"), nameof(password));
+                throw new ArgumentException(string.Format(ErrorCannotBeNullOrWhitespace, "Password"), nameof(password));
             }
 
             var user = new ApplicationUser
@@ -83,6 +85,14 @@
             {
                 await this.signInManager.SignInAsync(user, isPersistent: false);
             }
+
+            // If it is the first user, make him admin
+            if (this.userManager.Users.Count() == 1)
+            {
+                await this.userManager.AddToRoleAsync(user, AdministratorRoleName);
+            }
+
+            await signInManager.SignInAsync(user, false);
 
             return result;
         }
