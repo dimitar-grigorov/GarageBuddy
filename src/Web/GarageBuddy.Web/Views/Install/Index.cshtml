@@ -15,7 +15,7 @@
     <link href="@Url.Content("~/lib/bootstrap/dist/css/bootstrap.min.css")" type="text/css" rel="stylesheet" />
     <link href="@Url.Content("~/css/install/styles.css")" type="text/css" rel="stylesheet" />
     <script src="@Url.Content("~/lib/jquery/dist/jquery.min.js")"></script>
-    <partial name="_ValidationScriptsPartial"/>
+    <partial name="_ValidationScriptsPartial" />
 
     <script src="@Url.Content("~/js/site.js")"></script>
 </head>
@@ -31,7 +31,7 @@
         <form asp-action="Index" asp-controller="Install" id="installation-form" method="post">
             <div class="content">
                 <div asp-validation-summary="All" class="message-error"></div>
-                
+
                 <script>
                     function showThrobber(message) {
                         $('.throbber-header').html(message);
@@ -65,17 +65,7 @@
                     });
 
                     $(document).ready(function () {
-                        $('#@Html.IdFor(m => m.DataProvider)').on('change', function () {
-                            var integratedSecurityProviders = ['@((int)DataProviderType.SqlServer)']
-                            if (!integratedSecurityProviders.includes($(this).val())) {
-                                $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('checked', false);
-                                $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('disabled', true)
-
-                                toggleSqlAuthenticationType();
-                            } else {
-                                $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('disabled', false)
-                            }
-                        });
+                        $('#@Html.IdFor(x => x.IntegratedSecurity)').prop('disabled', false);
                     });
 
                     function toggleSqlConnectionInfo() {
@@ -157,14 +147,6 @@
                             Database Information
                         </h3>
                         <div class="card-body">
-                            <div class="form-group row">
-                                <label class="col-sm-3 col-form-label text-right font-weight-bold">
-                                    Database
-                                </label>
-                                <div class="col-sm-8">
-                                    <select asp-for="DataProvider" asp-items="Model.AvailableDataProviders" class="form-control"></select>
-                                </div>
-                            </div>
                             <div class="form-group row">
                                 <div class="col-md-6 offset-md-3">
                                     <div class="form-check">

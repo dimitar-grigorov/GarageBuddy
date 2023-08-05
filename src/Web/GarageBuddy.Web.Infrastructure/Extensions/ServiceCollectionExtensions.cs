@@ -1,11 +1,14 @@
 ﻿// namespace Microsoft.Extensions.DependencyInjection
 namespace GarageBuddy.Web.Infrastructure.Extensions
 {
+    using System;
+
     using Common.Constants;
 
     using Data.DataProvider;
 
     using GarageBuddy.Common.Core;
+    using GarageBuddy.Data;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Repositories;
     using GarageBuddy.Services.Data.Contracts;
@@ -14,7 +17,11 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Options;
+
+    using Serilog;
 
     using Services.Data.Options;
 
@@ -23,14 +30,35 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     /// </summary>
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddDataRepositories(this IServiceCollection services)
-        {
-            // Data repositories
-            services.AddScoped(typeof(IDeletableEntityRepository<,>), typeof(EfDeletableEntityRepository<,>));
-            services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
-            services.AddScoped<IDataProvider, MsSqlDataProvider>();
+        private static readonly ILogger Lgger = Log.ForContext(typeof(ServiceCollectionExtensions));
 
-            return services;
+        public static IServiceCollection AddPersistence(this IServiceCollection services)
+        {
+            services.AddOptions<DatabaseSettings>()
+                .BindConfiguration(nameof(DatabaseSettings))
+                .PostConfigure(databaseSettings =>
+                {
+                    Lgger.Information("Current DB Provider: {dbProvider}", databaseSettings.DbProvider);
+                })
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            return services
+                .AddDbContext<ApplicationDbContext>((p, m) =>
+                {
+                    var databaseSettings = p.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+                    m.UseDatabase(databaseSettings.DbProvider, databaseSettings.ConnectionString);
+                })
+                /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
+                .AddTransient<ApplicationDbInitializer>()
+                .AddTransient<ApplicationDbSeeder>()
+                .AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
+                .AddTransient<CustomSeederRunner>()
+
+                .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
+                .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()*/
+
+                .AddRepositories();
         }
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
@@ -70,6 +98,26 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 options.LogoutPath = "/User/Logout";
                 options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
             });
+
+            return services;
+        }
+
+        internal static DbContextOptionsBuilder UseDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString)
+        {
+            return dbProvider.ToLowerInvariant() switch
+            {
+                DbProviderKeys.SqlServer => builder.UseSqlServer(connectionString, e =>
+                    e.MigrationsAssembly("GarageBuddy.Data")),
+                _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
+            };
+        }
+
+        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            // Data repositories
+            services.AddScoped(typeof(IDeletableEntityRepository<,>), typeof(EfDeletableEntityRepository<,>));
+            services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
+            services.AddScoped<IDataProvider, MsSqlDataProvider>();
 
             return services;
         }

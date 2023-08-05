@@ -1,7 +1,6 @@
 ﻿namespace GarageBuddy.Web.Controllers
 {
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Data.DataProvider;
@@ -10,7 +9,6 @@
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Options;
 
     using Services.Data.Contracts;
@@ -26,14 +24,14 @@
         private readonly IWebHelper webHelper;
         private readonly IDataProvider dataProvider;
         private readonly IInstallationService installationService;
-        private readonly IOptions<ConnectionStringsOptions> connectionStringsOptions;
+        private readonly IOptions<DatabaseSettings> connectionStringsOptions;
 
         public InstallController(
             IOptionsManager optionsManager,
             IWebHelper webHelper,
             IDataProvider dataProvider,
             IInstallationService installationService,
-            IOptions<ConnectionStringsOptions> connectionStringsOptions)
+            IOptions<DatabaseSettings> connectionStringsOptions)
         {
             this.optionsManager = optionsManager;
             this.webHelper = webHelper;
@@ -56,7 +54,6 @@
                 InstallSampleData = true,
                 CreateDatabaseIfNotExists = true,
                 ConnectionStringRaw = false,
-                DataProvider = DataProviderType.SqlServer,
 
                 // For debugging purposes
                 ServerName = "192.168.2.100",
@@ -68,7 +65,6 @@
                 ConfirmPassword = "123456",
             };
 
-            PrepareAvailableDataProviders(model);
             return View(model);
         }
 
@@ -80,8 +76,6 @@
             {
                 return this.RedirectToAction("Index", "Home");
             }
-
-            PrepareAvailableDataProviders(model);
 
             if (!ModelState.IsValid)
             {
@@ -100,7 +94,7 @@
                 }
 
                 // Save Settings
-                connectionStringsOptions.Value.DefaultConnection = connectionString;
+                connectionStringsOptions.Value.ConnectionString = connectionString;
 
                 /* if (model.CreateDatabaseIfNotExists)
                 {
@@ -154,20 +148,6 @@
             webHelper.RestartAppDomain();
 
             return new EmptyResult();
-        }
-
-        protected virtual void PrepareAvailableDataProviders(InstallFormModel model)
-        {
-            var list = Enum.GetValues(typeof(DataProviderType))
-                .Cast<DataProviderType>()
-                .Where(e => e != DataProviderType.Unknown)
-                .Select(e => new SelectListItem
-                {
-                    Text = e.ToString(),
-                    Value = Convert.ToInt32(e).ToString(),
-                })
-                .ToList();
-            model.AvailableDataProviders.AddRange(list);
         }
     }
 }

@@ -1,20 +1,12 @@
 ﻿namespace GarageBuddy.Web.ViewModels.Install
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Common.Core;
 
-    using Microsoft.AspNetCore.Mvc.Rendering;
-
     // TODO: Check validation
     public class InstallFormModel : IConnectionStringInfo
     {
-        public InstallFormModel()
-        {
-            AvailableDataProviders = new List<SelectListItem>();
-        }
-
         [Required]
         [DataType(DataType.EmailAddress)]
         public string AdminEmail { get; set; } = null!;
@@ -45,10 +37,6 @@
         public string Password { get; set; } = null!;
 
         public string? ConnectionString { get; set; }
-
-        public DataProviderType DataProvider { get; set; }
-
-        public List<SelectListItem> AvailableDataProviders { get; set; }
 
         public string? RestartUrl { get; set; }
     }

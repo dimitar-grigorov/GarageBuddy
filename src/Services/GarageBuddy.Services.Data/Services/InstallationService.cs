@@ -20,7 +20,7 @@
             await AddDefaultUserAsync(defaultUserEmail, defaultUserPassword);
         }
 
-        public async Task InstallSampleDataAsync(string defaultUserEmail)
+        public Task InstallSampleDataAsync(string defaultUserEmail)
         {
             throw new System.NotImplementedException();
         }
