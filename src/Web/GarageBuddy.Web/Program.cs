@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
@@ -6,6 +7,7 @@ using GarageBuddy.Data.Models;
 using GarageBuddy.Data.Seeding;
 using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Configurations;
+using GarageBuddy.Web.Infrastructure.Common;
 using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
 
@@ -14,73 +16,80 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-var builder = WebApplication.CreateBuilder(args);
+using Serilog;
 
-builder.AddConfigurations(); // RegisterSerilog();
+StaticLogger.EnsureInitialized();
+Log.Information("Server starting ...");
 
-builder.Services.AddPersistence();
+try
+{
+    var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-    .AddRoles<ApplicationRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    builder.AddConfigurations().RegisterSerilog();
+    builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.ConfigureCookiePolicy();
-builder.Services.ConfigureApplicationCookie();
+    builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+        .AddRoles<ApplicationRole>()
+        .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews()
-    .AddMvcOptions(options =>
+    builder.Services.ConfigureCookiePolicy();
+    builder.Services.ConfigureApplicationCookie();
+
+    builder.Services.AddControllersWithViews()
+        .AddMvcOptions(options => // TODO: Add model binder providers
+        {
+            options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+        });
+
+    var app = builder.Build();
+
+    // Seed data on application startup
+    using (var serviceScope = app.Services.CreateScope())
     {
-        // TODO: Add model binder providers
-        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-    });
+        var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate();
+        new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+    }
 
-builder.Services.AddRazorPages();
-builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+    AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseDeveloperExceptionPage();
+        app.UseMigrationsEndPoint();
+    }
+    else
+    {
+        app.UseExceptionHandler($"{GlobalConstants.ErrorRoute}/500");
+        app.UseHsts();
+    }
 
-builder.Services.AddSingleton(builder.Configuration);
+    app.UseStatusCodePagesWithRedirects($"{GlobalConstants.ErrorRoute}/?statusCode={{0}}");
+    app.UseHttpsRedirection();
+    app.UseStaticFiles();
+    app.UseCookiePolicy();
+    app.UseRouting();
+    app.UseInstallUrl();
 
-builder.Services.AddApplicationServices();
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-var app = builder.Build();
+    app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+    app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+    app.MapRazorPages();
 
-// Seed data on application startup
-using (var serviceScope = app.Services.CreateScope())
-{
-    var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    dbContext.Database.Migrate();
-    new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+    await app.RunAsync();
 }
-
-
-AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
-
-if (app.Environment.IsDevelopment())
+catch (Exception ex) when (!ex.GetType().Name.Equals("StopTheHostException", StringComparison.Ordinal))
 {
-    app.UseDeveloperExceptionPage();
-    app.UseMigrationsEndPoint();
+    StaticLogger.EnsureInitialized();
+    Log.Fatal(ex, "Unhandled exception");
 }
-else
+finally
 {
-    app.UseExceptionHandler($"{GlobalConstants.ErrorRoute}/500");
-    app.UseHsts();
+    StaticLogger.EnsureInitialized();
+    Log.Information("Server stopping...");
+    Log.CloseAndFlush();
 }
-
-app.UseStatusCodePagesWithRedirects($"{GlobalConstants.ErrorRoute}/?statusCode={{0}}");
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseCookiePolicy();
-app.UseRouting();
-app.UseInstallUrl();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-app.MapRazorPages();
-
-await app.RunAsync();
 
 // Added to fix Web.Tests project
 public partial class Program

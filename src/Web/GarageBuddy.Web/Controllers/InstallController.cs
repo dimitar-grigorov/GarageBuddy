@@ -6,6 +6,7 @@
     using Data.DataProvider;
 
     using GarageBuddy.Common.Core;
+    using GarageBuddy.Common.Core.Settings;
 
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;

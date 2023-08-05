@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Common.Core
+﻿namespace GarageBuddy.Common.Core.Settings
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

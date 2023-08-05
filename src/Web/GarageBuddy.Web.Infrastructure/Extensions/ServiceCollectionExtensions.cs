@@ -3,11 +3,11 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 {
     using System;
 
-    using Common.Constants;
-
     using Data.DataProvider;
 
+    using GarageBuddy.Common.Constants;
     using GarageBuddy.Common.Core;
+    using GarageBuddy.Common.Core.Settings;
     using GarageBuddy.Data;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Repositories;
@@ -18,6 +18,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
 
@@ -30,52 +31,16 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     /// </summary>
     public static class ServiceCollectionExtensions
     {
-        private static readonly ILogger Lgger = Log.ForContext(typeof(ServiceCollectionExtensions));
+        private static readonly ILogger Logger = Log.ForContext(typeof(ServiceCollectionExtensions));
 
-        public static IServiceCollection AddPersistence(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
         {
-            services.AddOptions<DatabaseSettings>()
-                .BindConfiguration(nameof(DatabaseSettings))
-                .PostConfigure(databaseSettings =>
-                {
-                    Lgger.Information("Current DB Provider: {dbProvider}", databaseSettings.DbProvider);
-                })
-                .ValidateDataAnnotations()
-                .ValidateOnStart();
-
+            // TODO: Remove Razor Pages
+            services.AddRazorPages();
             return services
-                .AddDbContext<ApplicationDbContext>((p, m) =>
-                {
-                    var databaseSettings = p.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-                    m.UseDatabase(databaseSettings.DbProvider, databaseSettings.ConnectionString);
-                })
-                /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
-                .AddTransient<ApplicationDbInitializer>()
-                .AddTransient<ApplicationDbSeeder>()
-                .AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
-                .AddTransient<CustomSeederRunner>()
-
-                .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
-                .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()*/
-
-                .AddRepositories();
-        }
-
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
-        {
-            // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IInstallationService, InstallationService>();
-
-            // Web helper
-            services.AddScoped<IWebHelper, WebHelper>();
-
-            // Settings manager
-            services.AddSingleton<IOptionsManager, OptionsManager>();
-
-            return services;
+                .AddPersistence()
+                .AddApplicationServices()
+                .AddDatabaseDeveloperPageExceptionFilter();
         }
 
         public static IServiceCollection ConfigureCookiePolicy(this IServiceCollection services)
@@ -102,17 +67,53 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             return services;
         }
 
-        internal static DbContextOptionsBuilder UseDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString)
+        internal static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            return dbProvider.ToLowerInvariant() switch
-            {
-                DbProviderKeys.SqlServer => builder.UseSqlServer(connectionString, e =>
-                    e.MigrationsAssembly("GarageBuddy.Data")),
-                _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
-            };
+            // Application services
+            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IInstallationService, InstallationService>();
+
+            // Web helper
+            services.AddScoped<IWebHelper, WebHelper>();
+
+            // Settings manager
+            services.AddSingleton<IOptionsManager, OptionsManager>();
+
+            return services;
         }
 
-        private static IServiceCollection AddRepositories(this IServiceCollection services)
+        internal static IServiceCollection AddPersistence(this IServiceCollection services)
+        {
+            services.AddOptions<DatabaseSettings>()
+                .BindConfiguration(nameof(DatabaseSettings))
+                .PostConfigure(databaseSettings =>
+                {
+                    Logger.Information("Current DB Provider: {dbProvider}", databaseSettings.DbProvider);
+                })
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
+
+            return services
+                .AddDbContext<ApplicationDbContext>((p, m) =>
+                {
+                    var databaseSettings = p.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+                    m.UseDatabase(databaseSettings.DbProvider, databaseSettings.ConnectionString);
+                })
+                /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
+                .AddTransient<ApplicationDbInitializer>()
+                .AddTransient<ApplicationDbSeeder>()
+                .AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
+                .AddTransient<CustomSeederRunner>()
+
+                .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
+                .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()*/
+
+                .AddRepositories();
+        }
+
+        internal static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<,>), typeof(EfDeletableEntityRepository<,>));
@@ -120,6 +121,16 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             services.AddScoped<IDataProvider, MsSqlDataProvider>();
 
             return services;
+        }
+
+        private static DbContextOptionsBuilder UseDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString)
+        {
+            return dbProvider.ToLowerInvariant() switch
+            {
+                DbProviderKeys.SqlServer => builder.UseSqlServer(connectionString, e =>
+                    e.MigrationsAssembly("GarageBuddy.Data")),
+                _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
+            };
         }
     }
 }

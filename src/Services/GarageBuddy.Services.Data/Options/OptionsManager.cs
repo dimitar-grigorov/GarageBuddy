@@ -1,7 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Options
 {
     using Common.Core;
-
+    using GarageBuddy.Common.Core.Settings;
     using Microsoft.Extensions.Options;
 
     public class OptionsManager : IOptionsManager
