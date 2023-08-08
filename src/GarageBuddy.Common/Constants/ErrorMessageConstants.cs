@@ -27,5 +27,9 @@
         public const string ErrorDatabaseNotExists = "Database does not exist!";
 
         public const string ErrorDatabaseInstallationFailed = "Database installation failed! Error: {0}";
+
+        public const string ErrorSendGridApiKeyNotProvided = "SendGrid API key is not provided.";
+
+        public const string ErrorMailSubjectAndMessageNotProvided = "Subject and message should be provided.";
     }
 }

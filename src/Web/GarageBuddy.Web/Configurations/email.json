@@ -1,0 +1,9 @@
+{
+  "EmailSettings": {
+    "SenderEmail": "example@mail.com",
+    "SenderName": "Example Sender",
+    "SendGridSettings": {
+      "ApiKey": ""
+    }
+  }
+}

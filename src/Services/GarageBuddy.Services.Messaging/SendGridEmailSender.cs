@@ -5,31 +5,44 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Common.Core.Settings.Mail;
+
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
+    using static GarageBuddy.Common.Constants.ErrorMessageConstants;
+
     public class SendGridEmailSender : IEmailSender
     {
-        private readonly SendGridClient client;
+        private readonly EmailSettings options;
+        private readonly ILogger<SendGridEmailSender> logger;
 
-        public SendGridEmailSender(string apiKey)
+        public SendGridEmailSender(IOptions<EmailSettings> options,
+            ILogger<SendGridEmailSender> logger)
         {
-            this.client = new SendGridClient(apiKey);
+            this.options = options.Value;
+            this.logger = logger;
         }
 
-        public async Task SendEmailAsync(string from, string fromName, string to, string subject, string htmlContent, IEnumerable<EmailAttachment> attachments = null)
+        public async Task SendEmailAsync(string fromMail, string fromName, string toMail,
+            string subject, string htmlContent, IEnumerable<EmailAttachment> attachments = null)
         {
             if (string.IsNullOrWhiteSpace(subject) && string.IsNullOrWhiteSpace(htmlContent))
             {
-                throw new ArgumentException("Subject and message should be provided.");
+                throw new ArgumentException(ErrorMailSubjectAndMessageNotProvided);
             }
 
-            var fromAddress = new EmailAddress(from, fromName);
-            var toAddress = new EmailAddress(to);
+            var fromAddress = new EmailAddress(fromMail, fromName);
+            var toAddress = new EmailAddress(toMail);
             var message = MailHelper.CreateSingleEmail(fromAddress, toAddress, subject, null, htmlContent);
-            if (attachments?.Any() == true)
+
+            var attachmentsList = attachments?.ToList();
+            if (attachmentsList?.Any() == true)
             {
-                foreach (var attachment in attachments)
+                foreach (var attachment in attachmentsList)
                 {
                     message.AddAttachment(attachment.FileName, Convert.ToBase64String(attachment.Content), attachment.MimeType);
                 }
@@ -37,15 +50,42 @@
 
             try
             {
-                var response = await this.client.SendEmailAsync(message);
-                Console.WriteLine(response.StatusCode);
-                Console.WriteLine(await response.Body.ReadAsStringAsync());
+                var apiKey = this.options.SendGridSettings.ApiKey;
+                if (string.IsNullOrWhiteSpace(apiKey))
+                {
+                    throw new ArgumentException(ErrorSendGridApiKeyNotProvided);
+                }
+
+                var client = new SendGridClient(apiKey);
+                var response = await client.SendEmailAsync(message);
+
+                if (response != null)
+                {
+                    if (response.IsSuccessStatusCode)
+                    {
+                        logger.LogInformation("Email sent to {toMail}. Status code: {StatusCode}.", toMail, response.StatusCode);
+                    }
+                    else
+                    {
+                        logger.LogError("Email not sent to {toMail}. Status code: {StatusCode}.", toMail, response.StatusCode);
+                    }
+
+                    var responseBody = await response.Body.ReadAsStringAsync();
+                    logger.LogDebug("Response body: {responseBody}", responseBody);
+                }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                logger.LogError(ex, "Message: {Message}", ex.Message);
                 throw;
             }
+        }
+
+        public async Task SendEmailAsync(string toMail, string subject, string htmlContent)
+        {
+            var fromMail = this.options.SenderEmail;
+            var fromName = this.options.SenderName;
+            await this.SendEmailAsync(fromMail, fromName, toMail, subject, htmlContent);
         }
     }
 }

@@ -6,11 +6,13 @@
     public interface IEmailSender
     {
         Task SendEmailAsync(
-            string from,
+            string fromMail,
             string fromName,
-            string to,
+            string toMail,
             string subject,
             string htmlContent,
             IEnumerable<EmailAttachment> attachments = null);
+
+        public Task SendEmailAsync(string toMail, string subject, string htmlContent);
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace GarageBuddy.Web.Controllers
 {
     using System;
-    using System.Threading.Tasks;
 
     using Data.DataProvider;
 
