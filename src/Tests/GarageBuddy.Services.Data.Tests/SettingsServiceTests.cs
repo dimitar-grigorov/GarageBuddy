@@ -26,9 +26,9 @@
             var repository = new Mock<IDeletableEntityRepository<Setting, Guid>>();
             repository.Setup(r => r.All()).Returns(new List<Setting>
                                                         {
-                                                            new Setting(),
-                                                            new Setting(),
-                                                            new Setting(),
+                                                            new(),
+                                                            new(),
+                                                            new(),
                                                         }.AsQueryable());
             var service = new SettingsService(repository.Object);
             Assert.Equal(3, service.GetCount());
@@ -40,23 +40,12 @@
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .EnableSensitiveDataLogging()
-                .UseInMemoryDatabase(databaseName: "SettingsTestDb").Options;
+                .UseInMemoryDatabase(databaseName: new Guid().ToString()).Options;
             await using var dbContext = new ApplicationDbContext(options);
-            dbContext.Settings.Add(new Setting()
-            {
-                Name = "Test",
-                Value = "Test",
-            });
-            dbContext.Settings.Add(new Setting()
-            {
-                Name = "Test",
-                Value = "Test",
-            });
-            dbContext.Settings.Add(new Setting()
-            {
-                Name = "Test",
-                Value = "Test",
-            });
+
+            await dbContext.Settings.AddAsync(new Setting(name: "Test", value: "Test"));
+            await dbContext.Settings.AddAsync(new Setting(name: "Test", value: "Test"));
+            await dbContext.Settings.AddAsync(new Setting(name: "Test", value: "Test"));
             await dbContext.SaveChangesAsync();
 
             using var repository = new EfDeletableEntityRepository<Setting, Guid>(dbContext);

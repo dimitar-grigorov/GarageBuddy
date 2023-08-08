@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="Moq.EntityFrameworkCore" Version="6.0.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Data\GarageBuddy.Data.Common\GarageBuddy.Data.Common.csproj" />
+    <ProjectReference Include="..\Data\GarageBuddy.Data\GarageBuddy.Data.csproj" />
+  </ItemGroup>
+
+</Project>
