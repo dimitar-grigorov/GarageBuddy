@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Services.Messaging
+﻿namespace GarageBuddy.Services.Messaging.Email
 {
     using System;
     using System.Collections.Generic;
@@ -48,9 +48,13 @@
                 }
             }
 
+            // Disable click tracking.
+            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            message.SetClickTracking(false, false);
+
             try
             {
-                var apiKey = this.options.SendGridSettings.ApiKey;
+                var apiKey = options.SendGridSettings.ApiKey;
                 if (string.IsNullOrWhiteSpace(apiKey))
                 {
                     throw new ArgumentException(ErrorSendGridApiKeyNotProvided);
@@ -83,9 +87,9 @@
 
         public async Task SendEmailAsync(string toMail, string subject, string htmlContent)
         {
-            var fromMail = this.options.SenderEmail;
-            var fromName = this.options.SenderName;
-            await this.SendEmailAsync(fromMail, fromName, toMail, subject, htmlContent);
+            var fromMail = options.SenderEmail;
+            var fromName = options.SenderName;
+            await SendEmailAsync(fromMail, fromName, toMail, subject, htmlContent);
         }
     }
 }

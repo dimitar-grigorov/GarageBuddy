@@ -17,6 +17,10 @@
                     .AddJsonFile($"{configurationsDirectory}/logger.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                     .AddJsonFile($"{configurationsDirectory}/database.json", optional: false, reloadOnChange: true)
                     .AddJsonFile($"{configurationsDirectory}/database.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile($"{configurationsDirectory}/email.json", optional: false, reloadOnChange: true)
+                    .AddJsonFile($"{configurationsDirectory}/email.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                    .AddJsonFile($"{configurationsDirectory}/identity.json", optional: false, reloadOnChange: true)
+                    .AddJsonFile($"{configurationsDirectory}/identity.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                     .AddUserSecrets(Assembly.GetExecutingAssembly())
                     .AddEnvironmentVariables();
             return builder;

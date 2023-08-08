@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Services.Messaging
+﻿namespace GarageBuddy.Services.Messaging.Email
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

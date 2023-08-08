@@ -4,8 +4,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Common.Core.Wrapper;
+
     using Contracts;
 
+    using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Models;
 
     using Microsoft.AspNetCore.Identity;
@@ -108,13 +111,25 @@
             return user != null;
         }
 
-        public async Task<string> GeneratePasswordResetTokenAsync(string email)
+        public async Task<IResult<string>> GeneratePasswordResetTokenAsync(string email)
         {
-            var user = await userManager.FindByEmailAsync(email) ??
-                       throw new NullReferenceException(ErrorUserNotFound);
-            var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(user);
+            var user = await userManager.FindByEmailAsync(email);
 
-            return passwordResetToken;
+            if (user == null)
+            {
+                // Don't return more detailed information here to prevent email enumeration
+                return await Result<string>.FailAsync(ErrorGeneral);
+            }
+
+            if (userManager.Options.SignIn.RequireConfirmedEmail && !(await userManager.IsEmailConfirmedAsync(user)))
+            {
+                return await Result<string>.FailAsync(ErrorGeneral);
+            }
+
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+
+            return await Result<string>.SuccessAsync(data: token);
         }
     }
 }

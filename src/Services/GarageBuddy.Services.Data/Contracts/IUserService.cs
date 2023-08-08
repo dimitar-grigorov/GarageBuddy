@@ -3,6 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
+    using Common.Core.Wrapper;
+    using Common.Core.Wrapper.Generic;
     using Microsoft.AspNetCore.Identity;
 
     public interface IUserService
@@ -20,7 +22,7 @@
 
         public Task<bool> ExistsAsync(Guid id);
 
-        public Task<string> GeneratePasswordResetTokenAsync(string email);
+        public Task<IResult<string>> GeneratePasswordResetTokenAsync(string email);
 
         /*
         public Task<TUser> FindUserByIdAsync(string id);

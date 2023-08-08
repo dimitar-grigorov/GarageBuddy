@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="Sendgrid" Version="9.28.1" />
@@ -23,6 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\GarageBuddy.Common\GarageBuddy.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Email\Templates\ResetPasswordEmailTemplate.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

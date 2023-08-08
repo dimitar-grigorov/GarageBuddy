@@ -14,7 +14,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using GarageBuddy.Data.Repositories;
     using GarageBuddy.Services.Data.Contracts;
     using GarageBuddy.Services.Data.Services;
-    using GarageBuddy.Services.Messaging;
+    using GarageBuddy.Services.Messaging.Email;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -22,10 +22,12 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
+
     using Serilog;
 
     using Services.Data.Options;
+    using Services.Messaging.Contracts;
+    using Services.Messaging.Services;
 
     /// <summary>
     /// Represents extensions of IServiceCollection.
@@ -72,6 +74,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
         {
             // Application services
             services.AddTransient<IEmailSender, SendGridEmailSender>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IInstallationService, InstallationService>();
@@ -99,10 +102,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             services.AddOptions<EmailSettings>()
                 .BindConfiguration(nameof(EmailSettings))
                 .ValidateDataAnnotations();
-
-            var emailSettings = new EmailSettings();
-            Logger.Error(JsonConvert.SerializeObject(emailSettings));
-
+            
             return services
                 .AddDbContext<ApplicationDbContext>((p, m) =>
                 {
