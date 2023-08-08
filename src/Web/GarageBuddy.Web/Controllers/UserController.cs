@@ -174,7 +174,7 @@
 
 
 
-            await emailService.SendResetPasswordEmail(model.Email, result.Data, endpointUri);
+            await emailService.SendResetPasswordEmail(model.Email, passwordResetUrl);
 
             return this.RedirectToAction(nameof(Login));
         }
