@@ -3,17 +3,21 @@
     using System;
     using System.Threading.Tasks;
 
+    using Common.Constants;
+
+    using Infrastructure.ViewRenderer;
+
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.AspNetCore.WebUtilities;
+    using Microsoft.Extensions.Logging;
 
     using Services.Data.Contracts;
     using Services.Messaging.Contracts;
 
+    using ViewModels.MailTemplates;
     using ViewModels.User;
 
     using static Common.Constants.ErrorMessageConstants;
@@ -22,12 +26,18 @@
     {
         private readonly IUserService userService;
         private readonly IEmailService emailService;
+        private readonly IViewRenderer viewRenderer;
+        private readonly ILogger<UserController> logger;
 
         public UserController(IUserService userService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IViewRenderer viewRenderer,
+            ILogger<UserController> logger)
         {
             this.userService = userService;
             this.emailService = emailService;
+            this.viewRenderer = viewRenderer;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -143,8 +153,11 @@
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-
-            return this.View();
+            var model = new ForgotPasswordFormModel
+            {
+                Email = "test@mail.com",
+            };
+            return View(model);
         }
 
         [HttpPost]
@@ -172,9 +185,18 @@
             string passwordResetUrl =
                 QueryHelpers.AddQueryString(endpointUri, nameof(ResetPasswordFormModel.Token), result.Data);
 
+            var forgotPasswordViewModel = new ForgotPasswordMailViewModel
+            {
+                ResetPasswordUrl = passwordResetUrl,
+                ApplicationName = GlobalConstants.SystemName,
+            };
 
+            var mailContent = await viewRenderer
+                .RenderAsync<ForgotPasswordMailViewModel>("ForgotPasswordEmailTemplate", forgotPasswordViewModel);
 
-            await emailService.SendResetPasswordEmail(model.Email, passwordResetUrl);
+            //logger.LogInformation(mailContent);
+
+            await emailService.SendResetPasswordEmail(model.Email, mailContent);
 
             return this.RedirectToAction(nameof(Login));
         }

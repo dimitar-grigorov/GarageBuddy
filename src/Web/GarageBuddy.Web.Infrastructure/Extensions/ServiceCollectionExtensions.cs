@@ -28,6 +28,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using Services.Data.Options;
     using Services.Messaging.Contracts;
     using Services.Messaging.Services;
+    using ViewRenderer;
 
     /// <summary>
     /// Represents extensions of IServiceCollection.
@@ -74,6 +75,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
         {
             // Application services
             services.AddTransient<IEmailSender, SendGridEmailSender>();
+            services.AddTransient<IViewRenderer, ViewRenderer>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();

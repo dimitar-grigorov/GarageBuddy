@@ -26,10 +26,4 @@
     <ProjectReference Include="..\..\GarageBuddy.Common\GarageBuddy.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Email\Templates\ResetPasswordEmailTemplate.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>

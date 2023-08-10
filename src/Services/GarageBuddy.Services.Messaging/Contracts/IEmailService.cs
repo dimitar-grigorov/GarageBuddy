@@ -4,6 +4,6 @@
 
     public interface IEmailService
     {
-        Task SendResetPasswordEmail(string userEmail, string passwordResetUrl);
+        Task SendResetPasswordEmail(string userEmail, string htmlContent);
     }
 }
