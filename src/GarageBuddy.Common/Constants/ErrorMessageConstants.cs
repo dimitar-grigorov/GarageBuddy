@@ -33,5 +33,7 @@
         public const string ErrorSendGridApiKeyNotProvided = "SendGrid API key is not provided.";
 
         public const string ErrorMailSubjectAndMessageNotProvided = "Subject and message should be provided.";
+
+        public const string ErrorGeneralSendEmail = "Error occured while sending email.";
     }
 }

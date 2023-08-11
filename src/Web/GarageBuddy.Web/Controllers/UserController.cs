@@ -2,6 +2,7 @@
 {
     using System;
     using System.IO;
+    using System.Text;
     using System.Threading.Tasks;
 
     using Common.Constants;
@@ -14,6 +15,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
 
@@ -169,11 +171,14 @@
         {
             if (!this.ModelState.IsValid)
             {
-                // return this.View(model);
                 return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
             }
 
-            var result = await this.userService.GeneratePasswordResetTokenAsync(model.Email);
+            var result = await this.userService.GenerateEmailResetUriAsync(
+                model.Email,
+                GetOriginFromRequest(),
+                Url.Action(nameof(ResetPassword), null, null)!,
+                nameof(ResetPasswordFormModel.Token));
 
             if (!result.Succeeded)
             {
@@ -182,16 +187,12 @@
                     this.ModelState.AddModelError(string.Empty, error);
                 }
 
-                return this.View(model);
+                return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
             }
-
-            string endpointUri = Url.Action(nameof(ResetPassword), null, null)!;
-            string passwordResetUrl =
-                QueryHelpers.AddQueryString(endpointUri, nameof(ResetPasswordFormModel.Token), result.Data);
 
             var forgotPasswordViewModel = new ForgotPasswordMailViewModel
             {
-                ResetPasswordUrl = passwordResetUrl,
+                ResetPasswordUrl = result.Data,
                 ApplicationName = GlobalConstants.SystemName,
             };
 
@@ -199,7 +200,20 @@
                 .RenderAsync(forgotPasswordViewModel, "ForgotPasswordEmailTemplate", GlobalConstants.MailTemplatePath);
 
             logger.LogInformation(mailContent);
-            await emailService.SendResetPasswordEmail(model.Email, mailContent);
+            var mailResult = await emailService.SendResetPasswordEmail(model.Email, mailContent);
+
+            if (!mailResult.Succeeded)
+            {
+                // TempData.AddErrorMessage(ErrorSomethingWentWrong);
+                foreach (var error in mailResult.Messages)
+                {
+                    this.ModelState.AddModelError(string.Empty, error);
+                }
+
+                return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
+            }
+
+            // TempData.AddSuccessMessage("Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.");
             return this.RedirectToAction(nameof(Login));
         }
 
@@ -221,6 +235,11 @@
                 return this.View(model);*/
 
             return this.View();
+        }
+
+        private string GetOriginFromRequest()
+        {
+            return $"{Request.Scheme}://{Request.Host.Value}{Request.PathBase.Value}";
         }
     }
 }

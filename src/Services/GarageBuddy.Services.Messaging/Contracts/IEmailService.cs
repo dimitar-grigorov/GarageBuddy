@@ -2,8 +2,10 @@
 {
     using System.Threading.Tasks;
 
+    using Common.Core.Wrapper;
+
     public interface IEmailService
     {
-        Task SendResetPasswordEmail(string userEmail, string htmlContent);
+        Task<IResult> SendResetPasswordEmail(string userEmail, string htmlContent);
     }
 }

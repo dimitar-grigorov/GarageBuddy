@@ -5,6 +5,7 @@
 
     using Common.Core.Wrapper;
     using Common.Core.Wrapper.Generic;
+
     using Microsoft.AspNetCore.Identity;
 
     public interface IUserService
@@ -24,6 +25,7 @@
 
         public Task<IResult<string>> GeneratePasswordResetTokenAsync(string email);
 
+        public Task<IResult<string>> GenerateEmailResetUriAsync(string email, string origin, string route, string tokenQueryKey);
         /*
         public Task<TUser> FindUserByIdAsync(string id);
 

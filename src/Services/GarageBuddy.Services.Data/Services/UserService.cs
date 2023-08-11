@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
     using Common.Core.Wrapper;
@@ -12,6 +13,8 @@
     using GarageBuddy.Data.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.WebUtilities;
+    using Microsoft.Extensions.Logging;
 
     using static Common.Constants.ErrorMessageConstants;
     using static Common.Constants.GlobalConstants;
@@ -20,12 +23,14 @@
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<UserService> logger;
 
         public UserService(SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager, ILogger<UserService> logger)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.logger = logger;
         }
 
         public async Task<SignInResult> LoginWithUsernameAsync(string username, string password,
@@ -129,6 +134,38 @@
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
             return await Result<string>.SuccessAsync(data: token);
+        }
+
+        public async Task<IResult<string>> GenerateEmailResetUriAsync(string email, string origin, string route, string tokenQueryKey)
+        {
+            var tokenResult = await GeneratePasswordResetTokenAsync(email);
+            if (!tokenResult.Succeeded)
+            {
+                return await Result<string>.FailAsync(tokenResult.Messages);
+            }
+
+            if (string.IsNullOrWhiteSpace(origin))
+            {
+                logger.LogError(ErrorCannotBeNullOrWhitespace, nameof(origin));
+                return await Result<string>.FailAsync(ErrorGeneral);
+            }
+
+            if (string.IsNullOrWhiteSpace(route))
+            {
+                logger.LogError(ErrorCannotBeNullOrWhitespace, nameof(route));
+                return await Result<string>.FailAsync(ErrorGeneral);
+            }
+
+            if (string.IsNullOrWhiteSpace(tokenQueryKey))
+            {
+                logger.LogError(ErrorCannotBeNullOrWhitespace, nameof(tokenQueryKey));
+                return await Result<string>.FailAsync(ErrorGeneral);
+            }
+
+            var endpointUri = new Uri(string.Concat($"{origin}/", route));
+            var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(tokenResult.Data));
+            var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), tokenQueryKey, token);
+            return await Result<string>.SuccessAsync(verificationUri);
         }
     }
 }
