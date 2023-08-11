@@ -128,7 +128,6 @@
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-
             return await Result<string>.SuccessAsync(data: token);
         }
     }

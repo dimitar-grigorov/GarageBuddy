@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Mvc.ModelBinding;
     using Microsoft.AspNetCore.Mvc.Razor;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Mvc.ViewEngines;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
     using Microsoft.AspNetCore.Routing;
 
@@ -29,11 +30,21 @@
             this.serviceProvider = serviceProvider;
         }
 
-        public async Task<string> RenderAsync<TModel>(string viewName, TModel model)
+        public async Task<string> RenderAsync<TModel>(TModel model, string viewName, string viewPath = "")
         {
             var actionContext = GetActionContext();
 
-            var viewEngineResult = viewEngine.FindView(actionContext, viewName, false);
+            ViewEngineResult viewEngineResult;
+
+            if (viewPath.Trim() == string.Empty)
+            {
+                viewEngineResult = viewEngine.FindView(actionContext, viewName, false);
+            }
+            else
+            {
+                var mailTemplateViewPath = Path.Combine(viewPath, viewName + ".cshtml");
+                viewEngineResult = viewEngine.GetView(mailTemplateViewPath, mailTemplateViewPath, isMainPage: false);
+            }
 
             if (!viewEngineResult.Success)
             {

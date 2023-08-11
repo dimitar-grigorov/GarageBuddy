@@ -7,7 +7,7 @@
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
     @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />*@
     @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
-    
+
     <partial name="_FavIconPartial" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
@@ -91,6 +91,7 @@
                     </section>
                 </div>
             </div>
+            <partial name="_ModalFormPartial" />
             <footer>
                 <div class="footer clearfix mb-0 text-muted">
                     <div class="float-start">
@@ -109,7 +110,7 @@
     <script src="~/themes/mazer/dist/assets/compiled/js/app.js"></script>  @*Bootstrap*@
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>*@
-    @*<script src="~/js/site.min.js" asp-append-version="true"></script>*@
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

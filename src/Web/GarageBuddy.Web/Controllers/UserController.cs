@@ -1,9 +1,12 @@
 ﻿namespace GarageBuddy.Web.Controllers
 {
     using System;
+    using System.IO;
     using System.Threading.Tasks;
 
     using Common.Constants;
+
+    using GarageBuddy.Web.Infrastructure.Extensions;
 
     using Infrastructure.ViewRenderer;
 
@@ -166,7 +169,8 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View(model);
+                // return this.View(model);
+                return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
             }
 
             var result = await this.userService.GeneratePasswordResetTokenAsync(model.Email);
@@ -192,12 +196,10 @@
             };
 
             var mailContent = await viewRenderer
-                .RenderAsync<ForgotPasswordMailViewModel>("ForgotPasswordEmailTemplate", forgotPasswordViewModel);
+                .RenderAsync(forgotPasswordViewModel, "ForgotPasswordEmailTemplate", GlobalConstants.MailTemplatePath);
 
-            //logger.LogInformation(mailContent);
-
+            logger.LogInformation(mailContent);
             await emailService.SendResetPasswordEmail(model.Email, mailContent);
-
             return this.RedirectToAction(nameof(Login));
         }
 
@@ -210,14 +212,13 @@
                 return this.BadRequest();
             }
 
-            /*            var model = new ForgotPasswordFormModel
-                        {
-                            Token = token,
-                            Email = email,
-                        };
+            /*var model = new ForgotPasswordFormModel
+                {
+                    Token = token,
+                    Email = email,
+                };
 
-                        return this.View(model);
-                    }*/
+                return this.View(model);*/
 
             return this.View();
         }

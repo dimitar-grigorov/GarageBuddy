@@ -4,6 +4,6 @@
 
     public interface IViewRenderer
     {
-        public Task<string> RenderAsync<TModel>(string viewName, TModel model);
+        public Task<string> RenderAsync<TModel>(TModel model, string viewName, string viewPath = "");
     }
 }

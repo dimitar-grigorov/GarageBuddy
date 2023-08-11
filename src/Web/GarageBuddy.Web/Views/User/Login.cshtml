@@ -56,7 +56,8 @@
                         <a class="font-bold" asp-controller="User" asp-action="Register">Register</a>
                     </p>
                     <p>
-                        <a class="font-bold" asp-controller="User" asp-action="ForgotPassword">Forgot password?</a>
+                        <a class="font-bold" onclick="showInPopup('@Url.Action("ForgotPassword","User", null)', 'Forgot password?')">Forgot password?</a>
+                        @* <a class="font-bold" asp-controller="User" asp-action="ForgotPassword">Forgot password?</a> *@
                     </p>
                 </div>
             </div>

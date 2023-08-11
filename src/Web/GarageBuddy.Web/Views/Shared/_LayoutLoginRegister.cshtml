@@ -9,15 +9,17 @@
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/auth.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/themes/mazer/dist/assets/compiled/js/app.js"></script> @*Bootstrap*@
     @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
     @*<link rel="stylesheet" href="~/GarageBuddy.Web.styles.css" asp-append-version="true" />*@
 </head>
 <body>
     <script src="~/themes/mazer/dist/assets/static/js/initTheme.js"></script>
     @RenderBody()
+    <partial name="_ModalFormPartial"/>
     <script src="~/themes/mazer/dist/assets/static/js/components/dark.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

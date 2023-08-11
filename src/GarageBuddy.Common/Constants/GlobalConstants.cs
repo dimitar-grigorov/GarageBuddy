@@ -8,6 +8,8 @@
 
         public const string ErrorRoute = "/Home/Error";
 
+        public const string MailTemplatePath = "MailTemplates";
+
         public const string ThemeErrorImagesPathTemplate = "/themes/mazer/dist/assets/compiled/svg/error-{0}.svg";
 
         /// <summary>
