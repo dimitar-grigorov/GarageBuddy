@@ -8,9 +8,10 @@
     @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
 
     <partial name="_FavIconPartial" />
-    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
+    
+    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/layout-rtl-backup.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
-    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/iconly.css" />
+    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
 </head>
 
 <body>
@@ -57,6 +58,7 @@
     @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>*@
 
     <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <partial name="_NotificationsPartial" />
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

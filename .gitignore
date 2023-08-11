@@ -399,4 +399,4 @@ FodyWeavers.xsd
 
 # ASP.NET Core client side libraries
 # **/wwwroot/lib/**
-# **/wwwroot/themes/**
+**/wwwroot/themes/**
