@@ -5,8 +5,6 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using Common.Core.Wrapper;
-
     using Contracts;
 
     using GarageBuddy.Common.Core.Wrapper.Generic;
@@ -15,9 +13,6 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
-
-    using static Common.Constants.ErrorMessageConstants;
-    using static Common.Constants.GlobalConstants;
 
     public class UserService : IUserService
     {
@@ -38,12 +33,12 @@
         {
             if (string.IsNullOrWhiteSpace(username.Trim()))
             {
-                throw new ArgumentException(String.Format(ErrorCannotBeNullOrWhitespace, "Username"), nameof(username));
+                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Username"), nameof(username));
             }
 
             if (string.IsNullOrWhiteSpace(password.Trim()))
             {
-                throw new ArgumentException(String.Format(ErrorCannotBeNullOrWhitespace, "Password"), nameof(password));
+                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
             }
 
             var user = await this.userManager.FindByNameAsync(username);
@@ -56,12 +51,12 @@
         {
             if (string.IsNullOrWhiteSpace(email.Trim()))
             {
-                throw new ArgumentException(String.Format(ErrorCannotBeNullOrWhitespace, "Email"), nameof(email));
+                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Email"), nameof(email));
             }
 
             if (string.IsNullOrWhiteSpace(password.Trim()))
             {
-                throw new ArgumentException(String.Format(ErrorCannotBeNullOrWhitespace, "Password"), nameof(password));
+                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
             }
 
             var user = await this.userManager.FindByEmailAsync(email);
@@ -74,12 +69,12 @@
         {
             if (string.IsNullOrWhiteSpace(email.Trim()))
             {
-                throw new ArgumentException(string.Format(ErrorCannotBeNullOrWhitespace, "Email"), nameof(email));
+                throw new ArgumentException(string.Format(Errors.CannotBeNullOrWhitespace, "Email"), nameof(email));
             }
 
             if (string.IsNullOrWhiteSpace(password.Trim()))
             {
-                throw new ArgumentException(string.Format(ErrorCannotBeNullOrWhitespace, "Password"), nameof(password));
+                throw new ArgumentException(string.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
             }
 
             var user = new ApplicationUser
@@ -123,12 +118,12 @@
             if (user == null)
             {
                 // Don't return more detailed information here to prevent email enumeration
-                return await Result<string>.FailAsync(ErrorGeneral);
+                return await Result<string>.FailAsync(Errors.GeneralError);
             }
 
             if (userManager.Options.SignIn.RequireConfirmedEmail && !(await userManager.IsEmailConfirmedAsync(user)))
             {
-                return await Result<string>.FailAsync(ErrorGeneral);
+                return await Result<string>.FailAsync(Errors.GeneralError);
             }
 
             var token = await userManager.GeneratePasswordResetTokenAsync(user);
@@ -146,20 +141,20 @@
 
             if (string.IsNullOrWhiteSpace(origin))
             {
-                logger.LogError(ErrorCannotBeNullOrWhitespace, nameof(origin));
-                return await Result<string>.FailAsync(ErrorGeneral);
+                logger.LogError(Errors.CannotBeNullOrWhitespace, nameof(origin));
+                return await Result<string>.FailAsync(Errors.GeneralError);
             }
 
             if (string.IsNullOrWhiteSpace(route))
             {
-                logger.LogError(ErrorCannotBeNullOrWhitespace, nameof(route));
-                return await Result<string>.FailAsync(ErrorGeneral);
+                logger.LogError(Errors.CannotBeNullOrWhitespace, nameof(route));
+                return await Result<string>.FailAsync(Errors.GeneralError);
             }
 
             if (string.IsNullOrWhiteSpace(tokenQueryKey))
             {
-                logger.LogError(ErrorCannotBeNullOrWhitespace, nameof(tokenQueryKey));
-                return await Result<string>.FailAsync(ErrorGeneral);
+                logger.LogError(Errors.CannotBeNullOrWhitespace, nameof(tokenQueryKey));
+                return await Result<string>.FailAsync(Errors.GeneralError);
             }
 
             var endpointUri = new Uri(string.Concat($"{origin}/", route));

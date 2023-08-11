@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using static Common.Constants.EntityValidationConstants.ApplicationUser;
-    using static Common.Constants.ErrorMessageConstants;
+    using static Common.Constants.MessageConstants;
 
     public class RegisterFormModel
     {
@@ -20,7 +20,7 @@
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare(nameof(Password), ErrorMessage = ErrorPasswordsDoNotMatch)]
+        [Compare(nameof(Password), ErrorMessage = Errors.PasswordsDoNotMatch)]
         public string ConfirmPassword { get; set; } = null!;
     }
 }

@@ -1,8 +1,6 @@
 ﻿namespace GarageBuddy.Web.Controllers
 {
     using System;
-    using System.IO;
-    using System.Text;
     using System.Threading.Tasks;
 
     using Common.Constants;
@@ -15,8 +13,6 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Routing;
-    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
 
     using Services.Data.Contracts;
@@ -24,8 +20,6 @@
 
     using ViewModels.MailTemplates;
     using ViewModels.User;
-
-    using static Common.Constants.ErrorMessageConstants;
 
     public class UserController : BaseController
     {
@@ -80,7 +74,7 @@
             }
             catch (Exception)
             {
-                this.ModelState.AddModelError(string.Empty, ErrorSomethingWentWrong);
+                this.ModelState.AddModelError(string.Empty, Errors.SomethingWentWrong);
                 return this.View(model);
             }
 
@@ -107,7 +101,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, ErrorInvalidUsernameOrPassword);
+                ModelState.AddModelError(string.Empty, Errors.InvalidUsernameOrPassword);
                 return this.View(model);
             }
 
@@ -118,11 +112,11 @@
 
                 if (!result.Result.Succeeded)
                 {
-                    ModelState.AddModelError(string.Empty, ErrorInvalidUsernameOrPassword);
+                    ModelState.AddModelError(string.Empty, Errors.InvalidUsernameOrPassword);
 
                     if (result.Result.IsLockedOut)
                     {
-                        ModelState.AddModelError(string.Empty, ErrorAccountLockedOut);
+                        ModelState.AddModelError(string.Empty, Errors.AccountLockedOut);
                     }
 
                     return this.View(model);
@@ -130,7 +124,7 @@
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, ErrorInvalidUsernameOrPassword);
+                ModelState.AddModelError(string.Empty, Errors.InvalidUsernameOrPassword);
                 return this.View(model);
             }
 
@@ -204,7 +198,7 @@
 
             if (!mailResult.Succeeded)
             {
-                // TempData.AddErrorMessage(ErrorSomethingWentWrong);
+                // TempData.AddErrorMessage(SomethingWentWrong);
                 foreach (var error in mailResult.Messages)
                 {
                     this.ModelState.AddModelError(string.Empty, error);
@@ -213,7 +207,7 @@
                 return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
             }
 
-            // TempData.AddSuccessMessage("Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.");
+            TempData.Add(NotifySuccess, "Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.");
             return this.RedirectToAction(nameof(Login));
         }
 

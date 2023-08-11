@@ -6,7 +6,7 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const string ErrorRoute = "/Home/Error";
+        public const string ErrorRoute = "/Home/Errors";
 
         public const string MailTemplatePath = "MailTemplates";
 

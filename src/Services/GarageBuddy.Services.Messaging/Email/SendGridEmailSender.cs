@@ -13,7 +13,7 @@
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
-    using static GarageBuddy.Common.Constants.ErrorMessageConstants;
+    using static GarageBuddy.Common.Constants.MessageConstants;
 
     public class SendGridEmailSender : IEmailSender
     {
@@ -32,7 +32,7 @@
         {
             if (string.IsNullOrWhiteSpace(subject) && string.IsNullOrWhiteSpace(htmlContent))
             {
-                throw new ArgumentException(ErrorMailSubjectAndMessageNotProvided);
+                throw new ArgumentException(Errors.MailSubjectAndMessageNotProvided);
             }
 
             var fromAddress = new EmailAddress(fromMail, fromName);
@@ -57,7 +57,7 @@
                 var apiKey = options.SendGridSettings.ApiKey;
                 if (string.IsNullOrWhiteSpace(apiKey))
                 {
-                    throw new ArgumentException(ErrorSendGridApiKeyNotProvided);
+                    throw new ArgumentException(Errors.SendGridApiKeyNotProvided);
                 }
 
                 var client = new SendGridClient(apiKey);

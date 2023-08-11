@@ -28,6 +28,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using Services.Data.Options;
     using Services.Messaging.Contracts;
     using Services.Messaging.Services;
+
     using ViewRenderer;
 
     /// <summary>
@@ -104,7 +105,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             services.AddOptions<EmailSettings>()
                 .BindConfiguration(nameof(EmailSettings))
                 .ValidateDataAnnotations();
-            
+
             return services
                 .AddDbContext<ApplicationDbContext>((p, m) =>
                 {

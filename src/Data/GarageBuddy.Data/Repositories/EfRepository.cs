@@ -6,7 +6,6 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Common.Constants;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
 
@@ -59,7 +58,7 @@
 
             if (entity == null)
             {
-                throw new InvalidOperationException(string.Format(ErrorMessageConstants.NoEntityWithPropertyFound, "entity", nameof(id)));
+                throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
             }
 
             if (isReadonly)
@@ -78,7 +77,7 @@
 
             if (entity == null)
             {
-                throw new InvalidOperationException(string.Format(ErrorMessageConstants.NoEntityWithPropertyFound, "entity", nameof(id)));
+                throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
             }
 
             if (isReadonly)
@@ -137,7 +136,7 @@
 
             if (entity == null)
             {
-                throw new InvalidOperationException(string.Format(ErrorMessageConstants.NoEntityWithPropertyFound, "entity", nameof(id)));
+                throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
             }
 
             this.Update(entity);

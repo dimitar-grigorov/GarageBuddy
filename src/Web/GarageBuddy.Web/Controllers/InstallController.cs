@@ -16,8 +16,6 @@
 
     using ViewModels.Install;
 
-    using static Common.Constants.ErrorMessageConstants;
-
     public class InstallController : BaseController
     {
         private readonly IOptionsManager optionsManager;
@@ -90,7 +88,7 @@
 
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    throw new Exception(ErrorConnectionStringWrongFormat);
+                    throw new Exception(Errors.ConnectionStringWrongFormat);
                 }
 
                 // Save Settings
@@ -104,7 +102,7 @@
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception(string.Format(ErrorDatabaseCreationFailed, ex.Message));
+                        throw new Exception(string.Format(DatabaseCreationFailed, ex.Message));
                     }
                 }
                 else
@@ -112,7 +110,7 @@
                     // check whether database exists
                     if (!await dataProvider.Value.DatabaseExistsAsync(connectionString))
                     {
-                        throw new Exception(ErrorDatabaseNotExists);
+                        throw new Exception(DatabaseNotExists);
                     }
                 }
 
@@ -130,7 +128,7 @@
             catch (Exception exception)
             {
                 // TODO: clear provider settings if something got wrong
-                ModelState.AddModelError(string.Empty, string.Format(ErrorDatabaseInstallationFailed, exception.Message));
+                ModelState.AddModelError(string.Empty, string.Format(Errors.DatabaseInstallationFailed, exception.Message));
             }
 
             return View(model);

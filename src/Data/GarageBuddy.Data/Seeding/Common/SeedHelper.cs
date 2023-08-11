@@ -6,7 +6,6 @@
     using System.Reflection;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Common.Constants;
     using GarageBuddy.Data.Seeding.Job;
 
     using Newtonsoft.Json;
@@ -19,12 +18,12 @@
         {
             // Get the directory path from the assembly location
             var currentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(JobStatusSeeder)).Location)
-                                   ?? throw new InvalidOperationException(ErrorMessageConstants.InvalidDirectoryPath);
+                                   ?? throw new InvalidOperationException(Errors.InvalidDirectoryPath);
             var fullPath = Path.Combine(currentDirectory, SeedPath, fileName);
 
             var json = await File.ReadAllTextAsync(fullPath);
             var result = JsonConvert.DeserializeObject<List<TEntity>>(json)
-                         ?? throw new InvalidOperationException(string.Format(ErrorMessageConstants.DeserializationFailed, fullPath));
+                         ?? throw new InvalidOperationException(string.Format(Errors.DeserializationFailed, fullPath));
 
             return result;
         }

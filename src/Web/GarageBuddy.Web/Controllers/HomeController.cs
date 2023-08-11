@@ -34,7 +34,7 @@
             var model = new ErrorViewModel
             {
                 RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
-                Title = "System Error",
+                Title = "System Errors",
                 Message = "An error occurred while processing your request.",
                 ImageUrl = GlobalConstants.ThemeErrorImagesPathTemplate.FormatWith(500),
             };

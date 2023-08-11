@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
+    using Common.Constants;
     using Common.Core.Wrapper;
 
     using Contracts;
@@ -11,8 +12,7 @@
 
     using Microsoft.Extensions.Logging;
 
-    using static GarageBuddy.Common.Constants.ErrorMessageConstants;
-    using static GarageBuddy.Common.Constants.SuccessMessageConstants;
+    using static GarageBuddy.Common.Constants.MessageConstants;
 
     public class EmailService : IEmailService
     {
@@ -32,12 +32,12 @@
             try
             {
                 await this.emailSender.SendEmailAsync(userEmail, "Reset Password", htmlContent);
-                return await Result.SuccessAsync(string.Format(SuccessPasswordResetMailSent, userEmail));
+                return await Result.SuccessAsync(string.Format(MessageConstants.Success.PasswordResetMailSent, userEmail));
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, ErrorGeneralSendEmail);
-                return await Result.FailAsync(ErrorGeneralSendEmail);
+                this.logger.LogError(ex, Errors.GeneralErrorSendEmail);
+                return await Result.FailAsync(Errors.GeneralErrorSendEmail);
             }
         }
     }

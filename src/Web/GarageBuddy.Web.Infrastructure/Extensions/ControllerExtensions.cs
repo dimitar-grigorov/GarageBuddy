@@ -34,8 +34,7 @@
                 controller.ViewData,
                 controller.TempData,
                 sw,
-                new HtmlHelperOptions()
-            );
+                new HtmlHelperOptions());
 
             await viewResult.View.RenderAsync(viewContext);
             return sw.GetStringBuilder().ToString();
