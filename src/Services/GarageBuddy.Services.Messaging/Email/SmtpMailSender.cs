@@ -37,7 +37,6 @@
         {
             try
             {
-
                 logger.LogInformation(htmlContent);
 
                 fromMail ??= options.SenderEmail;
