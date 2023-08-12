@@ -1,23 +1,21 @@
 ﻿@using static GarageBuddy.Common.Constants.NotificationConstants
 
-<script src="~/themes/mazer/dist/assets/extensions/sweetalert2/sweetalert2.min.js"></script>
-
-@if (TempData.ContainsKey(NotifyError))
-{
-    <script>toastr.error('@TempData[NotifyError]');</script>
-}
-
 @if (TempData.ContainsKey(NotifyWarning))
 {
-    <script>toastr.warning('@TempData[NotifyWarning]');</script>
+    <script>Toast.fire({ icon: 'warning', title: '@TempData[NotifyWarning]' });</script>
 }
 
 @if (TempData.ContainsKey(NotifyInfo))
 {
-    <script>toastr.info('@TempData[NotifyInfo]');</script>
+    <script>Toast.fire('info', '@TempData[NotifyInfo]');</script>
 }
 
 @if (TempData.ContainsKey(NotifySuccess))
 {
-    <script>toastr.success('@TempData[NotifySuccess]');</script>
+    <script>Toast.fire({ icon: 'success', title: '@TempData[NotifySuccess]' });</script>
+}
+
+@if (TempData.ContainsKey(NotifyError))
+{
+    <script>Toast.fire({ icon: 'error', title: '@TempData[NotifyError]' });</script>
 }

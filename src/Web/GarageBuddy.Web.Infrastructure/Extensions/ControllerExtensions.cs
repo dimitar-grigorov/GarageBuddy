@@ -11,7 +11,7 @@
 
     public static class ControllerExtensions
     {
-        public static async Task<string> RenderRazorViewToString(this Controller controller, string viewName, object model = null)
+        public static async Task<string> RenderRazorViewToStringAsync(this Controller controller, string viewName, object? model = null)
         {
             controller.ViewData.Model = model;
 

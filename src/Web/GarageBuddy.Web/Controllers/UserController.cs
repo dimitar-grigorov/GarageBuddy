@@ -152,20 +152,17 @@
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            var model = new ForgotPasswordFormModel
-            {
-                Email = "test@mail.com",
-            };
-            return View(model);
+            return View();
         }
 
+        // [ValidateRecaptcha(Action = nameof(Register), ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordFormModel model)
         {
             if (!this.ModelState.IsValid)
             {
-                return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
+                return Json(new { isValid = false, html = await this.RenderRazorViewToStringAsync("ForgotPassword", model) });
             }
 
             var result = await this.userService.GenerateEmailResetUriAsync(
@@ -181,7 +178,7 @@
                     this.ModelState.AddModelError(string.Empty, error);
                 }
 
-                return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
+                return Json(new { isValid = false, html = await this.RenderRazorViewToStringAsync("ForgotPassword", model) });
             }
 
             var forgotPasswordViewModel = new ForgotPasswordMailViewModel
@@ -198,16 +195,11 @@
 
             if (!mailResult.Succeeded)
             {
-                // TempData.AddErrorMessage(SomethingWentWrong);
-                foreach (var error in mailResult.Messages)
-                {
-                    this.ModelState.AddModelError(string.Empty, error);
-                }
-
-                return Json(new { isValid = false, html = await this.RenderRazorViewToString("ForgotPassword", model) });
+                TempData[NotifyError] = Errors.SomethingWentWrong;
+                return Json(new { isValid = false, html = await this.RenderRazorViewToStringAsync("ForgotPassword", model) });
             }
 
-            TempData.Add(NotifySuccess, "Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.");
+            TempData[NotifySuccess] = Success.SendPasswordResetEmail;
             return this.RedirectToAction(nameof(Login));
         }
 

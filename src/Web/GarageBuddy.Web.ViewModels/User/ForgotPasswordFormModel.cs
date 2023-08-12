@@ -8,7 +8,7 @@
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "Recovery E-mail")]
         [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
         public string Email { get; set; } = null!;
     }

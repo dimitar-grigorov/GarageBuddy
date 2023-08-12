@@ -11,14 +11,15 @@
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/auth-forgot-password.css" />
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/themes/mazer/dist/assets/compiled/js/app.js"></script> @*Bootstrap*@
-    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />*@
-    @*<link rel="stylesheet" href="~/GarageBuddy.Web.styles.css" asp-append-version="true" />*@
 </head>
 <body>
     <script src="~/themes/mazer/dist/assets/static/js/initTheme.js"></script>
+
     @RenderBody()
     <partial name="_ModalFormPartial" />
     <script src="~/themes/mazer/dist/assets/static/js/components/dark.js"></script>
+    <script src="~/themes/mazer/dist/assets/extensions/sweetalert2/sweetalert2.all.min.js"></script>
+
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <partial name="_NotificationsPartial" />
     @await RenderSectionAsync("Scripts", required: false)

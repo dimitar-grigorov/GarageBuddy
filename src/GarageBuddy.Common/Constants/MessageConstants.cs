@@ -22,7 +22,7 @@
 
             public const string PasswordsDoNotMatch = "Passwords do not match.";
 
-            public const string SomethingWentWrong = "Something went wrong. Please try again.";
+            public const string SomethingWentWrong = "Something went wrong. Please try again later.";
 
             public const string ConnectionStringWrongFormat = "Connection string is in wrong format!";
 
@@ -42,6 +42,9 @@
         public static class Success
         {
             public const string PasswordResetMailSent = "Password Reset Mail has been sent to your Email {0}.";
+
+            public const string SendPasswordResetEmail =
+                "Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.";
         }
     }
 }

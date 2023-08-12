@@ -5,9 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />*@
-    @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
-
     <partial name="_FavIconPartial" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
@@ -105,11 +102,15 @@
             </footer>
         </div>
     </div>
-    <script src="~/themes/mazer/dist/assets/static/js/components/dark.js"></script>
-    <script src="~/themes/mazer/dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <partial name="_ModalFormPartial" />
+
     <script src="~/themes/mazer/dist/assets/compiled/js/app.js"></script>  @*Bootstrap*@
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>*@
+
+    <script src="~/themes/mazer/dist/assets/static/js/components/dark.js"></script>
+
+    <script src="~/themes/mazer/dist/assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <partial name="_NotificationsPartial" />
     @await this.RenderSectionAsync("Scripts", required: false)
