@@ -37,10 +37,16 @@
         {
             try
             {
+
+                logger.LogInformation(htmlContent);
+
+                fromMail ??= options.SenderEmail;
                 var email = new MimeMessage
                 {
-                    Sender = new MailboxAddress(fromName, fromMail ?? options.SenderEmail),
+                    From = { MailboxAddress.Parse(fromMail) },
+                    Sender = new MailboxAddress(fromName, fromMail),
                     Subject = subject,
+                    To = { MailboxAddress.Parse(toMail) },
                 };
 
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
@@ -77,7 +83,7 @@
                 await smtp.ConnectAsync(
                     options.SmtpSettings.Host,
                     options.SmtpSettings.Port,
-                    SecureSocketOptions.StartTls);
+                    SecureSocketOptions.Auto);
                 await smtp.AuthenticateAsync(
                     options.SmtpSettings.UserName,
                     options.SmtpSettings.Password);
