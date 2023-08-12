@@ -3,6 +3,7 @@
     "AppName": "GarageBuddy",
     "ElasticSearchUrl": "http://localhost:9200",
     "WriteToFile": true,
-    "StructuredConsoleLogging": false
+    "StructuredConsoleLogging": false,
+    "MinimumLogLevel": "Debug"
   }
 }

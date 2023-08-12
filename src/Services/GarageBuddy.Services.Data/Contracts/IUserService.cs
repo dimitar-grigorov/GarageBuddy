@@ -26,6 +26,9 @@
         public Task<IResult<string>> GeneratePasswordResetTokenAsync(string email);
 
         public Task<IResult<string>> GenerateEmailResetUriAsync(string email, string origin, string route, string tokenQueryKey);
+
+        public Task<IResult> ResetPasswordAsync(string email, string password, string token);
+
         /*
         public Task<TUser> FindUserByIdAsync(string id);
 

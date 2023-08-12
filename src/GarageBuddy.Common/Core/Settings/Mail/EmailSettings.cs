@@ -11,5 +11,7 @@
         public string SenderName { get; set; } = null!;
 
         public SendGridMailSettings SendGridSettings { get; set; } = new SendGridMailSettings();
+
+        public SmtpMailSettings SmtpSettings { get; set; } = new SmtpMailSettings();
     }
 }

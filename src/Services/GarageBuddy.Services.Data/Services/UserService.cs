@@ -7,6 +7,7 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Models;
 
@@ -161,6 +162,27 @@
             var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(tokenResult.Data));
             var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), tokenQueryKey, token);
             return await Result<string>.SuccessAsync(verificationUri);
+        }
+
+        public async Task<IResult> ResetPasswordAsync(string email, string password, string token)
+        {
+            var user = await userManager.FindByEmailAsync(email.Normalize());
+            if (user == null)
+            {
+                // Don't reveal that the user does not exist
+                return await Result.FailAsync(Errors.GeneralError);
+            }
+
+            var result = await userManager.ResetPasswordAsync(user, token, password);
+            if (result.Succeeded)
+            {
+                logger.LogInformation($"User with email {email} has reset his password.");
+                return await Result.SuccessAsync(Success.PasswordResetSuccessful);
+            }
+
+            result.Errors.ToList().ForEach(error => logger.LogError(error.Description));
+
+            return await Result.FailAsync(Errors.GeneralError);
         }
     }
 }

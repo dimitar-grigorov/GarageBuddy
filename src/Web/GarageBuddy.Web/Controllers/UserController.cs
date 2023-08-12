@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Web.Controllers
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Common.Constants;
@@ -205,22 +206,41 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ResetPassword(string? token, string? email)
+        public IActionResult ResetPassword(string? token)
         {
-            if (token == null || email == null)
+            if (token == null)
             {
                 return this.BadRequest();
             }
 
-            /*var model = new ForgotPasswordFormModel
-                {
-                    Token = token,
-                    Email = email,
-                };
+            var model = new ResetPasswordFormModel
+            {
+                Token = token,
+            };
 
-                return this.View(model);*/
+            return this.View(model);
+        }
 
-            return this.View();
+        // [ValidateRecaptcha(Action = nameof(Register), ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword(ResetPasswordFormModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            var result = await this.userService.ResetPasswordAsync(model.Email, model.Token, model.Password);
+
+            if (!result.Succeeded)
+            {
+                TempData[NotifyError] = result.Messages.FirstOrDefault();
+                return this.View(model);
+            }
+
+            TempData[NotifySuccess] = result.Messages.FirstOrDefault();
+            return this.RedirectToAction(nameof(Login));
         }
 
         private string GetOriginFromRequest()

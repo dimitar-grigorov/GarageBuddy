@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@GlobalConstants.SystemName - @ViewData["Title"]</title>
+    <title>@this.ViewData["Title"] - @GlobalConstants.SystemName</title>
 
     <partial name="_FavIconPartial" />
-    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
-    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/auth-forgot-password.css" />
+    <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script src="~/themes/mazer/dist/assets/compiled/js/app.js"></script> @*Bootstrap*@
 </head>
+
 <body>
     <script src="~/themes/mazer/dist/assets/static/js/initTheme.js"></script>
+    <nav class="navbar navbar-light">
+        <div class="container d-block">
+            <a asp-controller="Home" asp-action="Index"><i class="bi bi-chevron-left"></i></a>
+            <a class="navbar-brand ms-4" asp-controller="Home" asp-action="Index">
+                <img src="~/themes/mazer/dist/assets/compiled/svg/logo.svg" />
+            </a>
+        </div>
+    </nav>
 
-    @RenderBody()
+    <div class="container">
+        <div class="">
+            @RenderBody()
+        </div>
+    </div>
     <partial name="_ModalFormPartial" />
-    <script src="~/themes/mazer/dist/assets/static/js/components/dark.js"></script>
     <script src="~/themes/mazer/dist/assets/extensions/sweetalert2/sweetalert2.all.min.js"></script>
-
     <script src="~/js/site.min.js" asp-append-version="true"></script>
     <partial name="_NotificationsPartial" />
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

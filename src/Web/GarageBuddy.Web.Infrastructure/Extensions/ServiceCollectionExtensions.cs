@@ -75,8 +75,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
         internal static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             // Application services
-            services.AddTransient<IEmailSender, SendGridEmailSender>();
             services.AddScoped<IViewRenderer, ViewRenderer>();
+            services.AddTransient<IEmailSender, SmtpMailSender>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();
