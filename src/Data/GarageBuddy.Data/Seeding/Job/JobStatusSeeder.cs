@@ -4,7 +4,9 @@
     using System.Threading.Tasks;
 
     using Extensions;
+
     using GarageBuddy.Data.Seeding.Common;
+
     using Microsoft.EntityFrameworkCore;
 
     using Models.Enums;

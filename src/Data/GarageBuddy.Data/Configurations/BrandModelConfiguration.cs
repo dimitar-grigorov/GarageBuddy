@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
     using Models.Vehicle;
 
     public class BrandModelConfiguration : IEntityTypeConfiguration<BrandModel>

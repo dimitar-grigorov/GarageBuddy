@@ -1,8 +1,6 @@
 ﻿namespace GarageBuddy.Data.Common.Repositories
 {
-    using System;
     using System.Linq;
-    using System.Linq.Expressions;
 
     using GarageBuddy.Data.Common.Models;
 

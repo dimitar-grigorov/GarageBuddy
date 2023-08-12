@@ -1,7 +1,5 @@
 ﻿namespace GarageBuddy.Common.Constants
 {
-    using System.ComponentModel;
-
     public static class EntityValidationConstants
     {
         public static class ApplicationUser

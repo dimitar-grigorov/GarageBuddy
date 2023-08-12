@@ -1,6 +1,5 @@
 ﻿namespace GarageBuddy.Data.DataProvider
 {
-    using System.Data.Common;
     using System.Threading.Tasks;
 
     using GarageBuddy.Common.Core;
