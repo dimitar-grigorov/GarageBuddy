@@ -158,10 +158,10 @@
                 return await Result<string>.FailAsync(Errors.GeneralError);
             }
 
-            var endpointUri = new Uri(string.Concat($"{origin}/", route));
+            var endpointUri = new Uri(string.Concat(origin, route));
             var token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(tokenResult.Data));
             var verificationUri = QueryHelpers.AddQueryString(endpointUri.ToString(), tokenQueryKey, token);
-            return await Result<string>.SuccessAsync(verificationUri);
+            return await Result<string>.SuccessAsync(data: verificationUri);
         }
 
         public async Task<IResult> ResetPasswordAsync(string email, string password, string token)
@@ -173,7 +173,9 @@
                 return await Result.FailAsync(Errors.GeneralError);
             }
 
-            var result = await userManager.ResetPasswordAsync(user, token, password);
+            var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+
+            var result = await userManager.ResetPasswordAsync(user, decodedToken, password);
             if (result.Succeeded)
             {
                 logger.LogInformation($"User with email {email} has reset his password.");

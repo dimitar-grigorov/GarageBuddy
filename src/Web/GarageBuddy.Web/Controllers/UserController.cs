@@ -19,6 +19,7 @@
     using Services.Data.Contracts;
     using Services.Messaging.Contracts;
 
+    using ViewModels;
     using ViewModels.MailTemplates;
     using ViewModels.User;
 
@@ -163,7 +164,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return Json(new { isValid = false, html = await this.RenderRazorViewToStringAsync("ForgotPassword", model) });
+                return Json(new ModalFormResult(isValid: false, await this.RenderRazorViewToStringAsync("ForgotPassword", model)));
             }
 
             var result = await this.userService.GenerateEmailResetUriAsync(
@@ -179,7 +180,7 @@
                     this.ModelState.AddModelError(string.Empty, error);
                 }
 
-                return Json(new { isValid = false, html = await this.RenderRazorViewToStringAsync("ForgotPassword", model) });
+                return Json(new ModalFormResult(isValid: false, await this.RenderRazorViewToStringAsync("ForgotPassword", model)));
             }
 
             var forgotPasswordViewModel = new ForgotPasswordMailViewModel
@@ -191,17 +192,21 @@
             var mailContent = await viewRenderer
                 .RenderAsync(forgotPasswordViewModel, "ForgotPasswordEmailTemplate", GlobalConstants.MailTemplatePath);
 
-            logger.LogInformation(mailContent);
             var mailResult = await emailService.SendResetPasswordEmail(model.Email, mailContent);
 
             if (!mailResult.Succeeded)
             {
                 TempData[NotifyError] = Errors.SomethingWentWrong;
-                return Json(new { isValid = false, html = await this.RenderRazorViewToStringAsync("ForgotPassword", model) });
+                return Json(new ModalFormResult(isValid: false, await this.RenderRazorViewToStringAsync("ForgotPassword", model)));
             }
 
             TempData[NotifySuccess] = Success.SendPasswordResetEmail;
-            return this.RedirectToAction(nameof(Login));
+            return Json(new ModalFormResult
+            {
+                IsValid = true,
+                Html = await this.RenderRazorViewToStringAsync("ForgotPassword", model),
+                RedirectUrl = Url.Action("Index", "Home")!,
+            });
         }
 
         [HttpGet]
@@ -224,14 +229,14 @@
         // [ValidateRecaptcha(Action = nameof(Register), ValidationFailedAction = ValidationFailedAction.ContinueRequest)]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> ResetPassword(ResetPasswordFormModel model)
+        public async Task<IActionResult> ResetPassword([FromForm] ResetPasswordFormModel model)
         {
             if (!this.ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            var result = await this.userService.ResetPasswordAsync(model.Email, model.Token, model.Password);
+            var result = await this.userService.ResetPasswordAsync(model.Email, model.Password, model.Token);
 
             if (!result.Succeeded)
             {

@@ -17,7 +17,7 @@
         public string? Password { get; set; }
 
         [Required]
-        [StringLength(ResetPasswordTokenMaxLength, MinimumLength = ResetPasswordTokenMinLength)]
+        [MinLength(ResetPasswordTokenMinLength)]
         public string? Token { get; set; }
     }
 }

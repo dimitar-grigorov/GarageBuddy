@@ -13,6 +13,8 @@ $(function () {
 
 /** SweetAlert2 */
 
+const toastTimer = 3000;
+
 const Swal2 = Swal.mixin({
     customClass: {
         input: 'form-control'
@@ -23,7 +25,7 @@ const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
-    timer: 3000,
+    timer: toastTimer,
     timerProgressBar: true,
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -46,9 +48,7 @@ function showInPopup(url, title) {
         modalTitle.html(title);
         $("#form-modal").modal("show");
 
-        /*$(".modal-dialog").draggable({
-            handle: ".modal-header"
-        });*/
+
     });
 }
 
@@ -85,9 +85,15 @@ function performAjaxRequest(type, form, successCallback) {
 function jQueryAjaxPost(form) {
     performAjaxRequest("POST", form, function (res) {
         if (res.isValid) {
-            $("#view-all").html(res.html);
+            //$("#view-all").html(res.html);
+            $("#form-modal .modal-body").html(res.html).delay(1000);
             $("#form-modal .modal-body, #form-modal .modal-title").html("");
             $("#form-modal").modal("hide");
+            if (res.redirectUrl) {
+                setTimeout(function () {
+                    window.location.href = res.redirectUrl; // Perform the delayed redirect
+                }, toastTimer);
+            }
         } else {
             $("#form-modal .modal-body").html(res.html);
         }
