@@ -25,29 +25,15 @@
 
         protected ApplicationDbContext Context { get; set; }
 
-        public virtual IQueryable<TEntity> All()
+        public virtual IQueryable<TEntity> All(bool isReadonly = false)
         {
-            return this.DbSet.AsQueryable();
+            return isReadonly ? this.DbSet.AsNoTracking() : this.DbSet;
         }
 
-        public virtual IQueryable<TEntity> AllReadonly()
+        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false)
         {
-            return this.DbSet.AsQueryable().AsNoTracking();
-        }
-
-        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search)
-        {
-            return this.DbSet
-                .Where(search)
-                .AsQueryable();
-        }
-
-        public virtual IQueryable<TEntity> AllReadonly(Expression<Func<TEntity, bool>> search)
-        {
-            return this.DbSet
-                .Where(search)
-                .AsQueryable()
-                .AsNoTracking();
+            var query = this.DbSet.Where(search);
+            return isReadonly ? query.AsNoTracking() : query;
         }
 
         public virtual TEntity Find(TKey id, bool isReadonly = false)

@@ -3,8 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using Common.Core;
-
+    using GarageBuddy.Common.Core;
     using Microsoft.AspNetCore.Http;
 
     using Options;

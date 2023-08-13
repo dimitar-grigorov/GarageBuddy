@@ -37,6 +37,12 @@
             public const string MailSubjectAndMessageNotProvided = "Subject and message should be provided.";
 
             public const string GeneralErrorSendEmail = "Errors occured while sending email.";
+
+            public const string EntitysModelStateIsNotValid = "{0} model state is not valid.";
+
+            public const string EntityNotFound = "The {0} cannot be found.";
+
+            public const string SourceOrDestinationNull = "Source or/and Destination Objects are null";
         }
 
         public static class Success

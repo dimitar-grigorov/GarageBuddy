@@ -3,8 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using Common.Core.Wrapper;
-    using Common.Core.Wrapper.Generic;
+    using GarageBuddy.Common.Core.Wrapper;
+    using GarageBuddy.Common.Core.Wrapper.Generic;
 
     using Microsoft.AspNetCore.Identity;
 

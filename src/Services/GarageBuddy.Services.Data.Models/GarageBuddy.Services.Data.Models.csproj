@@ -17,4 +17,9 @@
     <Folder Include="ApplicationUser\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\GarageBuddy.Data.Models\GarageBuddy.Data.Models.csproj" />
+    <ProjectReference Include="..\GarageBuddy.Services.Mapping\GarageBuddy.Services.Mapping.csproj" />
+  </ItemGroup>
+
 </Project>

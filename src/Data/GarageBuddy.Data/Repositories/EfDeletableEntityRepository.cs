@@ -17,30 +17,38 @@
         {
         }
 
-        public override IQueryable<TEntity> All()
+        public IQueryable<TEntity> All(bool isReadonly, bool withDeleted)
         {
-            return base.All().Where(x => !x.IsDeleted);
+            var query = base.All(isReadonly);
+
+            if (!withDeleted)
+            {
+                query = query.Where(e => !e.IsDeleted);
+            }
+
+            return query;
         }
 
-        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search)
+        public IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly, bool withDeleted)
         {
-            // TODO: Check if this works
-            return this.All().Where(search).Where(x => !x.IsDeleted);
+            var query = base.All(search, isReadonly);
+
+            if (!withDeleted)
+            {
+                query = query.Where(e => !e.IsDeleted);
+            }
+
+            return query;
         }
 
-        public override IQueryable<TEntity> AllReadonly()
+        public override IQueryable<TEntity> All(bool isReadonly = false)
         {
-            return base.AllReadonly().Where(x => !x.IsDeleted);
+            return base.All(isReadonly).Where(x => !x.IsDeleted);
         }
 
-        public IQueryable<TEntity> AllWithDeleted()
+        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false)
         {
-            return base.All().IgnoreQueryFilters();
-        }
-
-        public IQueryable<TEntity> AllAsNoTrackingWithDeleted()
-        {
-            return base.AllReadonly().IgnoreQueryFilters();
+            return this.All(isReadonly).Where(search);
         }
 
         public void HardDelete(TEntity entity)

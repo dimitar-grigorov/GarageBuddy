@@ -1,9 +1,8 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
     using GarageBuddy.Services.Data.Contracts;
-    using GarageBuddy.Web.ViewModels.Administration.Dashboard;
-
     using Microsoft.AspNetCore.Mvc;
+    using ViewModels.Admin.Dashboard;
 
     public class DashboardController : AdminController
     {

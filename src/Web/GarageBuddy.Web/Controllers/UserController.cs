@@ -236,7 +236,7 @@
                 return this.View(model);
             }
 
-            var result = await this.userService.ResetPasswordAsync(model.Email, model.Password, model.Token);
+            var result = await this.userService.ResetPasswordAsync(model.Email!, model.Password!, model.Token!);
 
             if (!result.Succeeded)
             {

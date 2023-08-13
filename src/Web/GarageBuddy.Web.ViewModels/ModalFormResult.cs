@@ -4,7 +4,6 @@
 
     public class ModalFormResult
     {
-
         public ModalFormResult()
         {
             IsValid = false;

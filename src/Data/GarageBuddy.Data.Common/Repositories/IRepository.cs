@@ -13,13 +13,9 @@
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : class, IEntity<TKey>
     {
-        IQueryable<TEntity> All();
+        IQueryable<TEntity> All(bool isReadonly = false);
 
-        IQueryable<TEntity> AllReadonly();
-
-        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search);
-
-        IQueryable<TEntity> AllReadonly(Expression<Func<TEntity, bool>> search);
+        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false);
 
         TEntity Find(TKey id, bool isReadonly = false);
 

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Reflection;
-
+using AutoMapper;
 using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
 using GarageBuddy.Data.Seeding;
+using GarageBuddy.Services.Data.Models.Vehicle.Brand;
 using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Configurations;
 using GarageBuddy.Web.Infrastructure.Common;
@@ -42,6 +43,15 @@ try
             options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
         });
 
+    // AutoMapper configuration
+    var assemblies = new Assembly[]
+    {
+        typeof(ErrorViewModel).GetTypeInfo().Assembly,
+        typeof(BrandServiceModel).GetTypeInfo().Assembly,
+    };
+    AutoMapperConfig.RegisterMappings(assemblies);
+    builder.Services.AddSingleton(AutoMapperConfig.MapperInstance);
+
     var app = builder.Build();
 
     // Seed data on application startup
@@ -52,7 +62,6 @@ try
         new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
     }
 
-    AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
     if (app.Environment.IsDevelopment())
     {
         app.UseDeveloperExceptionPage();
