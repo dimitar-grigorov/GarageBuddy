@@ -44,7 +44,7 @@ try
         });
 
     // AutoMapper configuration
-    var assemblies = new Assembly[]
+    var assemblies = new[]
     {
         typeof(ErrorViewModel).GetTypeInfo().Assembly,
         typeof(BrandServiceModel).GetTypeInfo().Assembly,
