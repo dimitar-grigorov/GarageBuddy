@@ -54,7 +54,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 options =>
                 {
                     options.CheckConsentNeeded = context => true;
-                    options.MinimumSameSitePolicy = SameSiteMode.None;
+                    options.MinimumSameSitePolicy = SameSiteMode.Strict;
+                    options.Secure = CookieSecurePolicy.Always;
                 });
 
             return services;

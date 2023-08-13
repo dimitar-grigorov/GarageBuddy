@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reflection;
-using AutoMapper;
+
+using DataTables.AspNet.AspNetCore;
+
 using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
@@ -13,6 +15,7 @@ using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +32,8 @@ try
 
     builder.AddConfigurations().RegisterSerilog();
     builder.Services.AddInfrastructure(builder.Configuration);
+
+    builder.Services.RegisterDataTables();
 
     builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
         .AddRoles<ApplicationRole>()
