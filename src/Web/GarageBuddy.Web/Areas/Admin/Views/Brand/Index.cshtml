@@ -1,0 +1,45 @@
+﻿@model ICollection<BrandListViewModel>
+
+<section class="section">
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">Brands Datatable</h5>
+        </div>
+        <div class="card-body">
+            <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                <div class="dataTable-top">
+                    <div class="dataTable-search">
+                        <input class="dataTable-input" placeholder="Search..." type="text">
+                    </div>
+                </div>
+                <div class="dataTable-container">
+                    <table class="table table-striped dataTable-table" id="table1">
+                        <thead>
+                            <tr>
+                                <th data-sortable="" style="width: 20%;"><a href="#" class="dataTable-sorter">Brand ID</a></th>
+                                <th data-sortable="" style="width: 20%;"><a href="#" class="dataTable-sorter">Brand Name</a></th>
+                                <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Is Seeded</a></th>
+                                <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Created On</a></th>
+                                <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Modified On</a></th>
+                                <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Is Deleted</a></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var brand in Model)
+                            {
+                                <tr>
+                                    <td>@brand.BrandId</td>
+                                    <td>@brand.BrandName</td>
+                                    <td>@(brand.IsSeeded ? "Yes" : "No")</td>
+                                    <td>@brand.CreatedOn.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                    <td>@(brand.ModifiedOn?.ToString("yyyy-MM-dd HH:mm:ss") ?? "-")</td>
+                                    <td>@(brand.IsDeleted ? "Yes" : "No")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

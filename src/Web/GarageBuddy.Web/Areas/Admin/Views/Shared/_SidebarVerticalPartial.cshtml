@@ -14,7 +14,7 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div>                   
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
@@ -26,15 +26,15 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item has-sub">
+                <li class="sidebar-item has-sub active">
                     <a href="#" class="sidebar-link">
-                        <i class="bi bi-stack"></i>
-                        <span>Components</span>
+                        <i class="bi bi-box"></i>
+                        <span>Vehicles</span>
                     </a>
 
                     <ul class="submenu">
-                        <li class="submenu-item">
-                            <a href="component-accordion.html" class="submenu-link">Accordion</a>
+                        <li class="submenu-item active">
+                            <a class="submenu-link" asp-area="Admin" asp-controller="Brand" asp-action="Index"><i class="bi bi-car-front"></i> Brands</a>
                         </li>
 
                         <li class="submenu-item">
@@ -138,13 +138,13 @@
                     </ul>
                 </li>
 
-                <li class="sidebar-item active has-sub">
+                <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="bi bi-grid-1x2-fill"></i>
                         <span>Layouts</span>
                     </a>
 
-                    <ul class="submenu active">
+                    <ul class="submenu">
                         <li class="submenu-item">
                             <a href="layout-default.html" class="submenu-link">Default Layout</a>
                         </li>
@@ -153,7 +153,7 @@
                             <a href="layout-vertical-1-column.html" class="submenu-link">1 Column</a>
                         </li>
 
-                        <li class="submenu-item active">
+                        <li class="submenu-item">
                             <a href="layout-vertical-navbar.html" class="submenu-link">Vertical Navbar</a>
                         </li>
 

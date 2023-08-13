@@ -76,6 +76,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
         {
             // Application services
             services.AddScoped<IViewRenderer, ViewRenderer>();
+            services.AddScoped<IBrandService, BrandService>();
             services.AddTransient<IEmailSender, SmtpMailSender>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISettingsService, SettingsService>();

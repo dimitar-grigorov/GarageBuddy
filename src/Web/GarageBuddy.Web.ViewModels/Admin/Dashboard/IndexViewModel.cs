@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Web.ViewModels.Administration.Dashboard
+﻿namespace GarageBuddy.Web.ViewModels.Admin.Dashboard
 {
     public class IndexViewModel
     {
