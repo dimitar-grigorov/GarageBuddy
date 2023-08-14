@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Reflection;
 
-using DataTables.AspNet.AspNetCore;
-
 using GarageBuddy.Common.Constants;
 using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
@@ -31,8 +29,7 @@ try
 
     builder.AddConfigurations().RegisterSerilog();
     builder.Services.AddInfrastructure(builder.Configuration);
-
-    builder.Services.RegisterDataTables();
+    builder.Services.AddDataTables();
 
     builder.Services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
         .AddRoles<ApplicationRole>()
@@ -63,7 +60,7 @@ try
     {
         var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         dbContext.Database.Migrate();
-        new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+        // new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
     }
 
     if (app.Environment.IsDevelopment())

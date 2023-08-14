@@ -7,6 +7,8 @@
 
     using AutoMapper;
 
+    using Common.Constants;
+
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
 
@@ -48,9 +50,12 @@
                 return new DataTablesJsonResult(DataTablesResponse.Create(request, 0, 0, null), true);
             }
 
+            request.AdditionalParameters.TryGetValue(IncludeDeletedFilterName, out var searchValue);
+
             var brandsResult = await this.brandService.GetAllAsync(
                 new QueryOptions<BrandServiceModel>()
                 {
+                    IncludeDeleted = (bool)(searchValue ?? false),
                     Skip = request.Start,
                     Take = request.Length,
                 });

@@ -20,29 +20,32 @@
             searching: true,
             ordering: true,
             ajax: {
-                url: "@Url.Action("BrandList", "Brand", new { Area = @GlobalConstants.AdminArea })"
+                url: "@Url.Action("BrandList", "Brand", new { Area = @GlobalConstants.AdminArea })",
+                "data": function (data) {
+                    data.includeDeleted = true;
+                }
             },
             columns: [
                 {
                     name: "brandId",
                     data: "brandId",
-                    title: "BrandId",
+                    title: "BrandId"
                 },
                 {
                     name: 'brandName',
                     data: "brandName",
-                    title: "BrandName",
+                    title: "BrandName"
                 },
                 {
                     name: "createdOn",
                     data: "createdOn",
-                    title: "createdOn",
+                    title: "createdOn"
                 },
                 {
                     data: "brandId",
                     render: function (data, row) { return `<a href='#' class='btn btn-danger' onclick=alert('${data}$'); >Delete</a>`; },
                     sortable: false,
-                    width: "10%",
+                    width: "10%"
                 }
             ],
             //Auto refresh

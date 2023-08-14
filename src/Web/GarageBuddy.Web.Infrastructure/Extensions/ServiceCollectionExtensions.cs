@@ -2,8 +2,11 @@
 namespace GarageBuddy.Web.Infrastructure.Extensions
 {
     using System;
+    using System.Collections.Generic;
 
     using Data.DataProvider;
+
+    using DataTables.AspNet.AspNetCore;
 
     using GarageBuddy.Common.Constants;
     using GarageBuddy.Common.Core;
@@ -69,6 +72,29 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 options.LogoutPath = "/User/Logout";
                 options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddDataTables(this IServiceCollection services)
+        {
+            var options = new DataTables.AspNet.AspNetCore.Options()
+                .EnableRequestAdditionalParameters()
+                .EnableResponseAdditionalParameters();
+
+            var binder = new ModelBinder
+            {
+                ParseAdditionalParameters = context =>
+                {
+                    var includeDeleted = Convert.ToBoolean(context.ValueProvider.GetValue(GlobalConstants.IncludeDeletedFilterName).FirstValue);
+                    return new Dictionary<string, object>()
+                    {
+                        { GlobalConstants.IncludeDeletedFilterName, includeDeleted },
+                    };
+                },
+            };
+
+            services.RegisterDataTables(options, binder);
 
             return services;
         }
