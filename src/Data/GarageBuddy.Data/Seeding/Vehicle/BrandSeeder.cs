@@ -13,10 +13,9 @@
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            if (await dbContext.Brands.AnyAsync(b => b.IsSeeded) == false)
+            if (await dbContext.Brands.AnyAsync() == false)
             {
                 var brands = await SeedHelper.GetSeedDataFromJson<Brand>("BrandSeed.json");
-                brands.ForEach(j => j.IsSeeded = true);
                 await dbContext.Brands.AddRangeAsync(brands);
             }
         }

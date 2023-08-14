@@ -60,21 +60,21 @@
                 },
                 {
                     data: "brandId",
-                    title: "Actions",
+                    title: "Action",
                     render: function (data, type, row) {
-                        return `< a href = '@Url.Action("Edit", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class= 'btn btn-primary' > Edit < /a>`;
+                        return `<a href = '@Url.Action("Edit", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class= 'btn btn-primary'> Edit </a>`;
                     },
                     sortable: false,
-                    width: "15%"
+                    width: "10%"
                 },
                 {
                     data: "brandId",
-                    title: "List Models",
+                    title: "Models",
                     render: function (data, type, row) {
                         return `<a href='@Url.Action("BrandModels", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class='btn btn-info'>List Models</a>`;
                     },
                     sortable: false,
-                    width: "10%"
+                    width: "8%"
                 },
 
 

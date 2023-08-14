@@ -19,8 +19,5 @@
         [Required]
         [MaxLength(BrandModelNameMaxLength)]
         public string ModelName { get; set; } = null!;
-
-        [Required]
-        public bool IsSeeded { get; set; } = false;
     }
 }

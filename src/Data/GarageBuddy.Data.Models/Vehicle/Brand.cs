@@ -15,9 +15,6 @@
         public string BrandName { get; set; } = null!;
 
         [Required]
-        public bool IsSeeded { get; set; } = false;
-
-        [Required]
         public IEnumerable<BrandModel> BrandModels { get; set; } = new HashSet<BrandModel>();
     }
 }
