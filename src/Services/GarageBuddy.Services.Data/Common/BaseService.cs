@@ -32,6 +32,8 @@
             this.mapper = mapper;
         }
 
+        protected IMapper Mapper => this.mapper;
+
         public async Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false)
         {
             var query = this.entityRepository
@@ -82,7 +84,7 @@
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var entity = await this.entityRepository.FindAsync(id);
+            var entity = await this.entityRepository.FindAsync(id, true);
 
             var model = this.mapper.Map<TModel>(entity);
 
@@ -151,7 +153,7 @@
 
             try
             {
-                var entity = await this.entityRepository.FindAsync(id);
+                var entity = await this.entityRepository.FindAsync(id, queryOptions?.AsReadOnly ?? false);
                 bool withDeleted = queryOptions?.IncludeDeleted ?? false;
 
                 if (withDeleted == false && entity.IsDeleted == true)
@@ -178,7 +180,7 @@
 
             return isValid;
         }
-
+        
 #pragma warning disable IDE0060 // Remove unused parameter / The parameter is used for generic intellisense
         private PropertyInfo GetPropertyInfo<TSource, TProperty>(TSource source, Expression<Func<TSource, TProperty>> propertyLambda)
 #pragma warning restore IDE0060 // Remove unused parameter

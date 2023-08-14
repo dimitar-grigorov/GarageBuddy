@@ -55,7 +55,13 @@
             return entity;
         }
 
-        public virtual async Task<TEntity> FindAsync(TKey id, bool asReadonly = false)
+        public async Task<bool> ExistsAsync(TKey id)
+        {
+            ArgumentNullException.ThrowIfNull(id);
+            return await this.DbSet.AnyAsync(e => e.Id.Equals(id));
+        }
+
+        public virtual async Task<TEntity> FindAsync(TKey id, bool asReadonly)
         {
             ArgumentNullException.ThrowIfNull(id);
 
@@ -118,7 +124,7 @@
 
         public virtual async Task UpdateAsync(TKey id)
         {
-            var entity = await this.FindAsync(id);
+            var entity = await this.FindAsync(id, true);
 
             if (entity == null)
             {
@@ -150,7 +156,7 @@
 
         public virtual async Task DeleteAsync(TKey id)
         {
-            var entity = await this.FindAsync(id);
+            var entity = await this.FindAsync(id, true);
 
             this.Delete(entity);
         }

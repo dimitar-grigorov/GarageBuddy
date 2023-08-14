@@ -1,6 +1,8 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
+    using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -65,6 +67,41 @@
             var response = DataTablesResponse.Create(request, brandsResult.TotalCount, brandsResult.TotalCount, data);
 
             return new DataTablesJsonResult(response, true);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            if (!await this.brandService.ExistsAsync(id))
+            {
+                return ShowError(string.Format(Errors.EntityNotFound, "Brand"), (int)HttpStatusCode.NotFound);
+            }
+
+            var brand = await this.brandService.GetAsync(id);
+            var model = mapper.Map<BrandViewModel>(brand.Data);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, BrandViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var brandServiceModel = mapper.Map<BrandServiceModel>(model);
+            var result = await this.brandService.EditAsync(id, brandServiceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+            }
+
+            return RedirectToAction(Actions.Index);
         }
     }
 }

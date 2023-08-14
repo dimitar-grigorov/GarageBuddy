@@ -42,12 +42,40 @@
                     title: "Created On"
                 },
                 {
+                    name: "IsDeleted",
+                    data: "isDeleted",
+                    title: "Active",
+                    render: function (data) {
+                        if (data) {
+                            return `<span class="badge bg-danger">Inactive</span>`; 
+                        } else {
+                            return `<span class="badge bg-success">Active</span>`;
+                        }
+                    }
+                },
+                {
                     data: "brandId",
                     title: "Actions",
-                    render: function (data, row) { return `<a href='#' class='btn btn-danger' onclick=alert('${data}$'); >Delete</a>`; },
+                    render: function (data, type, row) { 
+                        return `
+                        <a href='#' class='btn btn-danger' onclick=alert('${data}$'); >Delete</a>
+                        <a href='@Url.Action("Edit", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class='btn btn-primary'>Edit</a>
+                    `;
+                    },
+                    sortable: false,
+                    width: "15%"
+                },
+                {
+                    data: "brandId",
+                    title: "List Models",
+                    render: function (data, type, row) {
+                        return `<a href='@Url.Action("BrandModels", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class='btn btn-info'>List Models</a>`;
+                    },
                     sortable: false,
                     width: "10%"
-                }
+                },
+
+
             ],
             //Auto refresh
             //initComplete: function () {

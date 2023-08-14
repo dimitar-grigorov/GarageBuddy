@@ -6,9 +6,9 @@
 
     using Common.Constants;
 
-    public class ReverseDateTimeTypeConverter : ITypeConverter<DateTime?, string?>
+    public class ReverseDateTimeTypeConverter : ITypeConverter<DateTime?, string>
     {
-        public string? Convert(DateTime? source, string? destination, ResolutionContext context)
+        public string Convert(DateTime? source, string destination, ResolutionContext context)
         {
             return source?.ToString(GlobalConstants.DefaultDateTimeFormat);
         }

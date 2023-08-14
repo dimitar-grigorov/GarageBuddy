@@ -5,11 +5,12 @@
     using AutoMapper;
 
     using GarageBuddy.Data.Models.Vehicle;
+
     using Mapping;
 
     public class BrandServiceModel : IMapFrom<Brand>, IMapTo<Brand>, IHaveCustomMappings
     {
-        public string BrandId { get; set; } = null!;
+        public Guid BrandId { get; set; }
 
         public string BrandName { get; set; } = null!;
 
@@ -25,6 +26,16 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
+            configuration
+                .CreateMap<BrandServiceModel, Brand>()
+                .ForMember(d => d.DeletedOn,
+                    opt => opt.Ignore());
+
+            configuration
+                .CreateMap<BrandServiceModel, Brand>()
+                .ForMember(d => d.CreatedOn,
+                    opt => opt.Ignore());
+
             configuration
                 .CreateMap<Brand, BrandServiceModel>()
                 .ForMember(d => d.BrandId, opt =>

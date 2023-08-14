@@ -1,5 +1,67 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model BrandViewModel
+
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-6 col-12 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Edit vehicle brand</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form asp-area="Admin" asp-controller="Brand" asp-action="Edit" class="form form-vertical" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BrandName"></label>
+                                            <input type="text" class="form-control" asp-for="@Model.BrandName" placeholder="Brand Name">
+                                            <span class="form-text text-danger" asp-validation-for="@Model.BrandName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <div class="checkbox">
+                                                <input type="checkbox" asp-for="@Model.IsDeleted" class="form-check-input">
+                                                <label asp-for="@Model.IsDeleted" class="form-check-label"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.IsDeleted)
+                                    {
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.DeletedOn"></label>
+                                                <input type="text" class="form-control" asp-for="@Model.DeletedOn" placeholder="Deleted On" readonly>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="@Model.BrandId" />
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">
+                                            Submit
+                                        </button>
+                                        <button type="reset" class="btn btn-light-secondary me-1 mb-1">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .card-header {
+        --bs-card-cap-padding-y: 1.5rem;
+    }
+</style>

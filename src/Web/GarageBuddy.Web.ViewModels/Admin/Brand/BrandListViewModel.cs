@@ -6,6 +6,7 @@
 
     using Services.Data.Models.Vehicle.Brand;
     using Services.Mapping;
+    using Services.Mapping.TypeConverters;
 
     public class BrandListViewModel : IMapFrom<BrandServiceModel>, IHaveCustomMappings
     {
@@ -15,9 +16,9 @@
 
         public bool IsSeeded { get; set; }
 
-        public string CreatedOn { get; set; }
+        public string CreatedOn { get; set; } = null!;
 
-        public string ModifiedOn { get; set; }
+        public string? ModifiedOn { get; set; }
 
         public bool IsDeleted { get; set; }
 
@@ -26,6 +27,10 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<DateTime?, string?>().ConvertUsing(new ReverseDateTimeTypeConverter());
+
+          /*  configuration.CreateMap<BrandServiceModel, BrandListViewModel>()
+                .ForMember(d => d.IsDeleted, opt =>
+                    opt.MapFrom(src => src.IsDeleted ? "Active" : "Deleted"));*/
         }
     }
 }

@@ -2,6 +2,8 @@
 {
     public static class MessageConstants
     {
+        public const string NotDeleted = "Not deleted";
+
         public static class Errors
         {
             public const string GeneralError = "Something went wrong!";
@@ -41,6 +43,10 @@
             public const string EntitysModelStateIsNotValid = "{0} model state is not valid.";
 
             public const string EntityNotFound = "The {0} cannot be found.";
+
+            public const string EntityNotCreated = "The {0} cannot be created.";
+
+            public const string InvalidEntityName = "Invalid {0}.";
 
             public const string SourceOrDestinationNull = "Source or/and Destination Objects are null";
         }

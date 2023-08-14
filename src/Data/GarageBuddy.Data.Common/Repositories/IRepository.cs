@@ -17,9 +17,12 @@
 
         IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly);
 
+        // TODO: Delete
         TEntity Find(TKey id, bool asReadonly = false);
 
-        Task<TEntity> FindAsync(TKey id, bool asReadonly = false);
+        Task<TEntity> FindAsync(TKey id, bool asReadonly);
+
+        Task<bool> ExistsAsync(TKey id);
 
         EntityEntry<TEntity> Add(TEntity entity);
 

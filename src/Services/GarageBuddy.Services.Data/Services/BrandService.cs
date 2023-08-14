@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -10,9 +11,12 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
+
+    using Microsoft.EntityFrameworkCore;
 
     using Models.Vehicle.Brand;
 
@@ -45,6 +49,72 @@
             }
 
             return await base.GetAllAsync(queryOptions);
+        }
+
+        public async Task<bool> ExistsAsync(Guid id)
+        {
+            return await brandRepository.ExistsAsync(id);
+        }
+
+        public async Task<IResult<BrandServiceModel>> GetAsync(Guid id)
+        {
+            if (!await ExistsAsync(id))
+            {
+                return await Result<BrandServiceModel>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+            }
+
+            var model = await base.GetAsync<BrandServiceModel>(id);
+            return await Result<BrandServiceModel>.SuccessAsync(model);
+        }
+
+        public async Task<bool> BrandNameExistsAsync(string brandName)
+        {
+            return await brandRepository.All(true, true).AnyAsync(b => b.BrandName == brandName);
+        }
+
+        public async Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel)
+        {
+            var isValid = base.ValidateModel(brandServiceModel);
+            if (!isValid)
+            {
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+            }
+
+            var brand = this.Mapper.Map<Brand>(brandServiceModel);
+
+            var entity = await brandRepository.AddAsync(brand);
+            await brandRepository.SaveChangesAsync();
+            var id = entity?.Entity.Id ?? Guid.Empty;
+
+            if (entity?.Entity.Id != Guid.Empty)
+            {
+                return await Result<Guid>.SuccessAsync(id);
+            }
+
+            return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotCreated, nameof(Brand)));
+        }
+
+        public async Task<IResult> EditAsync(Guid id, BrandServiceModel brandServiceModel)
+        {
+            if (!await ExistsAsync(id))
+            {
+                return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+            }
+
+            var isValid = base.ValidateModel(brandServiceModel);
+            if (!isValid)
+            {
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+            }
+
+            var brand = await brandRepository.FindAsync(id, false); 
+
+            this.Mapper.Map(brandServiceModel, brand);
+
+            //var brand = this.Mapper.Map<Brand>(brandServiceModel);
+            brandRepository.Update(brand);
+            await brandRepository.SaveChangesAsync();
+            return await Result<Guid>.SuccessAsync();
         }
     }
 }
