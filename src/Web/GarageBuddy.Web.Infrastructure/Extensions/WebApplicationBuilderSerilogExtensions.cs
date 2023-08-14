@@ -72,22 +72,6 @@
             }
         }
 
-        /*private static void ConfigureElasticSearch(WebApplicationBuilder builder, LoggerConfiguration serilogConfig, string appName, string elasticSearchUrl)
-        {
-            if (!string.IsNullOrEmpty(elasticSearchUrl))
-            {
-                string? formattedAppName = appName?.ToLower().Replace(".", "-").Replace(" ", "-");
-                string indexFormat = $"{formattedAppName}-logs-{builder.Environment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}";
-                serilogConfig.WriteTo.Async(writeTo =>
-                    writeTo.Elasticsearch(new(new Uri(elasticSearchUrl))
-                    {
-                        AutoRegisterTemplate = true,
-                        IndexFormat = indexFormat,
-                        MinimumLogEventLevel = LogEventLevel.Information,
-                    })).Enrich.WithProperty("Environment", builder.Environment.EnvironmentName!);
-            }
-        }*/
-
         private static void OverideMinimumLogLevel(LoggerConfiguration serilogConfig)
         {
             serilogConfig

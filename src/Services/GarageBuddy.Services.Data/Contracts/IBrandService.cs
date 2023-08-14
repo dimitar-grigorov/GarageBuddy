@@ -20,7 +20,7 @@
 
         public Task<IResult<BrandServiceModel>> GetAsync(Guid id);
 
-        public Task<bool> BrandNameExistsAsync(string brandName);
+        public Task<bool> BrandNameExistsAsync(string brandName, Guid excludeId);
 
         public Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel);
 

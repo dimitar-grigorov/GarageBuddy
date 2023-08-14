@@ -32,9 +32,9 @@
             },
             columns: [
                 {
-                    name: "BrandId",
-                    data: "brandId",
-                    title: "BrandId"
+                    name: "Id",
+                    data: "id",
+                    title: "Id"
                 },
                 {
                     name: 'BrandName',
@@ -59,7 +59,7 @@
                     }
                 },
                 {
-                    data: "brandId",
+                    data: "id",
                     title: "Action",
                     render: function (data, type, row) {
                         return `<a href = '@Url.Action("Edit", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class= 'btn btn-primary'> Edit </a>`;
@@ -68,7 +68,7 @@
                     width: "10%"
                 },
                 {
-                    data: "brandId",
+                    data: "id",
                     title: "Models",
                     render: function (data, type, row) {
                         return `<a href='@Url.Action("BrandModels", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class='btn btn-info'>List Models</a>`;

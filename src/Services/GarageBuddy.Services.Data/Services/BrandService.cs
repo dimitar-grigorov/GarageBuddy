@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -67,9 +68,10 @@
             return await Result<BrandServiceModel>.SuccessAsync(model);
         }
 
-        public async Task<bool> BrandNameExistsAsync(string brandName)
+        public async Task<bool> BrandNameExistsAsync(string brandName, Guid excludeId)
         {
-            return await brandRepository.All(true, true).AnyAsync(b => b.BrandName == brandName);
+            return await brandRepository.All(true, true)
+                .AnyAsync(b => b.BrandName == brandName && b.Id.ToString() != excludeId.ToString());
         }
 
         public async Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel)
@@ -80,7 +82,7 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName))
+            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName, Guid.Empty))
             {
                 return await Result<Guid>.FailAsync(string.Format(string.Format(
                         Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), brandServiceModel.BrandName)));
@@ -107,7 +109,7 @@
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName))
+            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName, id))
             {
                 return await Result<Guid>.FailAsync(string.Format(string.Format(
                     Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), brandServiceModel.BrandName)));

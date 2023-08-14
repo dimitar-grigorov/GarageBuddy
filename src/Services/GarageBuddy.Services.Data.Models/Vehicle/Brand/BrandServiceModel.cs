@@ -10,11 +10,9 @@
 
     public class BrandServiceModel : IMapFrom<Brand>, IMapTo<Brand>, IHaveCustomMappings
     {
-        public Guid BrandId { get; set; }
+        public Guid Id { get; set; }
 
         public string BrandName { get; set; } = null!;
-
-        public bool IsSeeded { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
@@ -35,11 +33,10 @@
                 .CreateMap<BrandServiceModel, Brand>()
                 .ForMember(d => d.CreatedOn,
                     opt => opt.Ignore());
-
             configuration
-                .CreateMap<Brand, BrandServiceModel>()
-                .ForMember(d => d.BrandId, opt =>
-                    opt.MapFrom(s => s.Id));
+                .CreateMap<BrandServiceModel, Brand>()
+                .ForMember(d => d.Id,
+                    opt => opt.Ignore());
         }
     }
 }

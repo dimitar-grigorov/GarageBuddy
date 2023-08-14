@@ -1,8 +1,6 @@
-﻿namespace GarageBuddy.Services.Data.Models.Vehicle.Brand
+﻿namespace GarageBuddy.Services.Data.Models.Vehicle.BrandModel
 {
-    using System;
-
-    public class BrandModelServiceModel
+    public class BrandModelListServiceModel
     {
         Guid Id { get; set; }
 
