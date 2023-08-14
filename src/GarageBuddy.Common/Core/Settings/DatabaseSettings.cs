@@ -7,7 +7,7 @@
     {
         public string DbProvider { get; set; } = string.Empty;
 
-        public string ConnectionString { get; set; } = string.Empty;
+        public string DefaultConnection { get; set; } = string.Empty;
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -18,11 +18,11 @@
                     new[] { nameof(DbProvider) });
             }
 
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (string.IsNullOrEmpty(DefaultConnection))
             {
                 yield return new ValidationResult(
-                    $"{nameof(DatabaseSettings)}.{nameof(ConnectionString)} is not configured",
-                    new[] { nameof(ConnectionString) });
+                    $"{nameof(DatabaseSettings)}.{nameof(DefaultConnection)} is not configured",
+                    new[] { nameof(DefaultConnection) });
             }
         }
     }

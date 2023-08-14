@@ -110,9 +110,6 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IInstallationService, InstallationService>();
 
-            // Web helper
-            services.AddScoped<IWebHelper, WebHelper>();
-
             // Settings manager
             services.AddSingleton<IOptionsManager, OptionsManager>();
 
@@ -138,7 +135,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 .AddDbContext<ApplicationDbContext>((p, m) =>
                 {
                     var databaseSettings = p.GetRequiredService<IOptions<DatabaseSettings>>().Value;
-                    m.UseDatabase(databaseSettings.DbProvider, databaseSettings.ConnectionString);
+                    m.UseDatabase(databaseSettings.DbProvider, databaseSettings.DefaultConnection);
                 })
                 /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
                 .AddTransient<ApplicationDbInitializer>()

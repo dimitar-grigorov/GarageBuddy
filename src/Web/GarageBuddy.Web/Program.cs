@@ -79,7 +79,6 @@ try
     app.UseStaticFiles();
     app.UseCookiePolicy();
     app.UseRouting();
-    app.UseInstallUrl();
 
     app.UseAuthentication();
     app.UseAuthorization();

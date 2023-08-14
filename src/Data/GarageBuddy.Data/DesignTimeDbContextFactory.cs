@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Data
 {
     using System.IO;
+    using System.Xml.Linq;
 
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Design;
@@ -16,7 +17,7 @@
                 .Build();
 
             var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            var connectionString = configuration.GetSection("DatabaseSettings")["DefaultConnection"];
             builder.UseSqlServer(connectionString);
 
             return new ApplicationDbContext(builder.Options);

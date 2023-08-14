@@ -20,7 +20,7 @@
 
         public bool IsDatabaseInstalled()
         {
-            databaseIsInstalled ??= !string.IsNullOrEmpty(connectionStringsOptions.Value.ConnectionString);
+            databaseIsInstalled ??= !string.IsNullOrEmpty(connectionStringsOptions.Value.DefaultConnection);
             return databaseIsInstalled.Value;
         }
     }
