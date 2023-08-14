@@ -15,7 +15,6 @@ using GarageBuddy.Web.Infrastructure.Extensions;
 using GarageBuddy.Web.ViewModels;
 
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

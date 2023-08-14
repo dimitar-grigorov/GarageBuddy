@@ -13,6 +13,7 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
 
@@ -31,20 +32,50 @@
             this.mapper = mapper;
         }
 
-        public virtual async Task<ICollection<TModel>> GetAllAsync<TModel>(QueryOptions<TModel>? queryOptions = null)
+        public async Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false)
         {
             var query = this.entityRepository
-                .All(queryOptions?.IsReadOnly ?? false, queryOptions?.WithDeleted ?? false)
+                .All(asReadOnly, includeDeleted)
+                .ProjectTo<TModel>(this.mapper.ConfigurationProvider);
+            return await query.ToListAsync();
+        }
+
+        public virtual async Task<PaginatedResult<TModel>> GetAllAsync<TModel>(QueryOptions<TModel> queryOptions)
+        {
+            var query = this.entityRepository
+                .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider);
 
-            query = this.ModifyQuery(query, queryOptions ?? new());
+            foreach (var orderOption in queryOptions.OrderOptions)
+            {
+                query = orderOption.Order == OrderByOrder.Ascending
+                    ? query.OrderBy(orderOption.Property)
+                    : query.OrderByDescending(orderOption.Property);
+            }
+
+            var totalCount = 0;
+
+            if (queryOptions.Take.HasValue)
+            {
+                totalCount = await query.CountAsync();
+            }
+
+            if (queryOptions.Skip.HasValue)
+            {
+                query = query.Skip(queryOptions.Skip.Value);
+            }
+
+            if (queryOptions.Take.HasValue)
+            {
+                query = query.Take(queryOptions.Take.Value);
+            }
 
             var modelList = await query.ToListAsync();
 
-            return modelList;
+            return PaginatedResult<TModel>.Success(modelList, totalCount);
         }
 
-        public virtual async Task<TModel> GetAsync<TModel>(TKey id, QueryOptions<TModel>? queryOptions = null)
+        public virtual async Task<TModel> GetAsync<TModel>(TKey id)
         {
             if (id == null)
             {
@@ -121,7 +152,7 @@
             try
             {
                 var entity = await this.entityRepository.FindAsync(id);
-                bool withDeleted = queryOptions?.WithDeleted ?? false;
+                bool withDeleted = queryOptions?.IncludeDeleted ?? false;
 
                 if (withDeleted == false && entity.IsDeleted == true)
                 {
@@ -134,33 +165,6 @@
             }
 
             return result;
-        }
-
-        protected IQueryable<TModel> ModifyQuery<TModel>(IQueryable<TModel> query, QueryOptions<TModel>? queryOptions)
-        {
-            if (queryOptions == null)
-            {
-                return query;
-            }
-
-            foreach (var orderOption in queryOptions.OrderOptions)
-            {
-                query = orderOption.Order == OrderByOrder.Ascending 
-                    ? query.OrderBy(orderOption.Property) 
-                    : query.OrderByDescending(orderOption.Property);
-            }
-
-            if (queryOptions.Skip.HasValue)
-            {
-                query = query.Skip(queryOptions.Skip.Value);
-            }
-
-            if (queryOptions.Take.HasValue)
-            {
-                query = query.Take(queryOptions.Take.Value);
-            }
-
-            return query;
         }
 
         protected bool ValidateModel<TModel>(TModel model)

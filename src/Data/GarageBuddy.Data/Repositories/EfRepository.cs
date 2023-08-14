@@ -25,18 +25,18 @@
 
         protected ApplicationDbContext Context { get; set; }
 
-        public virtual IQueryable<TEntity> All(bool isReadonly = false)
+        public virtual IQueryable<TEntity> All(bool asReadonly)
         {
-            return isReadonly ? this.DbSet.AsNoTracking() : this.DbSet;
+            return asReadonly ? this.DbSet.AsNoTracking() : this.DbSet;
         }
 
-        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false)
+        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly)
         {
             var query = this.DbSet.Where(search);
-            return isReadonly ? query.AsNoTracking() : query;
+            return asReadonly ? query.AsNoTracking() : query;
         }
 
-        public virtual TEntity Find(TKey id, bool isReadonly = false)
+        public virtual TEntity Find(TKey id, bool asReadonly = false)
         {
             ArgumentNullException.ThrowIfNull(id);
 
@@ -47,7 +47,7 @@
                 throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
             }
 
-            if (isReadonly)
+            if (asReadonly)
             {
                 this.Context.Entry(entity).State = EntityState.Detached;
             }
@@ -55,7 +55,7 @@
             return entity;
         }
 
-        public virtual async Task<TEntity> FindAsync(TKey id, bool isReadonly = false)
+        public virtual async Task<TEntity> FindAsync(TKey id, bool asReadonly = false)
         {
             ArgumentNullException.ThrowIfNull(id);
 
@@ -66,7 +66,7 @@
                 throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
             }
 
-            if (isReadonly)
+            if (asReadonly)
             {
                 this.Context.Entry(entity).State = EntityState.Detached;
             }

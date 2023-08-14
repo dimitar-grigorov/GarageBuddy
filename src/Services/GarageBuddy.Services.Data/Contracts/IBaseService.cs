@@ -5,11 +5,15 @@
 
     using Common;
 
+    using GarageBuddy.Common.Core.Wrapper.Generic;
+
     public interface IBaseService<TKey>
     {
-        public Task<ICollection<TModel>> GetAllAsync<TModel>(QueryOptions<TModel> queryOptions);
+        public Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false);
 
-        public Task<TModel> GetAsync<TModel>(TKey id, QueryOptions<TModel> queryOptions);
+        public Task<PaginatedResult<TModel>> GetAllAsync<TModel>(QueryOptions<TModel> queryOptions);
+
+        public Task<TModel> GetAsync<TModel>(TKey id);
 
         public Task<TKey> CreateAsync<TModel>(TModel model);
 

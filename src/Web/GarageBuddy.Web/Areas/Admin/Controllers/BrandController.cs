@@ -12,7 +12,9 @@
 
     using Microsoft.AspNetCore.Mvc;
 
+    using Services.Data.Common;
     using Services.Data.Contracts;
+    using Services.Data.Models.Vehicle.Brand;
 
     using ViewModels.Admin.Brand;
 
@@ -39,43 +41,28 @@
             return View(model);
         }
 
-        /// <summary>
-        /// This is your data method.
-        /// DataTables will query this (HTTP GET) to fetch data to display.
-        /// </summary>
-        /// <param name="request">
-        /// This represents your DataTables request.
-        /// It's automatically binded using the default binder and settings.
-        ///
-        /// You should use IDataTablesRequest as your model, to avoid unexpected behavior and allow
-        /// custom binders to be attached whenever necessary.
-        /// </param>
-        /// <returns>
-        /// Return data here, with a json-compatible result.
-        /// </returns>
         public async Task<IActionResult> BrandList(IDataTablesRequest request)
         {
-            var brands = await this.brandService.GetAllAsync();
+            if (request.Length <= 0)
+            {
+                return new DataTablesJsonResult(DataTablesResponse.Create(request, 0, 0, null), true);
+            }
 
-            var data = mapper.Map<ICollection<BrandListViewModel>>(brands);
+            var brandsResult = await this.brandService.GetAllAsync(
+                new QueryOptions<BrandServiceModel>()
+                {
+                    Skip = request.Start,
+                    Take = request.Length,
+                });
 
-            // Global filtering.
-            // Filter is being manually applied due to in-memmory (IEnumerable) data.
-            // If you want something rather easier, check IEnumerableExtensions Sample.
-            var filteredData = String.IsNullOrWhiteSpace(request.Search.Value)
-                ? data
-                : data.Where(item => item.BrandName.Contains(request.Search.Value));
+            var data = mapper.Map<ICollection<BrandListViewModel>>(brandsResult.Data);
 
-            // Paging filtered data.
-            // Paging is rather manual due to in-memmory (IEnumerable) data.
-            var dataPage = filteredData.Skip(request.Start).Take(request.Length);
+            /*var filteredData = String.IsNullOrWhiteSpace(request.Search.Value)
+               ? data
+               : data.Where(item => item.BrandName.Contains(request.Search.Value));*/
 
-            // Response creation. To create your response you need to reference your request, to avoid
-            // request/response tampering and to ensure response will be correctly created.
-            var response = DataTablesResponse.Create(request, data.Count(), filteredData.Count(), dataPage);
+            var response = DataTablesResponse.Create(request, brandsResult.TotalCount, brandsResult.TotalCount, data);
 
-            // Easier way is to return a new 'DataTablesJsonResult', which will automatically convert your
-            // response to a json-compatible content, so DataTables can read it when received.
             return new DataTablesJsonResult(response, true);
         }
     }

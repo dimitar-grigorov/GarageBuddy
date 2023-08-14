@@ -1,6 +1,5 @@
 ﻿namespace GarageBuddy.Common.Core.Wrapper.Generic
 {
-    using System;
     using System.Collections.Generic;
 
     public class PaginatedResult<T> : Result
@@ -10,38 +9,26 @@
             Data = data;
         }
 
-        internal PaginatedResult(bool succeeded, List<T> data = default, List<string> messages = null, int count = 0, int page = 1, int pageSize = 10)
+        internal PaginatedResult(bool succeeded, List<T> data, List<string> messages, int totalCount)
         {
             Data = data;
-            CurrentPage = page;
+            Messages = messages;
             Succeeded = succeeded;
-            PageSize = pageSize;
-            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-            TotalCount = count;
+            TotalCount = totalCount;
         }
 
-        public int CurrentPage { get; set; }
-
-        public int TotalPages { get; set; }
-
         public int TotalCount { get; set; }
-
-        public int PageSize { get; set; }
-
-        public bool HasPreviousPage => CurrentPage > 1;
-
-        public bool HasNextPage => CurrentPage < TotalPages;
 
         public List<T> Data { get; set; }
 
         public static PaginatedResult<T> Failure(List<string> messages)
         {
-            return new PaginatedResult<T>(false, default, messages);
+            return new PaginatedResult<T>(false, new List<T>(), messages, 0);
         }
 
-        public static PaginatedResult<T> Success(List<T> data, int count, int page, int pageSize)
+        public static PaginatedResult<T> Success(List<T> data, int totalCount)
         {
-            return new PaginatedResult<T>(true, data, null, count, page, pageSize);
+            return new PaginatedResult<T>(true, data, new List<string>(), totalCount);
         }
     }
 }

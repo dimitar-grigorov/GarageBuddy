@@ -20,12 +20,12 @@
 
         public int GetCount()
         {
-            return settingsRepository.All().Count();
+            return settingsRepository.All(false).Count();
         }
 
         public IEnumerable<T> GetAll<T>()
         {
-            return settingsRepository.All().To<T>().ToList();
+            return settingsRepository.All(false).To<T>().ToList();
         }
     }
 }

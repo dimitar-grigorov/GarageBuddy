@@ -17,11 +17,11 @@
         {
         }
 
-        public IQueryable<TEntity> All(bool isReadonly, bool withDeleted)
+        public IQueryable<TEntity> All(bool asReadonly, bool includeDeleted)
         {
-            var query = base.All(isReadonly);
+            var query = base.All(asReadonly);
 
-            if (!withDeleted)
+            if (!includeDeleted)
             {
                 query = query.Where(e => !e.IsDeleted);
             }
@@ -29,11 +29,11 @@
             return query;
         }
 
-        public IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly, bool withDeleted)
+        public IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly, bool includeDeleted)
         {
-            var query = base.All(search, isReadonly);
+            var query = base.All(search, asReadonly);
 
-            if (!withDeleted)
+            if (!includeDeleted)
             {
                 query = query.Where(e => !e.IsDeleted);
             }
@@ -41,14 +41,14 @@
             return query;
         }
 
-        public override IQueryable<TEntity> All(bool isReadonly = false)
+        public override IQueryable<TEntity> All(bool asReadonly)
         {
-            return base.All(isReadonly).Where(x => !x.IsDeleted);
+            return base.All(asReadonly).Where(x => !x.IsDeleted);
         }
 
-        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false)
+        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly = false)
         {
-            return this.All(isReadonly).Where(search);
+            return this.All(asReadonly).Where(search);
         }
 
         public void HardDelete(TEntity entity)

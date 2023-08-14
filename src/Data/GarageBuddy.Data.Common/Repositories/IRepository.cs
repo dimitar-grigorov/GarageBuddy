@@ -13,13 +13,13 @@
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : class, IEntity<TKey>
     {
-        IQueryable<TEntity> All(bool isReadonly = false);
+        IQueryable<TEntity> All(bool asReadonly);
 
-        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool isReadonly = false);
+        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly);
 
-        TEntity Find(TKey id, bool isReadonly = false);
+        TEntity Find(TKey id, bool asReadonly = false);
 
-        Task<TEntity> FindAsync(TKey id, bool isReadonly = false);
+        Task<TEntity> FindAsync(TKey id, bool asReadonly = false);
 
         EntityEntry<TEntity> Add(TEntity entity);
 

@@ -4,91 +4,61 @@
 <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Brands Datatable</h5>
+            <h5 class="card-title">Brands</h5>
         </div>
         <div class="card-body">
-            <div class="">
-
-                <table class="table table-striped dataTable-table" id="myTable"></table>
-            </div>
-            @*   <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
-            <div class="dataTable-top">
-            <div class="dataTable-search">
-            <input class="dataTable-input" placeholder="Search..." type="text">
-            </div>
-            </div>
-            <div class="dataTable-container">
-            <table class="table table-striped dataTable-table" id="table1">
-            <thead>
-            <tr>
-            <th data-sortable="" style="width: 20%;"><a href="#" class="dataTable-sorter">Brand ID</a></th>
-            <th data-sortable="" style="width: 20%;"><a href="#" class="dataTable-sorter">Brand Name</a></th>
-            <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Is Seeded</a></th>
-            <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Created On</a></th>
-            <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Modified On</a></th>
-            <th data-sortable="" style="width: 15%;"><a href="#" class="dataTable-sorter">Is Deleted</a></th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var brand in Model)
-            {
-            <tr>
-            <td>@brand.BrandId</td>
-            <td>@brand.BrandName</td>
-            <td>@(brand.IsSeeded ? "Yes" : "No")</td>
-            <td>@brand.CreatedOn.ToString("yyyy-MM-dd HH:mm:ss")</td>
-            <td>@(brand.ModifiedOn?.ToString("yyyy-MM-dd HH:mm:ss") ?? "-")</td>
-            <td>@(brand.IsDeleted ? "Yes" : "No")</td>
-            </tr>
-            }
-            </tbody>
-            </table>
-            </div>
-            </div> *@
+            <table id="brandTable" class="table table-striped table-hover" style="width:100%"></table>
         </div>
     </div>
 </section>
 
 <script>
     $(document).ready(function () {
-        $('#myTable').dataTable({
+        $('#brandTable').dataTable({
             serverSide: true,
             responsive: true,
-            //pagingType: 'simple',
-            dom:
-                "<'row'<'col-3'l><'col-9'f>>" +
-                    "<'row dt-row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-4'i><'col-8'p>>",
-            "language": {
-                "info": "Page _PAGE_ of _PAGES_",
-                "lengthMenu": "_MENU_ ",
-                "search": "",
-                "searchPlaceholder": "Search..."
+            searching: true,
+            ordering: true,
+            ajax: {
+                url: "@Url.Action("BrandList", "Brand", new { Area = @GlobalConstants.AdminArea })"
             },
-            ajax: "@Url.Action("BrandList","Brand", new {Area = @GlobalConstants.AdminArea })",
             columns: [
                 {
                     name: "brandId",
                     data: "brandId",
                     title: "BrandId",
-                    sortable: true,
-                    searchable: false
                 },
                 {
                     name: 'brandName',
                     data: "brandName",
                     title: "BrandName",
-                    sortable: true,
-                    searchable: false
                 },
                 {
                     name: "createdOn",
                     data: "createdOn",
                     title: "createdOn",
-                    sortable: true,
-                    searchable: false
+                },
+                {
+                    data: "brandId",
+                    render: function (data, row) { return `<a href='#' class='btn btn-danger' onclick=alert('${data}$'); >Delete</a>`; },
+                    sortable: false,
+                    width: "10%",
                 }
-
+            ],
+            //Auto refresh
+            //initComplete: function () {
+            //    const api = this.api();
+            //    setInterval(function () {
+            //        api.ajax.reload();
+            //    }, 5000);
+            //},
+            lengthMenu: [
+                [10, 25, -1],
+                [10, 25, 'All']
+            ],
+            columnDefs: [
+                { visible: false, targets: [0] },
+                { className: "text-center", targets: [1] }
             ]
         });
     });

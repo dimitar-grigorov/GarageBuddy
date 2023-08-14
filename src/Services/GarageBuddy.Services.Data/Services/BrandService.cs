@@ -10,6 +10,7 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
 
@@ -27,7 +28,12 @@
             this.brandRepository = entityRepository;
         }
 
-        public async Task<ICollection<BrandServiceModel>> GetAllAsync(QueryOptions<BrandServiceModel>? queryOptions = null)
+        public async Task<ICollection<BrandServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false)
+        {
+            return await base.GetAllAsync<BrandServiceModel>(asReadOnly, includeDeleted);
+        }
+
+        public async Task<PaginatedResult<BrandServiceModel>> GetAllAsync(QueryOptions<BrandServiceModel> queryOptions)
         {
             return await base.GetAllAsync(queryOptions);
         }

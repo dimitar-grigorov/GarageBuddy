@@ -6,11 +6,7 @@ namespace GarageBuddy.Common.Core.Wrapper.Generic
 
     public class Result<T> : Result, IResult<T>
     {
-        public Result()
-        {
-        }
-
-        public T Data { get; set; }
+        public T Data { get; set; } = default!;
 
         public static new Result<T> Fail()
         {
