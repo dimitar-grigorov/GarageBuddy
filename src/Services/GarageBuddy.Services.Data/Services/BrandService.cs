@@ -80,6 +80,12 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
+            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName))
+            {
+                return await Result<Guid>.FailAsync(string.Format(string.Format(
+                        Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), brandServiceModel.BrandName)));
+            }
+
             var brand = this.Mapper.Map<Brand>(brandServiceModel);
 
             var entity = await brandRepository.AddAsync(brand);
@@ -101,17 +107,22 @@
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
+            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName))
+            {
+                return await Result<Guid>.FailAsync(string.Format(string.Format(
+                    Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), brandServiceModel.BrandName)));
+            }
+
             var isValid = base.ValidateModel(brandServiceModel);
             if (!isValid)
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            var brand = await brandRepository.FindAsync(id, false); 
+            var brand = await brandRepository.FindAsync(id, false);
 
             this.Mapper.Map(brandServiceModel, brand);
 
-            //var brand = this.Mapper.Map<Brand>(brandServiceModel);
             brandRepository.Update(brand);
             await brandRepository.SaveChangesAsync();
             return await Result<Guid>.SuccessAsync();

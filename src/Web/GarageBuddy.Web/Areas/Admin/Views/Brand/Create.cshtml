@@ -1,7 +1,7 @@
-﻿@model BrandViewModel
+﻿@model BrandCreateViewModel
 
 @{
-    ViewData["Title"] = "Edit Brand";
+    ViewData["Title"] = "Create Brand";
 }
 
 <section id="basic-vertical-layouts">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form asp-area="Admin" asp-controller="Brand" asp-action="Edit" class="form form-vertical" method="post">
+                        <form asp-area="Admin" asp-controller="Brand" asp-action="Create" class="form form-vertical" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-body">
                                 <div class="row">
@@ -22,28 +22,6 @@
                                             <label asp-for="@Model.BrandName"></label>
                                             <input type="text" class="form-control" asp-for="@Model.BrandName" placeholder="Brand Name">
                                             <span class="form-text text-danger" asp-validation-for="@Model.BrandName"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <div class="checkbox">
-                                                <input type="checkbox" asp-for="@Model.IsDeleted" class="form-check-input">
-                                                <label asp-for="@Model.IsDeleted" class="form-check-label"></label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @if (Model.IsDeleted)
-                                    {
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                <label asp-for="@Model.DeletedOn"></label>
-                                                <input type="text" class="form-control" asp-for="@Model.DeletedOn" placeholder="Deleted On" readonly>
-                                            </div>
-                                        </div>
-                                    }
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <input type="hidden" asp-for="@Model.BrandId" />
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">

@@ -70,6 +70,34 @@
         }
 
         [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(BrandCreateViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var brandServiceModel = mapper.Map<BrandServiceModel>(model);
+            var result = await this.brandService.CreateAsync(brandServiceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+                return View(model);
+            }
+
+            return RedirectToAction(Actions.Index);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
             if (!await this.brandService.ExistsAsync(id))

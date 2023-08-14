@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/site.min.css"/>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script> 
     
     @await this.RenderSectionAsync("HeadScripts", required: false)
@@ -48,25 +49,6 @@
                         </div>
                     </div>
                     @RenderBody()
-                    <section class="section">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">About Vertical Navbar</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>
-                                    Vertical Navbar is a layout option that you can use with
-                                    Mazer.
-                                </p>
-
-                                <p>
-                                    In case you want the navbar to be sticky on top while
-                                    scrolling, add <code>.navbar-fixed</code> class alongside
-                                    with <code>.layout-navbar</code> class.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </div>
             <partial name="_ModalFormPartial" />
