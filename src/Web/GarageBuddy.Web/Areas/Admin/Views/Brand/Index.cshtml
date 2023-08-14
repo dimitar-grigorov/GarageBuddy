@@ -27,22 +27,23 @@
             },
             columns: [
                 {
-                    name: "brandId",
+                    name: "BrandId",
                     data: "brandId",
                     title: "BrandId"
                 },
                 {
-                    name: 'brandName',
+                    name: 'BrandName',
                     data: "brandName",
-                    title: "BrandName"
+                    title: "Brand Name"
                 },
                 {
-                    name: "createdOn",
+                    name: "CreatedOn",
                     data: "createdOn",
-                    title: "createdOn"
+                    title: "Created On"
                 },
                 {
                     data: "brandId",
+                    title: "Actions",
                     render: function (data, row) { return `<a href='#' class='btn btn-danger' onclick=alert('${data}$'); >Delete</a>`; },
                     sortable: false,
                     width: "10%"

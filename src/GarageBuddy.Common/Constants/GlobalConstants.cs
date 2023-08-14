@@ -16,6 +16,8 @@
 
         public const string IncludeDeletedFilterName = "includeDeleted";
 
+        public const string DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+
         /// <summary>
         /// Gets a default timeout (in milliseconds) before restarting the application.
         /// </summary>

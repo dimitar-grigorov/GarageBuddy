@@ -35,6 +35,15 @@
 
         public async Task<PaginatedResult<BrandServiceModel>> GetAllAsync(QueryOptions<BrandServiceModel> queryOptions)
         {
+            // Default order by name
+            if (!queryOptions.OrderOptions.Any())
+            {
+                queryOptions.OrderOptions = new List<OrderOption<BrandServiceModel>>
+                {
+                    new(e => e.BrandName, OrderByOrder.Ascending),
+                };
+            }
+
             return await base.GetAllAsync(queryOptions);
         }
     }
