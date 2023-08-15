@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -133,12 +132,8 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            var brand = await brandRepository.FindAsync(id, false);
+            await base.EditAsync(id, brandServiceModel);
 
-            this.Mapper.Map(brandServiceModel, brand);
-
-            brandRepository.Update(brand);
-            await brandRepository.SaveChangesAsync();
             return await Result<Guid>.SuccessAsync();
         }
     }

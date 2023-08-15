@@ -26,15 +26,6 @@
         {
             configuration
                 .CreateMap<BrandServiceModel, Brand>()
-                .ForMember(d => d.DeletedOn,
-                    opt => opt.Ignore());
-
-            configuration
-                .CreateMap<BrandServiceModel, Brand>()
-                .ForMember(d => d.CreatedOn,
-                    opt => opt.Ignore());
-            configuration
-                .CreateMap<BrandServiceModel, Brand>()
                 .ForMember(d => d.Id,
                     opt => opt.Ignore());
         }

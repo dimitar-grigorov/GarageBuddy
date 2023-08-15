@@ -24,11 +24,11 @@
     {
         private readonly IMapper mapper;
 
-        private readonly IDeletableEntityRepository<TEntity, TKey> brandModelRepository;
+        private readonly IDeletableEntityRepository<TEntity, TKey> entityRepository;
 
-        public BaseService(IDeletableEntityRepository<TEntity, TKey> brandModelRepository, IMapper mapper)
+        public BaseService(IDeletableEntityRepository<TEntity, TKey> entityRepository, IMapper mapper)
         {
-            this.brandModelRepository = brandModelRepository;
+            this.entityRepository = entityRepository;
             this.mapper = mapper;
         }
 
@@ -36,7 +36,7 @@
 
         public async Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false)
         {
-            var query = this.brandModelRepository
+            var query = this.entityRepository
                 .All(asReadOnly, includeDeleted)
                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider);
             return await query.ToListAsync();
@@ -44,7 +44,7 @@
 
         public virtual async Task<PaginatedResult<TModel>> GetAllAsync<TModel>(QueryOptions<TModel> queryOptions)
         {
-            var query = this.brandModelRepository
+            var query = this.entityRepository
                 .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider);
             var modelList = await ModifyQuery(query, queryOptions).ToListAsync();
@@ -61,7 +61,7 @@
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var entity = await this.brandModelRepository.FindAsync(id, true);
+            var entity = await this.entityRepository.FindAsync(id, true);
 
             var model = this.mapper.Map<TModel>(entity);
 
@@ -81,8 +81,8 @@
 
             var entity = this.mapper.Map<TEntity>(model);
 
-            var result = await this.brandModelRepository.AddAsync(entity);
-            await this.brandModelRepository.SaveChangesAsync();
+            var result = await this.entityRepository.AddAsync(entity);
+            await this.entityRepository.SaveChangesAsync();
 
             return result.Entity.Id ?? default!;
         }
@@ -105,12 +105,31 @@
                     nameof(model));
             }
 
-            var oldEntity = await this.brandModelRepository.FindAsync(id, false);
+            var oldEntity = await this.entityRepository.FindAsync(id, false);
+
+            // Preserve and don't edit Created On date
+            var oldCreatedOn = oldEntity.CreatedOn;
+            var oldDeleted = oldEntity.IsDeleted;
 
             this.CopyProperties(model, oldEntity);
+
+            // If Deleted is changed, Update DeletedOn
+            if (oldEntity.IsDeleted != oldDeleted)
+            {
+                if (oldEntity.IsDeleted)
+                {
+                    oldEntity.DeletedOn = DateTime.Now;
+                }
+                else
+                {
+                    oldEntity.DeletedOn = null;
+                }
+            }
+
+            oldEntity.CreatedOn = oldCreatedOn;
             oldEntity.ModifiedOn = DateTime.Now;
 
-            await this.brandModelRepository.SaveChangesAsync();
+            await this.entityRepository.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync<TModel>(TKey id)
@@ -120,8 +139,8 @@
                 throw new InvalidOperationException(string.Format(Errors.EntityNotFound, "entity"));
             }
 
-            await this.brandModelRepository.DeleteAsync(id);
-            await this.brandModelRepository.SaveChangesAsync();
+            await this.entityRepository.DeleteAsync(id);
+            await this.entityRepository.SaveChangesAsync();
         }
 
         public virtual async Task<bool> ExistsAsync<TModel>(TKey id, QueryOptions<TModel>? queryOptions = null)
@@ -130,8 +149,8 @@
 
             try
             {
-                var entity = await this.brandModelRepository.FindAsync(id, queryOptions?.AsReadOnly ?? false);
-                bool withDeleted = queryOptions?.IncludeDeleted ?? false;
+                var entity = await this.entityRepository.FindAsync(id, queryOptions?.AsReadOnly ?? false);
+                var withDeleted = queryOptions?.IncludeDeleted ?? false;
 
                 if (withDeleted == false && entity.IsDeleted == true)
                 {
@@ -173,7 +192,7 @@
             var totalCount = 0;
             if (queryOptions.Take.HasValue)
             {
-                totalCount = await this.brandModelRepository
+                totalCount = await this.entityRepository
                     .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted).CountAsync();
             }
 
@@ -187,7 +206,7 @@
             var context = new ValidationContext(model, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
 
-            bool isValid = Validator.TryValidateObject(model, context, validationResults, true);
+            var isValid = Validator.TryValidateObject(model, context, validationResults, true);
 
             return isValid;
         }
@@ -241,6 +260,7 @@
                           let targetProperty = typeDest.GetProperty(srcProp.Name)
                           where srcProp.CanRead
                           && targetProperty != null
+                          && targetProperty.Name != nameof(BaseModel<TKey>.Id)
                           && (targetProperty.GetSetMethod(true) != null && !targetProperty.GetSetMethod(true)!.IsPrivate)
                           && (targetProperty.GetSetMethod()!.Attributes & MethodAttributes.Static) == 0
                           && targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)

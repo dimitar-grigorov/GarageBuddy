@@ -6,7 +6,6 @@
     using System.Reflection;
 
     using AutoMapper;
-
     using TypeConverters;
 
     public static class AutoMapperConfig

@@ -23,22 +23,22 @@
 
     public class BrandModelService : BaseService<BrandModel, Guid>, IBrandModelService
     {
-        private readonly IDeletableEntityRepository<BrandModel, Guid> brandModelRepository;
+        private readonly IDeletableEntityRepository<BrandModel, Guid> entityRepository;
         private readonly IBrandService brandService;
 
         public BrandModelService(
-            IDeletableEntityRepository<BrandModel, Guid> brandModelRepository,
+            IDeletableEntityRepository<BrandModel, Guid> entityRepository,
             IMapper mapper,
             IBrandService brandService)
-            : base(brandModelRepository, mapper)
+            : base(entityRepository, mapper)
         {
-            this.brandModelRepository = brandModelRepository;
+            this.entityRepository = entityRepository;
             this.brandService = brandService;
         }
 
         public async Task<ICollection<BrandModelListServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false)
         {
-            var query = this.brandModelRepository
+            var query = this.entityRepository
                 .All(asReadOnly, includeDeleted)
                 .Include(bm => bm.Brand)
                 .ProjectTo<BrandModelListServiceModel>(Mapper.ConfigurationProvider)
@@ -58,7 +58,7 @@
                         };
             }
 
-            var query = this.brandModelRepository
+            var query = this.entityRepository
                 .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
                 .Include(bm => bm.Brand)
                 .ProjectTo<BrandModelListServiceModel>(Mapper.ConfigurationProvider);
@@ -83,7 +83,7 @@
                 };
             }
 
-            var query = this.brandModelRepository
+            var query = this.entityRepository
                 .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
                 .Where(bm => bm.BrandId == brandId)
                 .Include(bm => bm.Brand)
@@ -98,7 +98,7 @@
 
         public async Task<bool> ExistsAsync(Guid id)
         {
-            return await brandModelRepository.ExistsAsync(id);
+            return await entityRepository.ExistsAsync(id);
         }
 
         public async Task<IResult<BrandModelServiceModel>> GetAsync(Guid id)
@@ -125,11 +125,10 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            // TODO: Check if works
             var brandModel = this.Mapper.Map<BrandModel>(model);
 
-            var entity = await brandModelRepository.AddAsync(brandModel);
-            await brandModelRepository.SaveChangesAsync();
+            var entity = await entityRepository.AddAsync(brandModel);
+            await entityRepository.SaveChangesAsync();
             var id = entity?.Entity.Id ?? Guid.Empty;
 
             if (entity?.Entity.Id != Guid.Empty)
@@ -158,13 +157,8 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            var brand = await brandModelRepository.FindAsync(id, false);
+            await base.EditAsync(id, model);
 
-            // TODO: check if works
-            this.Mapper.Map(model, brand);
-
-            brandModelRepository.Update(brand);
-            await brandModelRepository.SaveChangesAsync();
             return await Result<Guid>.SuccessAsync();
         }
     }

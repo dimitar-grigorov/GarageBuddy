@@ -29,16 +29,7 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration
-                .CreateMap<BrandModelListServiceModel, BrandModel>()
-                .ForMember(d => d.DeletedOn,
-                    opt => opt.Ignore());
-
-            configuration
-                .CreateMap<BrandModelListServiceModel, BrandModel>()
-                .ForMember(d => d.CreatedOn,
-                    opt => opt.Ignore());
-            configuration
-                .CreateMap<BrandModelListServiceModel, BrandModel>()
+                .CreateMap<BrandModelServiceModel, BrandModel>()
                 .ForMember(d => d.Id,
                     opt => opt.Ignore());
         }

@@ -6,6 +6,7 @@
     using AutoMapper;
 
     using Common.Constants;
+    using GarageBuddy.Services.Mapping.TypeConverters;
 
     using Services.Data.Models.Vehicle.Brand;
     using Services.Mapping;
@@ -30,25 +31,12 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration
-                .CreateMap<BrandViewModel, BrandServiceModel>()
-                .ForMember(d => d.DeletedOn,
-                    opt => opt.Ignore());
-
-            configuration
-                .CreateMap<BrandViewModel, BrandServiceModel>()
-                .ForMember(d => d.CreatedOn,
-                    opt => opt.Ignore());
-
-            configuration.CreateMap<DateTime?, string>().ConvertUsing(
+            /*  configuration.CreateMap<DateTime?, string>().ConvertUsing(
                 src =>
                     src.HasValue ? src.Value.ToString(GlobalConstants.DefaultDateTimeFormat)
-                        : MessageConstants.NotDeleted);
+                        : MessageConstants.NotDeleted);*/
 
-            configuration.CreateMap<BrandServiceModel, BrandViewModel>()
-                    .ForMember(dest =>
-                        dest.DeletedOn, opts
-                        => opts.MapFrom(src => src.DeletedOn));
+            configuration.CreateMap<DateTime?, string?>().ConvertUsing(new ReverseDateTimeTypeConverter());
         }
     }
 }

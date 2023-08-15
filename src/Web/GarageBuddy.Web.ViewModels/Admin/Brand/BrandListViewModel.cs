@@ -27,10 +27,6 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<DateTime?, string?>().ConvertUsing(new ReverseDateTimeTypeConverter());
-
-          /*  configuration.CreateMap<BrandServiceModel, BrandListViewModel>()
-                .ForMember(d => d.IsDeleted, opt =>
-                    opt.MapFrom(src => src.IsDeleted ? "Active" : "Deleted"));*/
         }
     }
 }

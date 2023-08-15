@@ -33,6 +33,23 @@
                                             <span class="form-text text-danger" asp-validation-for="@Model.BrandId"></span>
                                         </div>
                                     </div>
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <div class="checkbox">
+                                                <input type="checkbox" asp-for="@Model.IsDeleted" class="form-check-input">
+                                                <label asp-for="@Model.IsDeleted" class="form-check-label"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.IsDeleted)
+                                    {
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.DeletedOn"></label>
+                                                <input type="text" class="form-control" asp-for="@Model.DeletedOn" placeholder="Deleted On" readonly>
+                                            </div>
+                                        </div>
+                                    }
                                     <div class="col-12 d-flex justify-content-between">
                                         <a asp-area="Admin" asp-controller="BrandModel" asp-action="Index" class="btn btn-secondary me-1 mb-1">
                                             <i class="bi bi-car-front"></i>
