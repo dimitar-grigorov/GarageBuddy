@@ -1,20 +1,11 @@
 ﻿namespace GarageBuddy.Services.Data.Contracts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    using GarageBuddy.Common.Core.Enums;
-    using GarageBuddy.Common.Core.Wrapper;
-    using GarageBuddy.Common.Core.Wrapper.Generic;
-    using GarageBuddy.Services.Data.Common;
-
     using Models.Vehicle.Brand;
 
     public interface IBrandService
     {
         public Task<ICollection<BrandServiceModel>> GetAllAsync(
-            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.NotDeleted);
 
         public Task<PaginatedResult<BrandServiceModel>> GetAllAsync(QueryOptions<BrandServiceModel> queryOptions);

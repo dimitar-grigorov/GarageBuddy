@@ -3,8 +3,13 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
 
+    using Data;
+    using Data.Common.Repositories;
     using Data.DataProvider;
+    using Data.Repositories;
 
     using DataTables.AspNet.AspNetCore;
 
@@ -12,12 +17,6 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using GarageBuddy.Common.Core;
     using GarageBuddy.Common.Core.Settings;
     using GarageBuddy.Common.Core.Settings.Mail;
-    using GarageBuddy.Data;
-    using GarageBuddy.Data.Common.Repositories;
-    using GarageBuddy.Data.Repositories;
-    using GarageBuddy.Services.Data.Contracts;
-    using GarageBuddy.Services.Data.Services;
-    using GarageBuddy.Services.Messaging.Email;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -28,8 +27,10 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 
     using Serilog;
 
+    using Services.Data.Contracts;
     using Services.Data.Options;
     using Services.Messaging.Contracts;
+    using Services.Messaging.Email;
     using Services.Messaging.Services;
 
     using ViewRenderer;
@@ -46,8 +47,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             // TODO: Remove Razor Pages
             services.AddRazorPages();
             return services
+                .AddApplicationServices(typeof(IBrandService))
                 .AddPersistence()
-                .AddApplicationServices()
                 .AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -101,18 +102,43 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             return services;
         }
 
-        internal static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        /// <summary>
+        /// This method registers all services with their interfaces and implementations of given assembly.
+        /// The assembly is taken from the type of random service interface or implementation provided.
+        /// </summary>
+        /// <param name="serviceType"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        internal static IServiceCollection AddApplicationServices(this IServiceCollection services, Type serviceType)
         {
-            // Application services
+            Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
+            if (serviceAssembly == null)
+            {
+                throw new InvalidOperationException("Invalid service type provided!");
+            }
+
+            var implementationTypes = serviceAssembly
+                .GetTypes()
+                .Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
+                .ToArray();
+            foreach (var implementationType in implementationTypes)
+            {
+                var interfaceType = implementationType
+                    .GetInterface($"I{implementationType.Name}");
+                if (interfaceType == null)
+                {
+                    throw new InvalidOperationException(
+                        $"No interface is provided for the service with name: {implementationType.Name}");
+                }
+
+                services.AddScoped(interfaceType, implementationType);
+            }
+
+            // Extra Application services
             services.AddScoped<IViewRenderer, ViewRenderer>();
-            services.AddScoped<IBrandService, BrandService>();
-            services.AddScoped<IBrandModelService, BrandModelService>();
             services.AddTransient<IEmailSender, SmtpMailSender>();
             services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IUserService, UserService>();
 
-            // Settings manager
+            // Options manager
             services.AddSingleton<IOptionsManager, OptionsManager>();
 
             return services;

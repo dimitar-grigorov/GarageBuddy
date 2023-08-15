@@ -1,19 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using AutoMapper;
 
-    using Common;
-
-    using Contracts;
-
-    using GarageBuddy.Common.Core.Enums;
-    using GarageBuddy.Common.Core.Wrapper;
-    using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
 
@@ -34,7 +22,7 @@
         }
 
         public async Task<ICollection<BrandServiceModel>> GetAllAsync(
-            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
         {
             return await base.GetAllAsync<BrandServiceModel>(asReadOnly, includeDeleted);

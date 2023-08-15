@@ -1,14 +1,5 @@
 ﻿namespace GarageBuddy.Services.Data.Contracts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
-    using GarageBuddy.Common.Core.Enums;
-    using GarageBuddy.Common.Core.Wrapper;
-    using GarageBuddy.Common.Core.Wrapper.Generic;
-    using GarageBuddy.Services.Data.Common;
-
     using Models.Vehicle.BrandModel;
 
     public interface IBrandModelService
