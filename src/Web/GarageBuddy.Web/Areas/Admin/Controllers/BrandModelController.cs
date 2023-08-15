@@ -9,6 +9,7 @@
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
 
+    using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Services.Data.Common;
 
     using GarageBuddy.Services.Data.Models.Vehicle.Brand;
@@ -38,8 +39,13 @@
             this.brandService = brandService;
         }
 
-        public IActionResult Index(Guid? brandId)
+        public IActionResult Index(string? brandId)
         {
+            if (brandId != null)
+            {
+                TempData[IdFilterName] = brandId;
+            }
+
             return View();
         }
 
@@ -51,14 +57,18 @@
             }
 
             request.AdditionalParameters.TryGetValue(IncludeDeletedFilterName, out var searchValue);
+            request.AdditionalParameters.TryGetValue(IdFilterName, out var brandId);
 
-            var brandsResult = await this.brandModelService.GetAllAsync(
-                new QueryOptions<BrandModelListServiceModel>()
-                {
-                    IncludeDeleted = (bool)(searchValue ?? false),
-                    Skip = request.Start,
-                    Take = request.Length,
-                });
+            var queryOptions = new QueryOptions<BrandModelListServiceModel>()
+            {
+                IncludeDeleted = (bool)(searchValue ?? false),
+                Skip = request.Start,
+                Take = request.Length,
+            };
+            // Do we have passed search value?
+            var brandsResult = brandId != null
+                ? await this.brandModelService.GetAllByBrandIdAsync(Guid.Parse(brandId.ToString()!), queryOptions)
+                : await this.brandModelService.GetAllAsync(queryOptions);
 
             var data = mapper.Map<ICollection<BrandModelListViewModel>>(brandsResult.Data);
 

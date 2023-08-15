@@ -16,6 +16,8 @@
 
         public const string IncludeDeletedFilterName = "includeDeleted";
 
+        public const string IdFilterName = "id";
+
         public const string DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
         /// <summary>

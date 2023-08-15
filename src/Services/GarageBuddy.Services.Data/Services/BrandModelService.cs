@@ -71,6 +71,32 @@
             return PaginatedResult<BrandModelListServiceModel>.Success(modelList, totalCount);
         }
 
+        public async Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(Guid brandId,
+            QueryOptions<BrandModelListServiceModel> queryOptions)
+        {
+            // Default order by name
+            if (!queryOptions.OrderOptions.Any())
+            {
+                queryOptions.OrderOptions = new List<OrderOption<BrandModelListServiceModel>>
+                {
+                    new(e => e.ModelName, OrderByOrder.Ascending),
+                    new(e => e.BrandName, OrderByOrder.Ascending),
+                };
+            }
+
+            var query = this.brandModelRepository
+                .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
+                .Where(bm => bm.BrandId == brandId)
+                .Include(bm => bm.Brand)
+                .ProjectTo<BrandModelListServiceModel>(Mapper.ConfigurationProvider);
+
+            var modelList = await ModifyQuery(query, queryOptions).ToListAsync();
+
+            var totalCount = await GetTotalCountForPagination(queryOptions);
+
+            return PaginatedResult<BrandModelListServiceModel>.Success(modelList, totalCount);
+        }
+
         public async Task<bool> ExistsAsync(Guid id)
         {
             return await brandModelRepository.ExistsAsync(id);

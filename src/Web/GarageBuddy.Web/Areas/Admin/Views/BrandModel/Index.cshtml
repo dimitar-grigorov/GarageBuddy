@@ -1,6 +1,14 @@
 ﻿@using GarageBuddy.Common.Constants
 @{
-    ViewData["Title"] = "Vehicle Brand Models";
+    ViewData["Title"] = "Vehicle Models";
+    var ajaxUrl = @Url.Action("BrandModelList", "BrandModel", new { Area = @GlobalConstants.AdminArea });
+    var idFilter = "";
+
+    if (TempData[IdFilterName] != null)
+    {
+        idFilter = TempData[IdFilterName].ToString();
+    }
+
 }
 
 <section class="section">
@@ -17,6 +25,7 @@
 
 
 <script>
+    console.log("@ajaxUrl");
     $(document).ready(function () {
         $('#brandModelTable').dataTable({
             serverSide: true,
@@ -24,9 +33,10 @@
             searching: true,
             ordering: true,
             ajax: {
-                url: "@Url.Action("BrandModelList", "BrandModel", new { Area = @GlobalConstants.AdminArea })",
+                url: "@ajaxUrl",
                 "data": function (data) {
                     data.includeDeleted = true;
+                    data.id = "@idFilter";
                 }
             },
             columns: [

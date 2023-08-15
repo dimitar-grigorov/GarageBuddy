@@ -16,6 +16,8 @@
 
         public Task<PaginatedResult<BrandModelListServiceModel>> GetAllAsync(QueryOptions<BrandModelListServiceModel> queryOptions);
 
+        public Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(Guid brandId, QueryOptions<BrandModelListServiceModel> queryOptions);
+
         public Task<bool> ExistsAsync(Guid id);
 
         public Task<IResult<BrandModelServiceModel>> GetAsync(Guid id);

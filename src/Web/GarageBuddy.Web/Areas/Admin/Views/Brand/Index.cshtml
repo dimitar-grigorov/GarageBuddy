@@ -69,7 +69,7 @@
                     data: "id",
                     title: "Models",
                     render: function (data, type, row) {
-                        return `<a href='@Url.Action("Index", "BrandModel", new { Area = @GlobalConstants.AdminArea })/${data}' class='btn btn-info'>List Models</a>`;
+                        return `<a href='@Url.Action("Index", "BrandModel", new { Area = @GlobalConstants.AdminArea })?brandId=${data}' class='btn btn-info'>List Models</a>`;
                     },
                     sortable: false,
                     width: "8%"
