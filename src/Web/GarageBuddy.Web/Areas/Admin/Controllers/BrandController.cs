@@ -32,13 +32,9 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var brands = await this.brandService.GetAllAsync();
-
-            var model = mapper.Map<ICollection<BrandListViewModel>>(brands);
-
-            return View(model);
+            return View();
         }
 
         public async Task<IActionResult> BrandList(IDataTablesRequest request)

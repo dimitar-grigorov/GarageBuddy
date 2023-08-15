@@ -2,28 +2,26 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
+
     using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Services.Data.Common;
-    using GarageBuddy.Services.Data.Models.Vehicle.Brand;
+
+    using Models.Vehicle.BrandModel;
 
     public interface IBrandModelService
     {
-        public Task<ICollection<BrandServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false);
+        public Task<ICollection<BrandModelListServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false);
 
-        public Task<PaginatedResult<BrandServiceModel>> GetAllAsync(QueryOptions<BrandServiceModel> queryOptions);
+        public Task<PaginatedResult<BrandModelListServiceModel>> GetAllAsync(QueryOptions<BrandModelListServiceModel> queryOptions);
 
         public Task<bool> ExistsAsync(Guid id);
 
-        public Task<IResult<BrandServiceModel>> GetAsync(Guid id);
+        public Task<IResult<BrandModelServiceModel>> GetAsync(Guid id);
 
-        public Task<bool> BrandNameExistsAsync(string brandName);
+        public Task<IResult<Guid>> CreateAsync(BrandModelServiceModel model);
 
-        public Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel);
-
-        public Task<IResult> EditAsync(Guid id, BrandServiceModel brandServiceModel);
+        public Task<IResult> EditAsync(Guid id, BrandModelServiceModel model);
     }
 }

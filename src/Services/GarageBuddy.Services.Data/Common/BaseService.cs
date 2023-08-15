@@ -24,11 +24,11 @@
     {
         private readonly IMapper mapper;
 
-        private readonly IDeletableEntityRepository<TEntity, TKey> entityRepository;
+        private readonly IDeletableEntityRepository<TEntity, TKey> brandModelRepository;
 
-        public BaseService(IDeletableEntityRepository<TEntity, TKey> entityRepository, IMapper mapper)
+        public BaseService(IDeletableEntityRepository<TEntity, TKey> brandModelRepository, IMapper mapper)
         {
-            this.entityRepository = entityRepository;
+            this.brandModelRepository = brandModelRepository;
             this.mapper = mapper;
         }
 
@@ -36,7 +36,7 @@
 
         public async Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false)
         {
-            var query = this.entityRepository
+            var query = this.brandModelRepository
                 .All(asReadOnly, includeDeleted)
                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider);
             return await query.ToListAsync();
@@ -44,39 +44,16 @@
 
         public virtual async Task<PaginatedResult<TModel>> GetAllAsync<TModel>(QueryOptions<TModel> queryOptions)
         {
-            var query = this.entityRepository
+            var query = this.brandModelRepository
                 .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
                 .ProjectTo<TModel>(this.mapper.ConfigurationProvider);
+            var modelList = await ModifyQuery(query, queryOptions).ToListAsync();
 
-            foreach (var orderOption in queryOptions.OrderOptions)
-            {
-                query = orderOption.Order == OrderByOrder.Ascending
-                    ? query.OrderBy(orderOption.Property)
-                    : query.OrderByDescending(orderOption.Property);
-            }
-
-            var totalCount = 0;
-
-            if (queryOptions.Take.HasValue)
-            {
-                totalCount = await query.CountAsync();
-            }
-
-            if (queryOptions.Skip.HasValue)
-            {
-                query = query.Skip(queryOptions.Skip.Value);
-            }
-
-            if (queryOptions.Take.HasValue)
-            {
-                query = query.Take(queryOptions.Take.Value);
-            }
-
-            var modelList = await query.ToListAsync();
+            var totalCount = await GetTotalCountForPagination(queryOptions);
 
             return PaginatedResult<TModel>.Success(modelList, totalCount);
         }
-
+        
         public virtual async Task<TModel> GetAsync<TModel>(TKey id)
         {
             if (id == null)
@@ -84,7 +61,7 @@
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var entity = await this.entityRepository.FindAsync(id, true);
+            var entity = await this.brandModelRepository.FindAsync(id, true);
 
             var model = this.mapper.Map<TModel>(entity);
 
@@ -104,8 +81,8 @@
 
             var entity = this.mapper.Map<TEntity>(model);
 
-            var result = await this.entityRepository.AddAsync(entity);
-            await this.entityRepository.SaveChangesAsync();
+            var result = await this.brandModelRepository.AddAsync(entity);
+            await this.brandModelRepository.SaveChangesAsync();
 
             return result.Entity.Id ?? default!;
         }
@@ -128,12 +105,12 @@
                     nameof(model));
             }
 
-            var oldEntity = await this.entityRepository.FindAsync(id, false);
+            var oldEntity = await this.brandModelRepository.FindAsync(id, false);
 
             this.CopyProperties(model, oldEntity);
             oldEntity.ModifiedOn = DateTime.Now;
 
-            await this.entityRepository.SaveChangesAsync();
+            await this.brandModelRepository.SaveChangesAsync();
         }
 
         public virtual async Task DeleteAsync<TModel>(TKey id)
@@ -143,8 +120,8 @@
                 throw new InvalidOperationException(string.Format(Errors.EntityNotFound, "entity"));
             }
 
-            await this.entityRepository.DeleteAsync(id);
-            await this.entityRepository.SaveChangesAsync();
+            await this.brandModelRepository.DeleteAsync(id);
+            await this.brandModelRepository.SaveChangesAsync();
         }
 
         public virtual async Task<bool> ExistsAsync<TModel>(TKey id, QueryOptions<TModel>? queryOptions = null)
@@ -153,7 +130,7 @@
 
             try
             {
-                var entity = await this.entityRepository.FindAsync(id, queryOptions?.AsReadOnly ?? false);
+                var entity = await this.brandModelRepository.FindAsync(id, queryOptions?.AsReadOnly ?? false);
                 bool withDeleted = queryOptions?.IncludeDeleted ?? false;
 
                 if (withDeleted == false && entity.IsDeleted == true)
@@ -169,6 +146,40 @@
             return result;
         }
 
+        protected IQueryable<TModel> ModifyQuery<TModel>(IQueryable<TModel> query, QueryOptions<TModel> queryOptions)
+        {
+            foreach (var orderOption in queryOptions.OrderOptions)
+            {
+                query = orderOption.Order == OrderByOrder.Ascending
+                    ? query.OrderBy(orderOption.Property)
+                    : query.OrderByDescending(orderOption.Property);
+            }
+
+            if (queryOptions.Skip.HasValue)
+            {
+                query = query.Skip(queryOptions.Skip.Value);
+            }
+
+            if (queryOptions.Take.HasValue)
+            {
+                query = query.Take(queryOptions.Take.Value);
+            }
+
+            return query;
+        }
+
+        protected virtual async Task<int> GetTotalCountForPagination<TModel>(QueryOptions<TModel> queryOptions)
+        {
+            var totalCount = 0;
+            if (queryOptions.Take.HasValue)
+            {
+                totalCount = await this.brandModelRepository
+                    .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted).CountAsync();
+            }
+
+            return await Task.FromResult(totalCount);
+        }
+
         protected bool ValidateModel<TModel>(TModel model)
         {
             ArgumentNullException.ThrowIfNull(model);
@@ -180,7 +191,7 @@
 
             return isValid;
         }
-        
+
 #pragma warning disable IDE0060 // Remove unused parameter / The parameter is used for generic intellisense
         private PropertyInfo GetPropertyInfo<TSource, TProperty>(TSource source, Expression<Func<TSource, TProperty>> propertyLambda)
 #pragma warning restore IDE0060 // Remove unused parameter

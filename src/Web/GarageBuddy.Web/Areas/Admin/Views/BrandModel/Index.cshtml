@@ -1,29 +1,30 @@
 ﻿@using GarageBuddy.Common.Constants
 @{
-    ViewData["Title"] = "Brands";
+    ViewData["Title"] = "Brand Models";
 }
 
 <section class="section">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title">@ViewData["Title"]</h5>
-            <a class="btn btn-success" asp-area="Admin", asp-controller="Brand" asp-action="Create">Create New Brand</a>
+            <a class="btn btn-success" asp-area="Admin" , asp-controller="BrandModel" asp-action="Create">Create New Model</a>
         </div>
         <div class="card-body">
-            <table id="brandTable" class="table table-striped table-hover" style="width:100%"></table>
+            <table id="brandModelTable" class="table table-striped table-hover" style="width:100%"></table>
         </div>
     </div>
 </section>
 
+
 <script>
     $(document).ready(function () {
-        $('#brandTable').dataTable({
+        $('#brandModelTable').dataTable({
             serverSide: true,
             responsive: true,
             searching: true,
             ordering: true,
             ajax: {
-                url: "@Url.Action("BrandList", "Brand", new { Area = @GlobalConstants.AdminArea })",
+                url: "@Url.Action("BrandModelList", "BrandModel", new { Area = @GlobalConstants.AdminArea })",
                 "data": function (data) {
                     data.includeDeleted = true;
                 }
@@ -32,12 +33,19 @@
                 {
                     name: "Id",
                     data: "id",
-                    title: "Id"
+                    title: "Id",
+                    visible: false
                 },
                 {
                     name: 'BrandName',
                     data: "brandName",
                     title: "Brand Name"
+                },
+
+                {
+                    name: 'ModelName',
+                    data: "modelName",
+                    title: "Model Name"
                 },
                 {
                     name: "CreatedOn",
@@ -60,36 +68,17 @@
                     data: "id",
                     title: "Action",
                     render: function (data, type, row) {
-                        return `<a href = '@Url.Action("Edit", "Brand", new { Area = @GlobalConstants.AdminArea })/${data}' class= 'btn btn-primary'> Edit </a>`;
+                        return `<a href = '@Url.Action("Edit", "BrandModel", new { Area = @GlobalConstants.AdminArea })/${data}' class= 'btn btn-primary'> Edit </a>`;
                     },
                     sortable: false,
                     width: "10%"
-                },
-                {
-                    data: "id",
-                    title: "Models",
-                    render: function (data, type, row) {
-                        return `<a href='@Url.Action("Index", "BrandModel", new { Area = @GlobalConstants.AdminArea })/${data}' class='btn btn-info'>List Models</a>`;
-                    },
-                    sortable: false,
-                    width: "8%"
-                },
-
-
+                }
             ],
-            //Auto refresh
-            //initComplete: function () {
-            //    const api = this.api();
-            //    setInterval(function () {
-            //        api.ajax.reload();
-            //    }, 5000);
-            //},
             lengthMenu: [
                 [10, 25, -1],
                 [10, 25, 'All']
             ],
             columnDefs: [
-                { visible: false, targets: [0] },
                 { className: "text-center", targets: [1] }
             ]
         });

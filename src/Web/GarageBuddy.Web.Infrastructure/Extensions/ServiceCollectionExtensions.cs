@@ -70,7 +70,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             {
                 options.LoginPath = "/User/Login";
                 options.LogoutPath = "/User/Logout";
-                options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
+                // options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
             });
 
             return services;
@@ -104,6 +104,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             // Application services
             services.AddScoped<IViewRenderer, ViewRenderer>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IBrandModelService, BrandModelService>();
             services.AddTransient<IEmailSender, SmtpMailSender>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISettingsService, SettingsService>();
