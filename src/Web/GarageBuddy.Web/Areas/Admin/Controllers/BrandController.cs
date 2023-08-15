@@ -9,6 +9,7 @@
 
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
+    using GarageBuddy.Common.Core.Enums;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -44,12 +45,12 @@
                 return new DataTablesJsonResult(DataTablesResponse.Create(request, 0, 0, null), true);
             }
 
-            request.AdditionalParameters.TryGetValue(IncludeDeletedFilterName, out var searchValue);
+            request.AdditionalParameters.TryGetValue(IncludeDeletedFilterName, out var includeDeleted);
 
             var brandsResult = await this.brandService.GetAllAsync(
                 new QueryOptions<BrandServiceModel>()
                 {
-                    IncludeDeleted = (bool)(searchValue ?? false),
+                    IncludeDeleted = (bool)(includeDeleted ?? false) ? DeletedFilter.Deleted : DeletedFilter.NotDeleted,
                     Skip = request.Start,
                     Take = request.Length,
                 });

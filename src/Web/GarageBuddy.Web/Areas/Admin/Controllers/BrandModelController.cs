@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-
+    using Common.Core.Enums;
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
 
@@ -52,12 +52,12 @@
                 return new DataTablesJsonResult(DataTablesResponse.Create(request, 0, 0, null), true);
             }
 
-            request.AdditionalParameters.TryGetValue(IncludeDeletedFilterName, out var searchValue);
+            request.AdditionalParameters.TryGetValue(IncludeDeletedFilterName, out var includeDeleted);
             request.AdditionalParameters.TryGetValue(IdFilterName, out var brandId);
 
             var queryOptions = new QueryOptions<BrandModelListServiceModel>()
             {
-                IncludeDeleted = (bool)(searchValue ?? false),
+                IncludeDeleted = (bool)(includeDeleted ?? false) ? DeletedFilter.Deleted : DeletedFilter.NotDeleted,
                 Skip = request.Start,
                 Take = request.Length,
             };

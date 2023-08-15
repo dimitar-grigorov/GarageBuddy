@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using GarageBuddy.Common.Core.Enums;
+
     /// <summary>
     /// This class is used to modify service queries. That way we eliminate the creating of multiple similar methods.
     /// Example:
@@ -19,12 +21,12 @@
         /// <summary>
         /// Gets or sets a value indicating whether the entities should be tracked.
         /// </summary>
-        public bool AsReadOnly { get; set; } = false;
+        public ReadOnlyOption AsReadOnly { get; set; } = ReadOnlyOption.Normal;
 
         /// <summary>
         /// Gets or sets a value indicating whether only not deleted entities should be returned.
         /// </summary>
-        public bool IncludeDeleted { get; set; } = false;
+        public DeletedFilter IncludeDeleted { get; set; } = DeletedFilter.NotDeleted;
 
         /// <summary>
         /// Gets or sets a list of <see cref="OrderOption{TClass}"/>.

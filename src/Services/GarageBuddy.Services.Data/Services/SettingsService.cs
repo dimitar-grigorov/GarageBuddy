@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
     using GarageBuddy.Services.Data.Contracts;
@@ -20,12 +20,12 @@
 
         public int GetCount()
         {
-            return settingsRepository.All(false).Count();
+            return settingsRepository.All(ReadOnlyOption.Normal).Count();
         }
 
         public IEnumerable<T> GetAll<T>()
         {
-            return settingsRepository.All(false).To<T>().ToList();
+            return settingsRepository.All(ReadOnlyOption.Normal).To<T>().ToList();
         }
     }
 }

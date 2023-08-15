@@ -5,11 +5,14 @@
 
     using Common;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Common.Core.Wrapper.Generic;
 
     public interface IBaseService<TKey>
     {
-        public Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false);
+        public Task<ICollection<TModel>> GetAllAsync<TModel>(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted);
 
         public Task<PaginatedResult<TModel>> GetAllAsync<TModel>(QueryOptions<TModel> queryOptions);
 

@@ -12,7 +12,7 @@
     using AutoMapper.QueryableExtensions;
 
     using Contracts;
-
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
@@ -34,7 +34,9 @@
 
         protected IMapper Mapper => this.mapper;
 
-        public async Task<ICollection<TModel>> GetAllAsync<TModel>(bool asReadOnly = false, bool includeDeleted = false)
+        public async Task<ICollection<TModel>> GetAllAsync<TModel>(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
         {
             var query = this.entityRepository
                 .All(asReadOnly, includeDeleted)
@@ -61,7 +63,7 @@
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var entity = await this.entityRepository.FindAsync(id, true);
+            var entity = await this.entityRepository.FindAsync(id, ReadOnlyOption.ReadOnly);
 
             var model = this.mapper.Map<TModel>(entity);
 
@@ -105,7 +107,7 @@
                     nameof(model));
             }
 
-            var oldEntity = await this.entityRepository.FindAsync(id, false);
+            var oldEntity = await this.entityRepository.FindAsync(id, ReadOnlyOption.Normal);
 
             // Preserve and don't edit Created On date
             var oldCreatedOn = oldEntity.CreatedOn;
@@ -149,10 +151,10 @@
 
             try
             {
-                var entity = await this.entityRepository.FindAsync(id, queryOptions?.AsReadOnly ?? false);
-                var withDeleted = queryOptions?.IncludeDeleted ?? false;
+                var entity = await this.entityRepository.FindAsync(id, queryOptions?.AsReadOnly ?? ReadOnlyOption.Normal);
+                var withDeleted = queryOptions?.IncludeDeleted ?? DeletedFilter.NotDeleted;
 
-                if (withDeleted == false && entity.IsDeleted == true)
+                if (withDeleted == DeletedFilter.Deleted && entity.IsDeleted)
                 {
                     result = false;
                 }

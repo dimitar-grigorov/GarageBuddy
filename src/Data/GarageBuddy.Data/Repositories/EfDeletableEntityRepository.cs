@@ -5,6 +5,7 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
 
@@ -18,11 +19,11 @@
         {
         }
 
-        public IQueryable<TEntity> All(bool asReadonly, bool includeDeleted)
+        public IQueryable<TEntity> All(ReadOnlyOption asReadOnly, DeletedFilter includeDeleted)
         {
-            var query = base.All(asReadonly);
+            var query = base.All(asReadOnly);
 
-            if (!includeDeleted)
+            if (includeDeleted == DeletedFilter.Deleted)
             {
                 query = query.Where(e => !e.IsDeleted);
             }
@@ -30,11 +31,12 @@
             return query;
         }
 
-        public IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly, bool includeDeleted)
+        public IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search,
+            ReadOnlyOption asReadOnly, DeletedFilter includeDeleted)
         {
-            var query = base.All(search, asReadonly);
+            var query = base.All(search, asReadOnly);
 
-            if (!includeDeleted)
+            if (includeDeleted == DeletedFilter.Deleted)
             {
                 query = query.Where(e => !e.IsDeleted);
             }
@@ -42,14 +44,15 @@
             return query;
         }
 
-        public override IQueryable<TEntity> All(bool asReadonly)
+        public override IQueryable<TEntity> All(ReadOnlyOption asReadOnly)
         {
-            return base.All(asReadonly).Where(x => !x.IsDeleted);
+            return base.All(asReadOnly).Where(x => !x.IsDeleted);
         }
 
-        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly = false)
+        public override IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search,
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal)
         {
-            return this.All(asReadonly).Where(search);
+            return this.All(asReadOnly).Where(search);
         }
 
         public void HardDelete(TEntity entity)

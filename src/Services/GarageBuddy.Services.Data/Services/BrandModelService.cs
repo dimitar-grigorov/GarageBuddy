@@ -12,6 +12,7 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Repositories;
@@ -36,7 +37,9 @@
             this.brandService = brandService;
         }
 
-        public async Task<ICollection<BrandModelListServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false)
+        public async Task<ICollection<BrandModelListServiceModel>> GetAllAsync(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
         {
             var query = this.entityRepository
                 .All(asReadOnly, includeDeleted)

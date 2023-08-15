@@ -11,6 +11,7 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Repositories;
@@ -32,7 +33,9 @@
             this.brandRepository = entityRepository;
         }
 
-        public async Task<ICollection<BrandServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false)
+        public async Task<ICollection<BrandServiceModel>> GetAllAsync(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
         {
             return await base.GetAllAsync<BrandServiceModel>(asReadOnly, includeDeleted);
         }
@@ -53,7 +56,7 @@
 
         public async Task<ICollection<BrandSelectServiceModel>> GetAllSelectAsync()
         {
-            return await brandRepository.All(true, true)
+            return await brandRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
                 .OrderBy(b => b.IsDeleted)
                 .ThenBy(b => b.BrandName)
                 .Select(b => new BrandSelectServiceModel
@@ -81,7 +84,7 @@
 
         public async Task<bool> BrandNameExistsAsync(string brandName, Guid excludeId)
         {
-            return await brandRepository.All(true, true)
+            return await brandRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
                 .AnyAsync(b => b.BrandName == brandName && b.Id.ToString() != excludeId.ToString());
         }
 

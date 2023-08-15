@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
@@ -24,7 +24,7 @@
         public void GetCountShouldReturnCorrectNumber()
         {
             var repository = new Mock<IDeletableEntityRepository<Setting, Guid>>();
-            repository.Setup(r => r.All(false)).Returns(new List<Setting>
+            repository.Setup(r => r.All(ReadOnlyOption.Normal)).Returns(new List<Setting>
                                                         {
                                                             new(),
                                                             new(),
@@ -32,7 +32,7 @@
                                                         }.AsQueryable());
             var service = new SettingsService(repository.Object);
             Assert.Equal(3, service.GetCount());
-            repository.Verify(x => x.All(false), Times.Once);
+            repository.Verify(x => x.All(ReadOnlyOption.Normal), Times.Once);
         }
 
         [Fact]

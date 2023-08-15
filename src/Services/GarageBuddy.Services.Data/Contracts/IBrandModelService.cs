@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Services.Data.Common;
@@ -12,11 +13,15 @@
 
     public interface IBrandModelService
     {
-        public Task<ICollection<BrandModelListServiceModel>> GetAllAsync(bool asReadOnly = false, bool includeDeleted = false);
+        public Task<ICollection<BrandModelListServiceModel>> GetAllAsync(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted);
 
-        public Task<PaginatedResult<BrandModelListServiceModel>> GetAllAsync(QueryOptions<BrandModelListServiceModel> queryOptions);
+        public Task<PaginatedResult<BrandModelListServiceModel>> GetAllAsync(
+            QueryOptions<BrandModelListServiceModel> queryOptions);
 
-        public Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(Guid brandId, QueryOptions<BrandModelListServiceModel> queryOptions);
+        public Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(
+            Guid brandId, QueryOptions<BrandModelListServiceModel> queryOptions);
 
         public Task<bool> ExistsAsync(Guid id);
 

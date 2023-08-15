@@ -6,6 +6,7 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Models;
 
     using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -13,14 +14,11 @@
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : class, IEntity<TKey>
     {
-        IQueryable<TEntity> All(bool asReadonly);
+        IQueryable<TEntity> All(ReadOnlyOption asReadOnly);
 
-        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly);
+        IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, ReadOnlyOption asReadOnly);
 
-        // TODO: Delete
-        TEntity Find(TKey id, bool asReadonly = false);
-
-        Task<TEntity> FindAsync(TKey id, bool asReadonly);
+        Task<TEntity> FindAsync(TKey id, ReadOnlyOption asReadOnly);
 
         Task<bool> ExistsAsync(TKey id);
 

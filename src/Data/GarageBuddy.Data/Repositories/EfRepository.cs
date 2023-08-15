@@ -6,6 +6,7 @@
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
+    using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
 
@@ -25,34 +26,15 @@
 
         protected ApplicationDbContext Context { get; set; }
 
-        public virtual IQueryable<TEntity> All(bool asReadonly)
+        public virtual IQueryable<TEntity> All(ReadOnlyOption asReadOnly)
         {
-            return asReadonly ? this.DbSet.AsNoTracking() : this.DbSet;
+            return asReadOnly.AsBoolean() ? this.DbSet.AsNoTracking() : this.DbSet;
         }
 
-        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, bool asReadonly)
+        public virtual IQueryable<TEntity> All(Expression<Func<TEntity, bool>> search, ReadOnlyOption asReadOnly)
         {
             var query = this.DbSet.Where(search);
-            return asReadonly ? query.AsNoTracking() : query;
-        }
-
-        public virtual TEntity Find(TKey id, bool asReadonly = false)
-        {
-            ArgumentNullException.ThrowIfNull(id);
-
-            var entity = this.DbSet.Find(id);
-
-            if (entity == null)
-            {
-                throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
-            }
-
-            if (asReadonly)
-            {
-                this.Context.Entry(entity).State = EntityState.Detached;
-            }
-
-            return entity;
+            return asReadOnly.AsBoolean() ? query.AsNoTracking() : query;
         }
 
         public async Task<bool> ExistsAsync(TKey id)
@@ -61,7 +43,7 @@
             return await this.DbSet.AnyAsync(e => e.Id.Equals(id));
         }
 
-        public virtual async Task<TEntity> FindAsync(TKey id, bool asReadonly)
+        public virtual async Task<TEntity> FindAsync(TKey id, ReadOnlyOption asReadOnly)
         {
             ArgumentNullException.ThrowIfNull(id);
 
@@ -72,7 +54,7 @@
                 throw new InvalidOperationException(string.Format(Errors.NoEntityWithPropertyFound, "entity", nameof(id)));
             }
 
-            if (asReadonly)
+            if (asReadOnly.AsBoolean())
             {
                 this.Context.Entry(entity).State = EntityState.Detached;
             }
@@ -124,7 +106,7 @@
 
         public virtual async Task UpdateAsync(TKey id)
         {
-            var entity = await this.FindAsync(id, true);
+            var entity = await this.FindAsync(id, ReadOnlyOption.ReadOnly);
 
             if (entity == null)
             {
@@ -156,7 +138,7 @@
 
         public virtual async Task DeleteAsync(TKey id)
         {
-            var entity = await this.FindAsync(id, true);
+            var entity = await this.FindAsync(id, ReadOnlyOption.ReadOnly);
 
             this.Delete(entity);
         }
