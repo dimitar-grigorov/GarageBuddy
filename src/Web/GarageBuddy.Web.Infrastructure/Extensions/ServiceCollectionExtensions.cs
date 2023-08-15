@@ -111,7 +111,6 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IInstallationService, InstallationService>();
 
             // Settings manager
             services.AddSingleton<IOptionsManager, OptionsManager>();
@@ -142,12 +141,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 })
                 /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
                 .AddTransient<ApplicationDbInitializer>()
-                .AddTransient<ApplicationDbSeeder>()
-                .AddServices(typeof(ICustomSeeder), ServiceLifetime.Transient)
-                .AddTransient<CustomSeederRunner>()
-
-                .AddTransient<IConnectionStringSecurer, ConnectionStringSecurer>()
-                .AddTransient<IConnectionStringValidator, ConnectionStringValidator>()*/
+                .AddTransient<ApplicationDbSeeder>()*/
 
                 .AddRepositories();
         }
