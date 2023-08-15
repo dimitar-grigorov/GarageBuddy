@@ -1,7 +1,7 @@
 ﻿@model BrandModelCreateOrEditViewModel
 
 @{
-    ViewData["Title"] = "Create Brand";
+    ViewData["Title"] = "Edit Brand";
 }
 
 <section id="basic-vertical-layouts">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form asp-area="Admin" asp-controller="BrandModel" asp-action="Create" class="form form-vertical" method="post">
+                        <form asp-area="Admin" asp-controller="BrandModel" asp-action="Edit" asp-route-id="@Model.Id" class="form form-vertical" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-body">
                                 <div class="row">
@@ -39,7 +39,7 @@
                                             Models
                                         </a>
                                         <button type="submit" class="btn btn-primary me-1 mb-1">
-                                            Submit
+                                            Update
                                         </button>
                                     </div>
                                 </div>

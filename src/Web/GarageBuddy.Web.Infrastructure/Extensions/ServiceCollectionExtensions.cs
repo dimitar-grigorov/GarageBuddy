@@ -87,7 +87,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 ParseAdditionalParameters = context =>
                 {
                     var includeDeleted = Convert.ToBoolean(context.ValueProvider.GetValue(GlobalConstants.IncludeDeletedFilterName).FirstValue);
-                    var id = context.ValueProvider.GetValue(GlobalConstants.IdFilterName).FirstValue;
+                    var id = context.ValueProvider.GetValue(GlobalConstants.IdFilterName).FirstValue ?? string.Empty;
                     return new Dictionary<string, object>()
                     {
                         { GlobalConstants.IncludeDeletedFilterName, includeDeleted },

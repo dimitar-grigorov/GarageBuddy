@@ -15,6 +15,9 @@
 
         public IActionResult Index()
         {
+            // TODO: Remove
+            return RedirectToAction("Index", "Brand");
+
             var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
             return this.View(viewModel);
         }

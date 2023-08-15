@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Net;
     using System.Threading.Tasks;
 
     using AutoMapper;
@@ -9,12 +10,7 @@
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
 
-    using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Services.Data.Common;
-
-    using GarageBuddy.Services.Data.Models.Vehicle.Brand;
-
-    using GarageBuddy.Web.ViewModels.Admin.Brand;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -65,8 +61,9 @@
                 Skip = request.Start,
                 Take = request.Length,
             };
+
             // Do we have passed search value?
-            var brandsResult = brandId != null
+            var brandsResult = (brandId != null) && (string)brandId != string.Empty
                 ? await this.brandModelService.GetAllByBrandIdAsync(Guid.Parse(brandId.ToString()!), queryOptions)
                 : await this.brandModelService.GetAllAsync(queryOptions);
 
@@ -80,7 +77,7 @@
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            var model = new BrandModelCreateViewModel()
+            var model = new BrandModelCreateOrEditViewModel()
             {
                 Brands = await this.brandService.GetAllSelectAsync(),
             };
@@ -88,7 +85,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandModelCreateViewModel model)
+        public async Task<IActionResult> Create(BrandModelCreateOrEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -107,7 +104,47 @@
                 model.Brands = await this.brandService.GetAllSelectAsync();
                 return View(model);
             }
+
             TempData[NotifySuccess] = string.Format(Success.SuccessfullyCreatedEntity, "Vehicle model");
+            return RedirectToAction(Actions.Index);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            if (!await this.brandModelService.ExistsAsync(id))
+            {
+                return ShowError(string.Format(Errors.EntityNotFound, "Vehicle model"), (int)HttpStatusCode.NotFound);
+            }
+
+            var serviceModel = await this.brandModelService.GetAsync(id);
+            var model = mapper.Map<BrandModelCreateOrEditViewModel>(serviceModel.Data);
+            
+            model.Brands = await this.brandService.GetAllSelectAsync();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, BrandModelCreateOrEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                model.Brands = await this.brandService.GetAllSelectAsync();
+                return View(model);
+            }
+
+            var serviceModel = mapper.Map<BrandModelServiceModel>(model);
+            var result = await this.brandModelService.EditAsync(id, serviceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+            }
+
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Vehicle model");
             return RedirectToAction(Actions.Index);
         }
     }

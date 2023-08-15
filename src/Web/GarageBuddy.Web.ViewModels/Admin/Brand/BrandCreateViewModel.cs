@@ -9,7 +9,6 @@
 
     public class BrandCreateViewModel : IMapFrom<BrandServiceModel>, IMapTo<BrandServiceModel>
     {
-
         [Required]
         [StringLength(BrandNameMaxLength, MinimumLength = BrandNameMinLength)]
         [Display(Name = "Brand Name")]

@@ -12,7 +12,6 @@
 
     using Contracts;
 
-    using GarageBuddy.Common.Constants;
     using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Repositories;
@@ -154,7 +153,7 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            if (!await this.brandService.ExistsAsync(model.Id))
+            if (!await this.brandService.ExistsAsync(model.BrandId))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }

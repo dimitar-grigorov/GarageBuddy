@@ -7,9 +7,10 @@
     using Services.Data.Models.Vehicle.Brand;
     using Services.Data.Models.Vehicle.BrandModel;
     using Services.Mapping;
+
     using static GarageBuddy.Common.Constants.EntityValidationConstants.BrandModel;
 
-    public class BrandModelCreateViewModel: IMapTo<BrandModelServiceModel>
+    public class BrandModelCreateOrEditViewModel : IMapTo<BrandModelServiceModel>, IMapFrom<BrandModelServiceModel>
     {
         public Guid Id { get; set; }
 

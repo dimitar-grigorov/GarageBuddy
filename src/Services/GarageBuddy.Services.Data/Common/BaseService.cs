@@ -53,7 +53,7 @@
 
             return PaginatedResult<TModel>.Success(modelList, totalCount);
         }
-        
+
         public virtual async Task<TModel> GetAsync<TModel>(TKey id)
         {
             if (id == null)

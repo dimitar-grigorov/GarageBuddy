@@ -4,7 +4,7 @@
 
     using Mapping;
 
-    public class BrandSelectServiceModel: IMapFrom<Brand>
+    public class BrandSelectServiceModel : IMapFrom<Brand>
     {
         public string Id { get; set; } = null!;
 

@@ -10,7 +10,6 @@
     [Authorize]
     public class BaseController : Controller
     {
-
         /// <summary>
         /// This method redirect to the error view providing an error message and status code.
         /// </summary>
