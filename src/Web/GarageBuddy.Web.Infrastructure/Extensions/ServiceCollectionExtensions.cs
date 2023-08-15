@@ -6,10 +6,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using System.Linq;
     using System.Reflection;
 
-    using Data;
-    using Data.Common.Repositories;
     using Data.DataProvider;
-    using Data.Repositories;
 
     using DataTables.AspNet.AspNetCore;
 
@@ -17,6 +14,11 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using GarageBuddy.Common.Core;
     using GarageBuddy.Common.Core.Settings;
     using GarageBuddy.Common.Core.Settings.Mail;
+    using GarageBuddy.Data;
+    using GarageBuddy.Data.Common.Repositories;
+    using GarageBuddy.Data.Repositories;
+    using GarageBuddy.Services.Data.Contracts;
+    using GarageBuddy.Services.Messaging.Email;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -27,10 +29,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 
     using Serilog;
 
-    using Services.Data.Contracts;
     using Services.Data.Options;
     using Services.Messaging.Contracts;
-    using Services.Messaging.Email;
     using Services.Messaging.Services;
 
     using ViewRenderer;
@@ -47,8 +47,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             // TODO: Remove Razor Pages
             services.AddRazorPages();
             return services
-                .AddApplicationServices(typeof(IBrandService))
                 .AddPersistence()
+                .AddApplicationServices(typeof(IBrandModelService))
                 .AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -102,12 +102,6 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             return services;
         }
 
-        /// <summary>
-        /// This method registers all services with their interfaces and implementations of given assembly.
-        /// The assembly is taken from the type of random service interface or implementation provided.
-        /// </summary>
-        /// <param name="serviceType"></param>
-        /// <exception cref="InvalidOperationException"></exception>
         internal static IServiceCollection AddApplicationServices(this IServiceCollection services, Type serviceType)
         {
             Assembly? serviceAssembly = Assembly.GetAssembly(serviceType);
@@ -116,13 +110,13 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 throw new InvalidOperationException("Invalid service type provided!");
             }
 
-            var implementationTypes = serviceAssembly
+            Type[] implementationTypes = serviceAssembly
                 .GetTypes()
                 .Where(t => t.Name.EndsWith("Service") && !t.IsInterface)
                 .ToArray();
-            foreach (var implementationType in implementationTypes)
+            foreach (Type implementationType in implementationTypes)
             {
-                var interfaceType = implementationType
+                Type? interfaceType = implementationType
                     .GetInterface($"I{implementationType.Name}");
                 if (interfaceType == null)
                 {
@@ -133,11 +127,10 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 services.AddScoped(interfaceType, implementationType);
             }
 
-            // Extra Application services
+            // Extra services
             services.AddScoped<IViewRenderer, ViewRenderer>();
             services.AddTransient<IEmailSender, SmtpMailSender>();
             services.AddTransient<IEmailService, EmailService>();
-
             // Options manager
             services.AddSingleton<IOptionsManager, OptionsManager>();
 
@@ -168,7 +161,6 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                 /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
                 .AddTransient<ApplicationDbInitializer>()
                 .AddTransient<ApplicationDbSeeder>()*/
-
                 .AddRepositories();
         }
 

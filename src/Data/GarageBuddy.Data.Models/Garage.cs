@@ -8,7 +8,7 @@
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Garage;
     using static GarageBuddy.Common.Constants.GlobalValidationConstants;
 
-    public class Garage : BaseModel<Guid>
+    public class Garage : BaseDeletableModel<Guid>
     {
         [Required]
         [MaxLength(GarageNameMaxLength)]
