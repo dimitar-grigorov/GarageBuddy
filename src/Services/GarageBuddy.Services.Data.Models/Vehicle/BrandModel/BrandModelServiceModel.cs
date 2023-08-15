@@ -5,9 +5,10 @@
     using AutoMapper;
 
     using GarageBuddy.Data.Models.Vehicle;
+
     using Mapping;
 
-    public class BrandModelServiceModel:  IMapFrom<BrandModel>, IMapTo<BrandModel>, IHaveCustomMappings
+    public class BrandModelServiceModel : IMapFrom<BrandModel>, IMapTo<BrandModel>, IHaveCustomMappings
     {
         public Guid Id { get; set; }
 

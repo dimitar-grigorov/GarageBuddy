@@ -52,6 +52,18 @@
             return await base.GetAllAsync(queryOptions);
         }
 
+        public async Task<ICollection<BrandSelectServiceModel>> GetAllSelectAsync()
+        {
+            return await brandRepository.All(true, true)
+                .OrderBy(b => b.IsDeleted)
+                .ThenBy(b => b.BrandName)
+                .Select(b => new BrandSelectServiceModel
+                {
+                    Id = b.Id.ToString(),
+                    BrandName = b.BrandName,
+                }).ToListAsync();
+        }
+
         public async Task<bool> ExistsAsync(Guid id)
         {
             return await brandRepository.ExistsAsync(id);

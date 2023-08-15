@@ -1,13 +1,13 @@
 ﻿@using GarageBuddy.Common.Constants
 @{
-    ViewData["Title"] = "Brand Models";
+    ViewData["Title"] = "Vehicle Brand Models";
 }
 
 <section class="section">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title">@ViewData["Title"]</h5>
-            <a class="btn btn-success" asp-area="Admin" , asp-controller="BrandModel" asp-action="Create">Create New Model</a>
+            <a class="btn btn-success" asp-area="Admin" , asp-controller="BrandModel" asp-action="Create">Create New Vehicle Model</a>
         </div>
         <div class="card-body">
             <table id="brandModelTable" class="table table-striped table-hover" style="width:100%"></table>

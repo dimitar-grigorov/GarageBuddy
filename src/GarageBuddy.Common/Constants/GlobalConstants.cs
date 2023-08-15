@@ -8,7 +8,7 @@
 
         public const string AdminArea = "Admin";
 
-        public const string ErrorRoute = "/Home/Errors";
+        public const string ErrorRoute = "/Home/Error";
 
         public const string MailTemplatePath = "MailTemplates";
 

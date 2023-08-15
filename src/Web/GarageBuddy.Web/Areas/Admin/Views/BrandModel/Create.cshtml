@@ -1,7 +1,7 @@
-﻿@model BrandCreateViewModel
+﻿@model BrandModelCreateViewModel
 
 @{
-    ViewData["Title"] = "Create Vehicle Brand";
+    ViewData["Title"] = "Create Brand";
 }
 
 <section id="basic-vertical-layouts">
@@ -13,21 +13,30 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <form asp-area="Admin" asp-controller="Brand" asp-action="Create" class="form form-vertical" method="post">
+                        <form asp-area="Admin" asp-controller="BrandModel" asp-action="Create" class="form form-vertical" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-body">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label asp-for="@Model.BrandName"></label>
-                                            <input type="text" class="form-control" asp-for="@Model.BrandName" placeholder="Brand Name">
-                                            <span class="form-text text-danger" asp-validation-for="@Model.BrandName"></span>
+                                            <label asp-for="@Model.ModelName"></label>
+                                            <input type="text" class="form-control" asp-for="@Model.ModelName" placeholder="Model Name">
+                                            <span class="form-text text-danger" asp-validation-for="@Model.ModelName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.BrandId"></label>
+                                            <select class="form-control" asp-for="@Model.BrandId" asp-items="@(new SelectList(Model.Brands, "Id", "BrandName"))">
+                                                <option value="">Select a Brand</option>
+                                            </select>
+                                            <span class="form-text text-danger" asp-validation-for="@Model.BrandId"></span>
                                         </div>
                                     </div>
                                     <div class="col-12 d-flex justify-content-between">
-                                        <a asp-area="Admin" asp-controller="Brand" asp-action="Index" class="btn btn-secondary me-1 mb-1">
+                                        <a asp-area="Admin" asp-controller="BrandModel" asp-action="Index" class="btn btn-secondary me-1 mb-1">
                                             <i class="bi bi-car-front"></i>
-                                            Brands
+                                            Models
                                         </a>
                                         <button type="submit" class="btn btn-primary me-1 mb-1">
                                             Submit

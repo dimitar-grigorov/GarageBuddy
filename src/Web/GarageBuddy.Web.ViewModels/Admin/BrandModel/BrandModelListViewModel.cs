@@ -11,7 +11,6 @@
 
     public class BrandModelListViewModel : IMapFrom<BrandModelListServiceModel>, IMapTo<BrandModelListServiceModel>, IHaveCustomMappings
     {
-
         public Guid Id { get; init; }
 
         public string ModelName { get; set; } = null!;

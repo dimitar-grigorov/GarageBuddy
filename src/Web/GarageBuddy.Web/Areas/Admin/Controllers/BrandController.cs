@@ -90,6 +90,7 @@
                 return View(model);
             }
 
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyCreatedEntity, "Vehicle Brand");
             return RedirectToAction(Actions.Index);
         }
 
@@ -98,7 +99,7 @@
         {
             if (!await this.brandService.ExistsAsync(id))
             {
-                return ShowError(string.Format(Errors.EntityNotFound, "Brand"), (int)HttpStatusCode.NotFound);
+                return ShowError(string.Format(Errors.EntityNotFound, "Vehicle Brand"), (int)HttpStatusCode.NotFound);
             }
 
             var brand = await this.brandService.GetAsync(id);
@@ -125,6 +126,7 @@
                 TempData[NotifyError] = errors;
             }
 
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Vehicle Brand");
             return RedirectToAction(Actions.Index);
         }
     }

@@ -61,6 +61,10 @@
                 "Please check your email for a link to reset your password. If it doesn't appear within a few minutes, check your spam folder.";
 
             public const string PasswordResetSuccessful = "Password Reset Successful!";
+
+            public const string SuccessfullyCreatedEntity = "Successfully created {0}.";
+
+            public const string SuccessfullyEditedEntity = "Successfully edited {0}.";
         }
     }
 }

@@ -95,7 +95,7 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(BrandModel)));
             }
 
-            if (!await this.brandService.ExistsAsync(model.Id))
+            if (!await this.brandService.ExistsAsync(model.BrandId))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }

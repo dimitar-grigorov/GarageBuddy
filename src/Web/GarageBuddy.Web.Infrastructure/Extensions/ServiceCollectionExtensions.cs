@@ -70,7 +70,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             {
                 options.LoginPath = "/User/Login";
                 options.LogoutPath = "/User/Logout";
-                // options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
+                options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
             });
 
             return services;

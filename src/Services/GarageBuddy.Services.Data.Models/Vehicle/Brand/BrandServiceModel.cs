@@ -8,7 +8,7 @@
 
     using Mapping;
 
-    public class BrandServiceModel : IMapFrom<Brand>, IMapTo<Brand>, IHaveCustomMappings
+    public class BrandServiceModel : IMapFrom<Brand>, IMapTo<Brand>, IMapTo<BrandSelectServiceModel>, IHaveCustomMappings
     {
         public Guid Id { get; set; }
 
