@@ -9,11 +9,19 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.WebUtilities;
+    using Microsoft.Extensions.Logging;
 
     using ViewModels;
 
     public class HomeController : BaseController
     {
+        private readonly ILogger<HomeController> logger;
+
+        public HomeController(ILogger<HomeController> logger)
+        {
+            this.logger = logger;
+        }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -30,7 +38,6 @@
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(int? statusCode = null)
         {
-            // TODO: Log errors
             var model = new ErrorViewModel
             {
                 RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier,
@@ -38,6 +45,9 @@
                 Message = "An error occurred while processing your request.",
                 ImageUrl = GlobalConstants.ThemeErrorImagesPathTemplate.FormatWith(500),
             };
+
+            // Log errors
+            logger.LogError($"Error occurred with status code: {statusCode}. Request id: {model.RequestId}");
 
             if (statusCode.HasValue)
             {

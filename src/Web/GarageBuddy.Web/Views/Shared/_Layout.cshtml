@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/layout-rtl-backup.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app-dark.css" />
     <link rel="stylesheet" href="~/themes/mazer/dist/assets/compiled/css/app.css" />
-    <link rel="stylesheet" href="css/site.min.css"/>
+    <link rel="stylesheet" href="css/site.min.css" />
 </head>
 
 <body>
@@ -38,9 +38,11 @@
                                 <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                             </p>
                         </div>
-                        @*<div class="float-end"><p></p></div>*@
+                        <div class="float-end">
+                            <partial name="_ThemeTogglePartial" />
+                            </div>
+                        </div>
                     </div>
-                </div>
             </footer>
         </div>
     </div>

@@ -2,7 +2,6 @@
 @using GarageBuddy.Web.Infrastructure.Extensions
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
-@*@inject UserManager<ApplicationUser> UserManager*@
 
 @if (this.SignInManager.IsSignedIn(this.User))
 {
@@ -26,10 +25,6 @@
             aria-labelledby="topbarUserDropdown">
             <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">My Account</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
-            @if (this.User.IsAdmin())
-            {
-                <li><a class="dropdown-item" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a></li>
-            }
             <li><hr class="dropdown-divider" /></li>
             <li>
                 <form class="dropdown-item" asp-area="" asp-controller="User" asp-action="Logout" asp-route-returnUrl="@this.Url.Action("Index", "Home", new { area = string.Empty })">
