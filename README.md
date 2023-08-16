@@ -19,20 +19,6 @@
 
 - **File Attachment**: Mechanics can attach files to service records, including pictures of repairs before and after completion. This feature enhances documentation and allows customers to see visual evidence of the work done. Additionally, warranties for parts used in repairs can be tracked, ensuring quick access to warranty details when needed.
 
-## Technologies used
-- ASP.NET Core 6
-- ASP.NET Core Identity
-- Entity Framework Core
-
-## Third-Party
- - Based on [ASP.NET Core MVC template](https://github.com/NikolayIT/ASP.NET-Core-Template) by [Nikolay Kostov](https://github.com/NikolayIT)
- - Theme [Mazer Dashboard](https://github.com/zuramai/mazer) by [Zuramai](https://github.com/zuramai)
- - Custom [npm package](https://www.npmjs.com/package/@grigorov-it/mazer) build on top of the Mazer theme.
- 
-## Contributing
-
-Garage Buddy is an open source project, and we welcome contributions from the community. If you find any bugs, have feature suggestions, or want to help improve the system, please feel free to submit issues and pull requests.
-
 ## Getting Started
 
 To get started with Garage Buddy, follow the instructions below:
@@ -56,6 +42,20 @@ Garage Buddy uses different than the default configuration file (`appsettings.js
 Also the same format can be used in the User Secrets.
 
 For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/docs/INSTALLATION.md).
+
+## Technologies used
+- ASP.NET Core 6
+- ASP.NET Core Identity
+- Entity Framework Core
+
+## Third-Party
+ - Based on [ASP.NET Core MVC template](https://github.com/NikolayIT/ASP.NET-Core-Template) by [Nikolay Kostov](https://github.com/NikolayIT)
+ - Theme [Mazer Dashboard](https://github.com/zuramai/mazer) by [Zuramai](https://github.com/zuramai)
+ - Custom [npm package](https://www.npmjs.com/package/@grigorov-it/mazer) build on top of the Mazer theme.
+ 
+## Contributing
+
+Garage Buddy is an open source project, and we welcome contributions from the community. If you find any bugs, have feature suggestions, or want to help improve the system, please feel free to submit issues and pull requests.
 
 ## License
 
