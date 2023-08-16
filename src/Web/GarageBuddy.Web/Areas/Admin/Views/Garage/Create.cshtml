@@ -1,0 +1,105 @@
+﻿<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-6 col-12 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Edit Vehicle Brand</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form class="form form-vertical" method="post" action="" novalidate="novalidate">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="coordinates">Coordinates:</label>
+                                                <input type="text" class="form-control" id="coordinates" placeholder="Enter coordinates">
+                                            </div>
+                                            <a href="#" class="btn btn-primary" id="getLocationBtn">Get Location</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <a class="btn btn-secondary me-1 mb-1" href="/Admin/Brand">
+                                            <i class="bi bi-car-front"></i>
+                                            Brands
+                                        </a>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="mapContainer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    let map;
+    let marker;
+
+    function initMap() {
+        map = L.map('mapContainer').setView([42.7339, 25.4858], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: ''
+        }).addTo(map);
+
+        marker = L.marker([42.7339, 25.4858], {
+            draggable: true
+        }).addTo(map)
+            .bindPopup('Choose the garage location.')
+            .openPopup();
+
+        marker.on('dragend', updateCoordinates);
+    }
+
+    function updateCoordinates() {
+        const latLng = marker.getLatLng();
+        const coordinatesInput = document.getElementById('coordinates');
+        coordinatesInput.value = `${latLng.lat.toFixed(6)}, ${latLng.lng.toFixed(6)}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        initMap();
+
+        const getLocationBtn = document.getElementById('getLocationBtn');
+
+        getLocationBtn.addEventListener('click', function () {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const userLatLng = L.latLng(position.coords.latitude, position.coords.longitude);
+                    map.setView(userLatLng, 14);
+                    marker.setLatLng(userLatLng);
+                    updateCoordinates();
+                });
+            } else {
+                alert("Geolocation is not available in this browser.");
+            }
+        });
+    });
+</script>
+
+@section HeadScripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+    <style>
+        #mapContainer {
+            position: fixed;
+            top: 120px;
+            right: 50px;
+            width: 350px;
+            height: 350px;
+            z-index: 9999;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+}
