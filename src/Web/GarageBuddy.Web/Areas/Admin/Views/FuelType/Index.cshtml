@@ -17,7 +17,7 @@
                         <th>Fuel Type</th>
                         <th>Created On</th>
                         <th>Modified On</th>
-                        <th>Deactivated ?</th>
+                        <th>Active</th>
                         <th>Deactivated On</th>
                     </tr>
                 </thead>
@@ -28,7 +28,16 @@
                             <td>@fuelType.FuelName</td>
                             <td>@fuelType.CreatedOn</td>
                             <td>@fuelType.ModifiedOn</td>
-                            <td>@fuelType.IsDeleted</td>
+                            <td>
+                                @if (@fuelType.IsDeleted)
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                            </td>
                             <td>@fuelType.DeletedOn</td>
                         </tr>
                     }

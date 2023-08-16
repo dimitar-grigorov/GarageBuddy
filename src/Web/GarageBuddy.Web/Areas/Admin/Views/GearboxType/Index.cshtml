@@ -17,7 +17,7 @@
                         <th>Gearbox Type Name</th>
                         <th>Created On</th>
                         <th>Modified On</th>
-                        <th>Deactivated ?</th>
+                        <th>Active</th>
                         <th>Deactivated On</th>
                     </tr>
                 </thead>
@@ -28,7 +28,16 @@
                             <td>@gearboxType.GearboxTypeName</td>
                             <td>@gearboxType.CreatedOn</td>
                             <td>@gearboxType.ModifiedOn</td>
-                            <td>@gearboxType.IsDeleted</td>
+                            <td>
+                                @if (@gearboxType.IsDeleted)
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                            </td>
                             <td>@gearboxType.DeletedOn</td>
                         </tr>
                     }

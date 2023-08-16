@@ -17,7 +17,7 @@
                         <th>Job Name</th>
                         <th>Created On</th>
                         <th>Modified On</th>
-                        <th>Deactivated ?</th>
+                        <th>Active<th>
                         <th>Deactivated On</th>
                     </tr>
                 </thead>
@@ -28,7 +28,16 @@
                             <td>@jobItemType.JobTypeName</td>
                             <td>@jobItemType.CreatedOn</td>
                             <td>@jobItemType.ModifiedOn</td>
-                            <td>@jobItemType.IsDeleted</td>
+                            <td>
+                                @if (@jobItemType.IsDeleted)
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                            </td>
                             <td>@jobItemType.DeletedOn</td>
                         </tr>
                     }
