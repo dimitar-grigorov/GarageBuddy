@@ -12,6 +12,7 @@
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Garage;
     using static GarageBuddy.Common.Constants.GlobalValidationConstants;
+    using static GarageBuddy.Common.Constants.MessageConstants;
 
     public class GarageCreateOrEditViewModel : IMapTo<GarageServiceModel>,
         IMapFrom<GarageServiceModel>, IHaveCustomMappings
@@ -33,6 +34,7 @@
         public string? Email { get; set; }
 
         [StringLength(GaragePhoneMaxLength)]
+        [Phone]
         public string? Phone { get; set; }
 
         [StringLength(UrlMaxLength)]
@@ -49,7 +51,7 @@
         public string? Description { get; set; }
 
         [StringLength(GarageCoordinatesMaxLength)]
-        [RegularExpression(CoordinatesRegex)]
+        [RegularExpression(CoordinatesRegex, ErrorMessage = Errors.InvalidCoordinates)]
         [Display(Name = "Garage location (coordinates)")]
         public string? Coordinates { get; set; }
 

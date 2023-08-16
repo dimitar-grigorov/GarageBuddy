@@ -4,6 +4,10 @@
 
     public interface IGarageService
     {
+        public Task<ICollection<GarageServiceModel>> GetAllAsync(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted);
+
         public Task<bool> ExistsAsync(Guid id);
 
         public Task<IResult<GarageServiceModel>> GetAsync(Guid id);

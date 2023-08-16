@@ -1,8 +1,61 @@
-﻿<section class="section">
+﻿@model ICollection<GarageListViewModel>
+
+@{
+    ViewData["Title"] = "Garage Information";
+}
+
+<section class="section">
     <div class="card">
         <div class="card-header d-flex justify-content-between">
             <h5 class="card-title">@ViewData["Title"]</h5>
-            <a class="btn btn-success" asp-area="Admin" , asp-controller="Garage" asp-action="Create">Create New Garage</a>
+            <a class="btn btn-success" asp-area="Admin" asp-controller="Garage" asp-action="Create">Create New Garage</a>
+        </div>
+        <div class="card-body">
+            <table id="garageTable" class="table table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Garage Name</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Image</th>
+                        <th>Working Hours</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var garage in Model)
+                    {
+                        <tr>
+                            <td>@garage.Name</td>
+                            <td>@garage.Address</td>
+                            <td>@garage.Email</td>
+                            <td>@garage.Phone</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(garage.ImageUrl))
+                                {
+                                    <img src="@garage.ImageUrl" alt="Garage Image" style="max-height: 50px; max-width: 50px;" />
+                                }
+                            </td>
+                            <td>@garage.WorkingHours</td>
+                            <td>@garage.Description</td>
+                            <td>
+                                <a class="btn btn-primary" asp-area="Admin" asp-controller="Garage" asp-action="Edit" asp-route-id="@garage.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </section>
+
+@section Scripts {
+    <partial name="_DataTablesScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#garageTable').DataTable();
+        });
+    </script>
+}

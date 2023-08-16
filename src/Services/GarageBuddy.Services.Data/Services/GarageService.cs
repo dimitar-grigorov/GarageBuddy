@@ -21,6 +21,13 @@
             this.garageRepository = entityRepository;
         }
 
+        public async Task<ICollection<GarageServiceModel>> GetAllAsync(
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
+            DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
+        {
+            return await base.GetAllAsync<GarageServiceModel>(asReadOnly, includeDeleted);
+        }
+
         public async Task<bool> ExistsAsync(Guid id)
         {
             return await garageRepository.ExistsAsync(id);

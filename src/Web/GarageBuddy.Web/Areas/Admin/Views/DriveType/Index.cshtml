@@ -19,6 +19,7 @@
                         <th>Modified On</th>
                         <th>Active</th>
                         <th>Deactivated On</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,9 @@
                                 }
                             </td>
                             <td>@driveType.DeletedOn</td>
+                            <td>
+                                <a class="btn btn-primary" asp-area="Admin" asp-controller="DriveType" asp-action="Edit" asp-route-id="@driveType.Id">Edit</a>
+                            </td>
                         </tr>
                     }
                 </tbody>

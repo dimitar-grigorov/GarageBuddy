@@ -1,27 +1,98 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
+    using System.Net;
+    using AutoMapper;
+    using GarageBuddy.Services.Data.Models.Vehicle.BrandModel;
+
+    using GarageBuddy.Web.ViewModels.Admin.BrandModel;
+
     using Microsoft.AspNetCore.Mvc;
+
     using Services.Data.Contracts;
+    using Services.Data.Models;
+
+    using ViewModels.Admin.Garage;
 
     public class GarageController : AdminController
     {
         IGarageService garageService;
 
-        public GarageController(IGarageService garageService)
+        private readonly IMapper mapper;
+
+        public GarageController(IGarageService garageService,
+            IMapper mapper)
         {
             this.garageService = garageService;
+            this.mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var serviceModel = await this.garageService.GetAllAsync();
+            var model = mapper.Map<ICollection<GarageListViewModel>>(serviceModel);
+
+            return View(model);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(GarageCreateOrEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var serviceModel = mapper.Map<GarageServiceModel>(model);
+            var result = await this.garageService.CreateAsync(serviceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+                return View(model);
+            }
+
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyCreatedEntity, "Garage");
+            return RedirectToAction(Actions.Index);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var serviceModel = await this.garageService.GetAsync(id);
+            var model = mapper.Map<GarageCreateOrEditViewModel>(serviceModel.Data);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, GarageCreateOrEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var serviceModel = mapper.Map<GarageServiceModel>(model);
+            var result = await this.garageService.EditAsync(id, serviceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+            }
+
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Garage");
+            return RedirectToAction(Actions.Index);
         }
     }
 }
