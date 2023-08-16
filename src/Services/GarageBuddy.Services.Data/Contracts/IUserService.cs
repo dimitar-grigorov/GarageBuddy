@@ -1,12 +1,8 @@
 ﻿namespace GarageBuddy.Services.Data.Contracts
 {
-    using System;
-    using System.Threading.Tasks;
-
-    using GarageBuddy.Common.Core.Wrapper;
-    using GarageBuddy.Common.Core.Wrapper.Generic;
-
     using Microsoft.AspNetCore.Identity;
+
+    using Models.ApplicationUser;
 
     public interface IUserService
     {
@@ -28,6 +24,8 @@
         public Task<IResult<string>> GenerateEmailResetUriAsync(string email, string origin, string route, string tokenQueryKey);
 
         public Task<IResult> ResetPasswordAsync(string email, string password, string token);
+
+        public Task<ICollection<UserSelectServiceModel>> GetAllSelectAsync();
 
         /*
         public Task<TUser> FindUserByIdAsync(string id);

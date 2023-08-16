@@ -26,7 +26,7 @@
         }
 
         public async Task<ICollection<BrandModelListServiceModel>> GetAllAsync(
-            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
         {
             var query = this.brandModelRepository

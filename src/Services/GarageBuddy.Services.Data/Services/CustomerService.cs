@@ -1,9 +1,14 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
     using AutoMapper;
+
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
     using GarageBuddy.Services.Data.Contracts;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using Models.Customer;
 
     public class CustomerService : BaseService<Customer, Guid>, ICustomerService
     {
@@ -15,6 +20,20 @@
             : base(entityRepository, mapper)
         {
             this.customerRepository = entityRepository;
+        }
+
+        public async Task<ICollection<CustomerSelectServiceModel>> GetAllSelectAsync()
+        {
+            return await customerRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
+                .OrderBy(c => c.IsDeleted)
+                .ThenBy(c => c.Name)
+                .ThenBy(c => c.Phone)
+                .Select(c => new CustomerSelectServiceModel
+                {
+                    Id = c.Id.ToString(),
+                    CustomerName = c.Name,
+                    Phone = c.Phone,
+                }).ToListAsync();
         }
     }
 }

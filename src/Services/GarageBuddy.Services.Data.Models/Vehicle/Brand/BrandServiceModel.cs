@@ -3,25 +3,17 @@
     using System;
 
     using AutoMapper;
-
+    using Base;
     using GarageBuddy.Data.Models.Vehicle;
 
     using Mapping;
 
-    public class BrandServiceModel : IMapFrom<Brand>, IMapTo<Brand>, IMapTo<BrandSelectServiceModel>, IHaveCustomMappings
+    public class BrandServiceModel : BaseListServiceModel, IMapFrom<Brand>, IMapTo<Brand>, IHaveCustomMappings
     {
         public Guid Id { get; set; }
 
         public string BrandName { get; set; } = null!;
-
-        public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
-
+        
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration

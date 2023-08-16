@@ -1,10 +1,6 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Vehicle.Brand
 {
-    using GarageBuddy.Data.Models.Vehicle;
-
-    using Mapping;
-
-    public class BrandSelectServiceModel : IMapFrom<Brand>
+    public class BrandSelectServiceModel
     {
         public string Id { get; set; } = null!;
 

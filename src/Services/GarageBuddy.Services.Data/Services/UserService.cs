@@ -13,7 +13,10 @@
 
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.WebUtilities;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Logging;
+
+    using Models.ApplicationUser;
 
     public class UserService : IUserService
     {
@@ -185,6 +188,21 @@
             result.Errors.ToList().ForEach(error => logger.LogError(error.Description));
 
             return await Result.FailAsync(Errors.GeneralError);
+        }
+
+        public async Task<ICollection<UserSelectServiceModel>> GetAllSelectAsync()
+        {
+            var users = await userManager.Users
+                .Select(c => new UserSelectServiceModel
+                {
+                    Id = c.Id.ToString(),
+                    FullName = c.UserName,
+                    Email = c.Email,
+                })
+                .OrderBy(c => c.FullName)
+                .ThenBy(c => c.Email)
+                .ToListAsync();
+            return users;
         }
     }
 }
