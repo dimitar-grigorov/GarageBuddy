@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
 
-        public string DriveTypeName { get; set; }
+        public string DriveTypeName { get; set; } = null!;
     }
 }

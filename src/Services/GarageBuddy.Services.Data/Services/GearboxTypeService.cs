@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
@@ -19,6 +20,17 @@
             : base(entityRepository, mapper)
         {
             this.gearboxTypeRepository = entityRepository;
+        }
+
+        public async Task<ICollection<GearBoxTypeServiceModel>> GetAllAsync()
+        {
+            var query = this.gearboxTypeRepository
+                .All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
+                .ProjectTo<GearBoxTypeServiceModel>(this.Mapper.ConfigurationProvider)
+                .OrderBy(d => d.IsDeleted)
+                .ThenBy(b => b.Id);
+
+            return await query.ToListAsync();
         }
 
         public async Task<ICollection<GearBoxTypeSelectServiceModel>> GetAllSelectAsync()

@@ -4,6 +4,8 @@
 
     public interface IFuelTypeService
     {
+        public Task<ICollection<FuelTypeServiceModel>> GetAllAsync();
+
         public Task<ICollection<FuelTypeSelectServiceModel>> GetAllSelectAsync();
     }
 }

@@ -35,6 +35,7 @@
             this.brandService = brandService;
         }
 
+        [HttpGet]
         public IActionResult Index(string? brandId)
         {
             if (brandId != null)

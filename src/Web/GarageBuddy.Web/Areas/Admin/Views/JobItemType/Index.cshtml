@@ -1,0 +1,48 @@
+﻿@model ICollection<JobItemTypeServiceModel>
+
+@{
+    ViewData["Title"] = "Job Types";
+}
+
+<section class="section">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h5 class="card-title">@ViewData["Title"]</h5>
+            <a class="btn btn-success" asp-area="Admin" asp-controller="JobItemType" asp-action="Create">Create New Job Type</a>
+        </div>
+        <div class="card-body">
+            <table id="jobItemTypeTable" class="table table-striped table-hover" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Job Name</th>
+                        <th>Created On</th>
+                        <th>Modified On</th>
+                        <th>Deactivated ?</th>
+                        <th>Deactivated On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var jobItemType in Model)
+                    {
+                        <tr>
+                            <td>@jobItemType.JobTypeName</td>
+                            <td>@jobItemType.CreatedOn</td>
+                            <td>@jobItemType.ModifiedOn</td>
+                            <td>@jobItemType.IsDeleted</td>
+                            <td>@jobItemType.DeletedOn</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_DataTablesScriptsPartial" />
+    <script>
+        $(document).ready(function () {
+            $('#jobItemTypeTable').DataTable();
+        });
+    </script>
+}

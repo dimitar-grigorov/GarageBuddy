@@ -4,6 +4,8 @@
 
     public interface IGearboxTypeService
     {
+        public Task<ICollection<GearBoxTypeServiceModel>> GetAllAsync();
+
         public Task<ICollection<GearBoxTypeSelectServiceModel>> GetAllSelectAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
     using AutoMapper;
+    using AutoMapper.QueryableExtensions;
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
@@ -19,6 +20,17 @@
             : base(entityRepository, mapper)
         {
             this.fuelTypeRepository = entityRepository;
+        }
+
+        public async Task<ICollection<FuelTypeServiceModel>> GetAllAsync()
+        {
+            var query = this.fuelTypeRepository
+                .All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
+                .ProjectTo<FuelTypeServiceModel>(this.Mapper.ConfigurationProvider)
+                .OrderBy(d => d.IsDeleted)
+                .ThenBy(b => b.Id);
+
+            return await query.ToListAsync();
         }
 
         public async Task<ICollection<FuelTypeSelectServiceModel>> GetAllSelectAsync()

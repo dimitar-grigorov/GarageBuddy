@@ -12,6 +12,7 @@
     using AutoMapper.QueryableExtensions;
 
     using Contracts;
+
     using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Common.Models;
@@ -35,7 +36,7 @@
         protected IMapper Mapper => this.mapper;
 
         public async Task<ICollection<TModel>> GetAllAsync<TModel>(
-            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal, 
+            ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
         {
             var query = this.entityRepository
