@@ -23,7 +23,7 @@
         {
             var query = base.All(asReadOnly);
 
-            if (includeDeleted == DeletedFilter.Deleted)
+            if (includeDeleted == DeletedFilter.NotDeleted)
             {
                 query = query.Where(e => !e.IsDeleted);
             }
@@ -36,7 +36,7 @@
         {
             var query = base.All(search, asReadOnly);
 
-            if (includeDeleted == DeletedFilter.Deleted)
+            if (includeDeleted == DeletedFilter.NotDeleted)
             {
                 query = query.Where(e => !e.IsDeleted);
             }

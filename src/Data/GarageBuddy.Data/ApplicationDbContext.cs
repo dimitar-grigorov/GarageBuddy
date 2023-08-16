@@ -93,11 +93,11 @@
             GlobalEntityConfiguration.AddIndexForDeletableEntities(builder, deletableEntityTypes);
 
             // Set global query filter for not deleted entities only
-            foreach (var deletableEntityType in deletableEntityTypes)
+            /*foreach (var deletableEntityType in deletableEntityTypes)
             {
                 var method = SetIsDeletedQueryFilterMethod.MakeGenericMethod(deletableEntityType.ClrType);
                 method.Invoke(null, new object[] { builder });
-            }
+            }*/
 
             GlobalEntityConfiguration.DisableCascadeDelete(builder, entityTypes);
         }
