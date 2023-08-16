@@ -27,6 +27,7 @@
 ## Third-Party
  - Based on [ASP.NET Core MVC template](https://github.com/NikolayIT/ASP.NET-Core-Template) by [Nikolay Kostov](https://github.com/NikolayIT)
  - Theme [Mazer Dashboard](https://github.com/zuramai/mazer) by [Zuramai](https://github.com/zuramai)
+ - Custom [npm package](https://www.npmjs.com/package/@grigorov-it/mazer) build on top of the Mazer theme.
  
 ## Contributing
 
@@ -39,8 +40,19 @@ To get started with Garrage Buddy, follow the instructions below:
 1. Clone the repository: `git clone https://github.com/dimitar-grigorov/GarageBuddy`
 2. Install the required dependencies.
 3. Configure the database settings to fit your environment.
-4. Build and run the application.
-5. Access the application through your web browser and create your admin account.
+
+### Configure Database Settings
+
+Garrage Buddy uses a configuration file to manage its database settings. The default configuration file (`appsettings.json`) is different from the standard one. It looks like this:
+
+```json
+{
+  "DatabaseSettings": {
+    "DbProvider": "mssql",
+    "DefaultConnection": "Server=.;Database=GarageBuddy;Trusted_Connection=True;MultipleActiveResultSets=true"
+  }
+}
+```
 
 For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/docs/INSTALLATION.md).
 
