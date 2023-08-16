@@ -32,7 +32,7 @@
                 {
                     Id = c.Id.ToString(),
                     CustomerName = c.Name,
-                    Phone = c.Phone,
+                    Phone = c.Phone ?? NoValue,
                 }).ToListAsync();
         }
     }

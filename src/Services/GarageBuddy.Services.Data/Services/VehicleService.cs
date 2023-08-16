@@ -28,16 +28,16 @@
             return await vehicleRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
                 .Include(v => v.Brand)
                 .Include(v => v.BrandModel)
-                .OrderBy(b => b.IsDeleted)
-                .ThenBy(b => b.Brand.BrandName)
-                .ThenBy(b => b.BrandModel.ModelName)
-                .ThenBy(b => b.Customer.Name)
-                .Select(b => new VehicleSelectServiceModel
+                .OrderBy(v => v.IsDeleted)
+                .ThenBy(v => v.Brand.BrandName)
+                .ThenBy(v => v.BrandModel.ModelName)
+                .ThenBy(v => v.Customer.Name)
+                .Select(v => new VehicleSelectServiceModel
                 {
-                    Id = b.Id.ToString(),
-                    BrandName = b.Brand.BrandName,
-                    ModelName = b.BrandModel.ModelName,
-                    CustomerName = b.Customer.Name,
+                    Id = v.Id.ToString(),
+                    BrandName = v.Brand.BrandName,
+                    ModelName = v.BrandModel.ModelName,
+                    CustomerName = v.Customer.Name,
                 }).ToListAsync();
         }
     }

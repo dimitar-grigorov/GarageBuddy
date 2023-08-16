@@ -20,6 +20,8 @@
 
         public const string DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
+        public const string NoValue = "None";
+
         /// <summary>
         /// Gets a default timeout (in milliseconds) before restarting the application.
         /// </summary>
