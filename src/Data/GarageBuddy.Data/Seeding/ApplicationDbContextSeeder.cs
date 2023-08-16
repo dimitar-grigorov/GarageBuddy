@@ -39,6 +39,9 @@
                               // new JobItemTypeSeeder(),
                               new BrandSeeder(),
                               new BrandModelSeeder(), // Always after BrandSeeder
+                              new DriveTypeSeeder(),
+                              new FuelTypeSeeder(),
+                              new GearboxTypeSeeder(),
                           };
 
             foreach (var seeder in seeders)

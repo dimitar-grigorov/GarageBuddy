@@ -16,16 +16,20 @@
 
         public static async Task<List<TEntity>> GetSeedDataFromJson<TEntity>(string fileName)
         {
-            // Get the directory path from the assembly location
-            var currentDirectory = Path.GetDirectoryName(Assembly.GetAssembly(typeof(JobStatusSeeder)).Location)
-                                   ?? throw new InvalidOperationException(Errors.InvalidDirectoryPath);
-            var fullPath = Path.Combine(currentDirectory, SeedPath, fileName);
-
+            var fullPath = GetJsonFromSeedFile(fileName);
             var json = await File.ReadAllTextAsync(fullPath);
             var result = JsonConvert.DeserializeObject<List<TEntity>>(json)
                          ?? throw new InvalidOperationException(string.Format(Errors.DeserializationFailed, fullPath));
 
             return result;
+        }
+
+        private static string GetJsonFromSeedFile(string fileName)
+        {
+            var assembly = Assembly.GetAssembly(typeof(JobStatusSeeder)) ?? throw new InvalidOperationException("Invalid seed assembly.");
+            var currentDirectory = Path.GetDirectoryName(assembly.Location)
+                                   ?? throw new InvalidOperationException(Errors.InvalidDirectoryPath);
+            return Path.Combine(currentDirectory, SeedPath, fileName);
         }
     }
 }
