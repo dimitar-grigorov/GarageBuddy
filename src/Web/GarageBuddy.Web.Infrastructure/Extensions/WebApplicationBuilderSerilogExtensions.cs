@@ -17,7 +17,7 @@
         {
             builder.Services.AddOptions<LoggerSettings>().BindConfiguration(nameof(LoggerSettings));
 
-            _ = builder.Host.UseSerilog((_, sp, serilogConfig) =>
+            _ = builder.Host.UseSerilog((_, sp, logConfig) =>
             {
                 LoggerSettings loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
                 string appName = loggerSettings.AppName;
@@ -25,40 +25,40 @@
                 bool writeToFile = loggerSettings.WriteToFile;
                 bool structuredConsoleLogging = loggerSettings.StructuredConsoleLogging;
                 string minLogLevel = loggerSettings.MinimumLogLevel;
-                ConfigureEnrichers(serilogConfig, appName);
-                ConfigureConsoleLogging(serilogConfig, structuredConsoleLogging);
-                ConfigureWriteToFile(serilogConfig, writeToFile);
+                ConfigureEnrichers(logConfig, appName);
+                ConfigureConsoleLogging(logConfig, structuredConsoleLogging);
+                ConfigureWriteToFile(logConfig, writeToFile);
 
-                SetMinimumLogLevel(serilogConfig, minLogLevel);
-                OverrideMinimumLogLevel(serilogConfig);
+                SetMinimumLogLevel(logConfig, minLogLevel);
+                OverrideMinimumLogLevel(logConfig);
             });
         }
 
-        private static void ConfigureEnrichers(LoggerConfiguration serilogConfig, string appName)
+        private static void ConfigureEnrichers(LoggerConfiguration logConfig, string appName)
         {
-            serilogConfig
+            logConfig
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Application", appName)
                 .Enrich.WithExceptionDetails();
         }
 
-        private static void ConfigureConsoleLogging(LoggerConfiguration serilogConfig, bool structuredConsoleLogging)
+        private static void ConfigureConsoleLogging(LoggerConfiguration logConfig, bool structuredConsoleLogging)
         {
             if (structuredConsoleLogging)
             {
-                serilogConfig.WriteTo.Async(wt => wt.Console(new CompactJsonFormatter()));
+                logConfig.WriteTo.Async(wt => wt.Console(new CompactJsonFormatter()));
             }
             else
             {
-                serilogConfig.WriteTo.Async(wt => wt.Console());
+                logConfig.WriteTo.Async(wt => wt.Console());
             }
         }
 
-        private static void ConfigureWriteToFile(LoggerConfiguration serilogConfig, bool writeToFile)
+        private static void ConfigureWriteToFile(LoggerConfiguration logConfig, bool writeToFile)
         {
             if (writeToFile)
             {
-                serilogConfig.WriteTo.File(
+                logConfig.WriteTo.File(
                     new CompactJsonFormatter(),
                     "Logs/logs.json",
                     restrictedToMinimumLevel: LogEventLevel.Information,
@@ -67,29 +67,29 @@
             }
         }
 
-        private static void OverrideMinimumLogLevel(LoggerConfiguration serilogConfig)
+        private static void OverrideMinimumLogLevel(LoggerConfiguration logConfig)
         {
-            serilogConfig
+            logConfig
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Error);
         }
 
-        private static void SetMinimumLogLevel(LoggerConfiguration serilogConfig, string minLogLevel)
+        private static void SetMinimumLogLevel(LoggerConfiguration logConfig, string minLogLevel)
         {
             switch (minLogLevel.ToLower())
             {
                 case "debug":
-                    serilogConfig.MinimumLevel.Debug();
+                    logConfig.MinimumLevel.Debug();
                     break;
                 case "information":
-                    serilogConfig.MinimumLevel.Information();
+                    logConfig.MinimumLevel.Information();
                     break;
                 case "warning":
-                    serilogConfig.MinimumLevel.Warning();
+                    logConfig.MinimumLevel.Warning();
                     break;
                 default:
-                    serilogConfig.MinimumLevel.Information();
+                    logConfig.MinimumLevel.Information();
                     break;
             }
         }

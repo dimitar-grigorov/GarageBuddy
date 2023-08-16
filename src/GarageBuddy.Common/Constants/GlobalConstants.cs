@@ -10,6 +10,10 @@
 
         public const string ErrorRoute = "/Home/Error";
 
+        public const string UserLoginRoute = "/User/Login";
+
+        public const string UserLogoutRoute = "/User/Logout";
+
         public const string MailTemplatePath = "MailTemplates";
 
         public const string ThemeErrorImagesPathTemplate = "/themes/mazer/dist/assets/compiled/svg/error-{0}.svg";

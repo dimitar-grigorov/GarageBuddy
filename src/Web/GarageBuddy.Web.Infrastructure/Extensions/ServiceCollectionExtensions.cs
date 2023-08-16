@@ -69,8 +69,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
         {
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/User/Login";
-                options.LogoutPath = "/User/Logout";
+                options.LoginPath = GlobalConstants.UserLoginRoute;
+                options.LogoutPath = GlobalConstants.UserLogoutRoute;
                 options.AccessDeniedPath = $"{GlobalConstants.ErrorRoute}/401";
             });
 
@@ -131,6 +131,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             services.AddScoped<IViewRenderer, ViewRenderer>();
             services.AddTransient<IEmailSender, SmtpMailSender>();
             services.AddTransient<IEmailService, EmailService>();
+
             // Options manager
             services.AddSingleton<IOptionsManager, OptionsManager>();
 
