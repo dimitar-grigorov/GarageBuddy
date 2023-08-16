@@ -6,7 +6,7 @@
     {
         public Task<ICollection<GarageServiceModel>> GetAllAsync(
             ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
-            DeletedFilter includeDeleted = DeletedFilter.NotDeleted);
+            DeletedFilter includeDeleted = DeletedFilter.Deleted);
 
         public Task<bool> ExistsAsync(Guid id);
 

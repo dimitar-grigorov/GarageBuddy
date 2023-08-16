@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Web.ViewModels.Admin.Garage
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using GarageBuddy.Services.Data.Models;
     using GarageBuddy.Services.Mapping;
@@ -22,5 +23,8 @@
         public string? WorkingHours { get; set; }
 
         public string? Description { get; set; }
+
+        public bool IsDeleted { get; set; } = false;
+
     }
 }

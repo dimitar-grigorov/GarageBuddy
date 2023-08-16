@@ -55,6 +55,12 @@
         [Display(Name = "Garage location (coordinates)")]
         public string? Coordinates { get; set; }
 
+        [Display(Name = "Deactivated")]
+        public bool IsDeleted { get; set; } = false;
+
+        [Display(Name = "Deactivated On")]
+        public string? DeletedOn { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<DateTime?, string?>().ConvertUsing(new ReverseDateTimeTypeConverter());

@@ -1,10 +1,6 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
-    using System.Net;
     using AutoMapper;
-    using GarageBuddy.Services.Data.Models.Vehicle.BrandModel;
-
-    using GarageBuddy.Web.ViewModels.Admin.BrandModel;
 
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +11,7 @@
 
     public class GarageController : AdminController
     {
-        IGarageService garageService;
+        private readonly IGarageService garageService;
 
         private readonly IMapper mapper;
 

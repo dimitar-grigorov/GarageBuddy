@@ -23,7 +23,7 @@
 
         public async Task<ICollection<GarageServiceModel>> GetAllAsync(
             ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
-            DeletedFilter includeDeleted = DeletedFilter.NotDeleted)
+            DeletedFilter includeDeleted = DeletedFilter.Deleted)
         {
             return await base.GetAllAsync<GarageServiceModel>(asReadOnly, includeDeleted);
         }

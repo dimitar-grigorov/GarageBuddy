@@ -27,7 +27,7 @@
         [Display(Name = "Deactivated")]
         public bool IsDeleted { get; set; } = false;
 
-        [Display(Name = "Deleted On")]
+        [Display(Name = "Deactivated On")]
         public string? DeletedOn { get; set; }
 
         [Required]
