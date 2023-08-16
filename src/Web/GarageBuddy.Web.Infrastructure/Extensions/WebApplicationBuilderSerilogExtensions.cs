@@ -19,7 +19,7 @@
 
             _ = builder.Host.UseSerilog((_, sp, serilogConfig) =>
             {
-                var loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
+                LoggerSettings loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
                 string appName = loggerSettings.AppName;
                 string elasticSearchUrl = loggerSettings.ElasticSearchUrl;
                 bool writeToFile = loggerSettings.WriteToFile;
@@ -29,9 +29,8 @@
                 ConfigureConsoleLogging(serilogConfig, structuredConsoleLogging);
                 ConfigureWriteToFile(serilogConfig, writeToFile);
 
-                // ConfigureElasticSearch(builder, serilogConfig, appName, elasticSearchUrl);
                 SetMinimumLogLevel(serilogConfig, minLogLevel);
-                OverideMinimumLogLevel(serilogConfig);
+                OverrideMinimumLogLevel(serilogConfig);
             });
         }
 
@@ -41,10 +40,6 @@
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Application", appName)
                 .Enrich.WithExceptionDetails();
-            /*.Enrich.WithMachineName()
-            .Enrich.WithProcessId()
-            .Enrich.WithThreadId()
-            .Enrich.FromLogContext();*/
         }
 
         private static void ConfigureConsoleLogging(LoggerConfiguration serilogConfig, bool structuredConsoleLogging)
@@ -72,11 +67,10 @@
             }
         }
 
-        private static void OverideMinimumLogLevel(LoggerConfiguration serilogConfig)
+        private static void OverrideMinimumLogLevel(LoggerConfiguration serilogConfig)
         {
             serilogConfig
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Hangfire", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
                 .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Error);
         }

@@ -158,9 +158,6 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                     var databaseSettings = p.GetRequiredService<IOptions<DatabaseSettings>>().Value;
                     m.UseDatabase(databaseSettings.DbProvider, databaseSettings.DefaultConnection);
                 })
-                /*.AddTransient<IDatabaseInitializer, DatabaseInitializer>()
-                .AddTransient<ApplicationDbInitializer>()
-                .AddTransient<ApplicationDbSeeder>()*/
                 .AddRepositories();
         }
 
