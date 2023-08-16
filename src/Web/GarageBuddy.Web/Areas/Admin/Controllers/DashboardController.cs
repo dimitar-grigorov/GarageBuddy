@@ -13,10 +13,11 @@
             this.settingsService = settingsService;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             // TODO: Remove
-            return RedirectToAction("Index", "Brand");
+            //return RedirectToAction("Index", "BrandModel");
 
             var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
             return this.View(viewModel);

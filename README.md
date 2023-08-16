@@ -24,7 +24,10 @@
 To get started with Garage Buddy, follow the instructions below:
 
 1. Clone the repository: `git clone https://github.com/dimitar-grigorov/GarageBuddy`
-2. Install the required dependencies.
+2. Install the required dependencies
+- Visual Studio 2022
+- Client side libraries are automatically installed by LibMan (included in Visual Studio).
+- SQL Server 2019
 3. Configure the database settings to fit your environment.
 
 ### Configure Database Settings
@@ -40,6 +43,11 @@ Garage Buddy uses different than the default configuration file (`appsettings.js
 }
 ```
 Also the same format can be used in the User Secrets.
+
+4. Apply the database migrations: `Update-Database`
+- In Visual Studio, open the Package Manager Console and select the `Data\GarageBuddy.Data` project as the Default project.
+- Execute the `Update-Database` command.
+5. On the first run the application will seed the database. The first registered user will be an administrator.
 
 For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/docs/INSTALLATION.md).
 
