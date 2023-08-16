@@ -49,7 +49,7 @@ Also the same format can be used in the User Secrets.
 - Execute the `Update-Database` command.
 5. On the first run the application will seed the database. The first registered user will be an administrator.
 
-For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/docs/INSTALLATION.md).
+For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/blob/main/docs/INSTALLATION.md).
 
 ## Technologies used
 - ASP.NET Core 6
