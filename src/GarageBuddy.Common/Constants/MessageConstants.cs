@@ -51,6 +51,8 @@
             public const string InvalidEntityName = "Invalid {0}.";
 
             public const string SourceOrDestinationNull = "Source or/and Destination Objects are null";
+
+            public const string NoMoreThanOneActiveGarage = "There can be only one active garage. Deactivate the other one.";
         }
 
         public static class Success

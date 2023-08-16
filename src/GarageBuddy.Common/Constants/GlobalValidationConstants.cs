@@ -14,5 +14,8 @@
         public const int DefaultEmailMaxLength = 150;
 
         public const int UrlMaxLength = 2048;
+
+        public const string CoordinatesRegex =
+            @"^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$";
     }
 }

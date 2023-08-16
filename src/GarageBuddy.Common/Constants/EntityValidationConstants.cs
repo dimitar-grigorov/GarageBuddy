@@ -104,6 +104,9 @@
             public const int GarageNameMinLength = 2;
             public const int GarageNameMaxLength = 50;
 
+            public const int GarageAddressMinLength = 2;
+            public const int GarageAddressMaxLength = 100;
+
             public const int GaragePhoneMaxLength = 30;
 
             public const int GarageWorkingHoursMaxLength = 100;
