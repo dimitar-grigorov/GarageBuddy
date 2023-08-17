@@ -1,11 +1,7 @@
 ﻿namespace GarageBuddy.Data.Models.Job
 {
-    using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
-    using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Models.Vehicle;
 
     using Microsoft.EntityFrameworkCore;

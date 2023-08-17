@@ -1,12 +1,6 @@
 ﻿namespace GarageBuddy.Data.Models.Job
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-
-    using GarageBuddy.Data.Common.Models;
-
     using static GarageBuddy.Common.Constants.EntityValidationConstants.JobDocument;
-    using static GarageBuddy.Common.Constants.GlobalValidationConstants;
 
     public class JobDocument : BaseDeletableModel<Guid>
     {

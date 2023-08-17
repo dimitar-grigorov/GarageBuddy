@@ -1,13 +1,6 @@
 ﻿namespace GarageBuddy.Data.Models.Vehicle
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    using GarageBuddy.Data.Common.Models;
-
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Vehicle;
-    using static GarageBuddy.Common.Constants.GlobalValidationConstants;
 
     public class Vehicle : BaseDeletableModel<Guid>
     {

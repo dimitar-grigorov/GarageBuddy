@@ -1,10 +1,6 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace GarageBuddy.Data.Models
 {
-    using System;
-
-    using GarageBuddy.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
 
     public class ApplicationRole : IdentityRole<Guid>, IAuditInfo, IDeletableEntity

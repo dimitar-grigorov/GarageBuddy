@@ -1,10 +1,7 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 namespace GarageBuddy.Data.Models
 {
-    using System;
     using System.Collections.Generic;
-
-    using GarageBuddy.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
 

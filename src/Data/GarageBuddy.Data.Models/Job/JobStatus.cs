@@ -1,11 +1,6 @@
 ﻿namespace GarageBuddy.Data.Models.Job
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     using Enums;
-
-    using GarageBuddy.Data.Common.Models;
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.JobStatus;
 

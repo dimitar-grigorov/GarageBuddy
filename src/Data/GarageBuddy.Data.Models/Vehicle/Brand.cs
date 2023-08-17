@@ -1,10 +1,6 @@
 ﻿namespace GarageBuddy.Data.Models.Vehicle
 {
-    using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    using GarageBuddy.Data.Common.Models;
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Brand;
 

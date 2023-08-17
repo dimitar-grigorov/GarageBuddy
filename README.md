@@ -47,7 +47,7 @@ Also the same format should be used in the User Secrets.
 
 For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/blob/main/docs/INSTALLATION.md).
 
-###It is way easier to use Docker and Docker Compose which are included and preconfigured as launch profile. 
+### It is way easier to use Docker and Docker Compose which are included and preconfigured as launch profile. 
 Don't forget to change the password in `docker-compose.override.yml`
 
 ## Technologies used

@@ -11,7 +11,6 @@
 
     public class DriveTypeController : AdminController
     {
-
         private readonly IDriveTypeService driveTypeService;
 
         private readonly IMapper mapper;

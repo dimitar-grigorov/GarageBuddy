@@ -5,6 +5,7 @@ namespace GarageBuddy.Data.Migrations
     using System;
 
     using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class CleanInit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

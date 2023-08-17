@@ -1,11 +1,5 @@
 ﻿namespace GarageBuddy.Data.Models.Job
 {
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
-    using GarageBuddy.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.JobItemPart;

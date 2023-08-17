@@ -1,5 +1,6 @@
 ﻿namespace GarageBuddy.Services.Data.Models
 {
+    using System;
     using AutoMapper;
 
     using GarageBuddy.Data.Models;

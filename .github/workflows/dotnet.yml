@@ -16,15 +16,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    #services:
-    #  mssql:
-    #    image: mcr.microsoft.com/mssql/server:2019-latest
-    #    env:
-    #      SA_PASSWORD: MyTestPassword
-    #      ACCEPT_EULA: 'Y'
-    #    ports:
-    #      - 1433:1433
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -39,7 +30,5 @@ jobs:
       working-directory: ./src
     - name: Test
       run: |
-        #dotnet user-secrets init --project Tests/GarageBuddy.Web.Tests/GarageBuddy.Web.Tests.csproj
-        #dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Initial Catalog=GarageBuddyTest;User Id=sa;Password=MyTestPassword;" --project Tests/GarageBuddy.Web.Tests/GarageBuddy.Web.Tests.csproj
         dotnet test --no-build --verbosity normal GarageBuddy.sln
       working-directory: ./src
