@@ -1,3 +1,4 @@
+
 # Garage Buddy - Open Source Garage Management System
 
 [![All Contributors](https://img.shields.io/github/contributors/dimitar-grigorov/GarageBuddy)](https://github.com/dimitar-grigorov/GarageBuddy/graphs/contributors)
@@ -17,17 +18,12 @@
 
 - **Service Tracking**: Keep a detailed log of every service performed on a customer's vehicle. From routine maintenance to complex repairs, Garage Buddy helps you maintain a complete history of each car, ensuring better customer service.
 
-- **File Attachment**: Mechanics can attach files to service records, including pictures of repairs before and after completion. This feature enhances documentation and allows customers to see visual evidence of the work done. Additionally, warranties for parts used in repairs can be tracked, ensuring quick access to warranty details when needed.
-
-## Getting Started
+## Install and Run
 
 To get started with Garage Buddy, follow the instructions below:
 
 1. Clone the repository: `git clone https://github.com/dimitar-grigorov/GarageBuddy`
-2. Install the required dependencies
-- Visual Studio 2022
-- Client side libraries are automatically installed by LibMan (included in Visual Studio).
-- SQL Server 2019
+2. Install the required dependencies. Visual Studio 2022 and SQL Server 2019.
 3. Configure the database settings to fit your environment.
 
 ### Configure Database Settings
@@ -42,7 +38,7 @@ Garage Buddy uses different than the default configuration file (`appsettings.js
   }
 }
 ```
-Also the same format can be used in the User Secrets.
+Also the same format should be used in the User Secrets.
 
 4. Apply the database migrations: `Update-Database`
 - In Visual Studio, open the Package Manager Console and select the `Data\GarageBuddy.Data` project as the Default project.
@@ -50,6 +46,9 @@ Also the same format can be used in the User Secrets.
 5. On the first run the application will seed the database. The first registered user will be an administrator.
 
 For more detailed instructions on installation and setup, please refer to the [Installation Guide](https://github.com/dimitar-grigorov/GarageBuddy/blob/main/docs/INSTALLATION.md).
+
+**It is way easier to use Docker and Docker Compose which are included and preconfigured as launch profile.** 
+Don't forget to change the password in `docker-compose.override.yml`
 
 ## Technologies used
 - ASP.NET Core 6
