@@ -41,7 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarageBuddy.Services.Data.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarageBuddy.Tests.Common", "GarageBuddy.Tests.Common\GarageBuddy.Tests.Common.csproj", "{43C2830C-BBBA-47EF-BBD7-66D5A55EBE33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GarageBuddy.Data.Tests", "Tests\GarageBuddy.Data.Tests\GarageBuddy.Data.Tests.csproj", "{C6F1BA97-B100-4A82-9813-303443D7B26F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GarageBuddy.Data.Tests", "Tests\GarageBuddy.Data.Tests\GarageBuddy.Data.Tests.csproj", "{C6F1BA97-B100-4A82-9813-303443D7B26F}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{26B54E62-8F59-4D60-80C9-87125BFF3DB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,10 @@ Global
 		{C6F1BA97-B100-4A82-9813-303443D7B26F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6F1BA97-B100-4A82-9813-303443D7B26F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6F1BA97-B100-4A82-9813-303443D7B26F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26B54E62-8F59-4D60-80C9-87125BFF3DB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26B54E62-8F59-4D60-80C9-87125BFF3DB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26B54E62-8F59-4D60-80C9-87125BFF3DB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26B54E62-8F59-4D60-80C9-87125BFF3DB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

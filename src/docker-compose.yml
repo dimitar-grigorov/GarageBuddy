@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  garagebuddy.web:
+    image: ${DOCKER_REGISTRY-}garagebuddyweb
+    build:
+      context: .
+      dockerfile: Web/GarageBuddy.Web/Dockerfile
+
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
