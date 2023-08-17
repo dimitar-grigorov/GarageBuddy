@@ -5,10 +5,6 @@
 
     public class Result : IResult
     {
-        public Result()
-        {
-        }
-
         public List<string> Messages { get; set; } = new();
 
         public bool Succeeded { get; set; }

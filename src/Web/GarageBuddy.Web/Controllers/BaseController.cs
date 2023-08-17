@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    using static GarageBuddy.Common.Constants.ControllersAndActionsConstants;
+    using static Common.Constants.ControllersAndActionsConstants;
 
     [Authorize]
     public class BaseController : Controller

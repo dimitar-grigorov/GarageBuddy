@@ -4,10 +4,9 @@
 
     using AutoMapper;
 
-    using GarageBuddy.Services.Mapping.TypeConverters;
-
     using Services.Data.Models.Vehicle.BrandModel;
     using Services.Mapping;
+    using Services.Mapping.TypeConverters;
 
     public class BrandModelListViewModel : IMapFrom<BrandModelListServiceModel>, IMapTo<BrandModelListServiceModel>, IHaveCustomMappings
     {

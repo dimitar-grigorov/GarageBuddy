@@ -5,7 +5,7 @@
     using System.Linq.Expressions;
 
     using GarageBuddy.Common.Core.Enums;
-    using GarageBuddy.Data.Common.Models;
+    using Models;
 
     public interface IDeletableEntityRepository<TEntity, in TKey> : IRepository<TEntity, TKey>
         where TEntity : BaseDeletableModel<TKey>

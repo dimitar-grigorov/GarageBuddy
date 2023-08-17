@@ -7,10 +7,9 @@
 
     using Base;
 
-    using GarageBuddy.Services.Mapping.TypeConverters;
-
     using Services.Data.Models.Vehicle.Brand;
     using Services.Mapping;
+    using Services.Mapping.TypeConverters;
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Brand;
 

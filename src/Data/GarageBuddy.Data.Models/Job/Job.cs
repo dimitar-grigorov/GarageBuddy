@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
 
-    using GarageBuddy.Data.Models.Vehicle;
-
     using Microsoft.EntityFrameworkCore;
+
+    using Vehicle;
 
     using static GarageBuddy.Common.Constants.GlobalValidationConstants;
 

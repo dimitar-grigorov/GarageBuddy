@@ -5,7 +5,6 @@
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Job;
-    using GarageBuddy.Services.Data.Models.Vehicle.GearboxType;
 
     using Microsoft.EntityFrameworkCore;
 

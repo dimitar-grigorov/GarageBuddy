@@ -5,7 +5,7 @@
     using Base;
 
     using GarageBuddy.Services.Data.Models.Vehicle.FuelType;
-    using GarageBuddy.Services.Mapping;
+    using Services.Mapping;
 
     using static Common.Constants.EntityValidationConstants.FuelType;
 

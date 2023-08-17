@@ -6,7 +6,7 @@
 
     using Common.Constants;
 
-    using GarageBuddy.Web.Infrastructure.Extensions;
+    using Infrastructure.Extensions;
 
     using Infrastructure.ViewRenderer;
 

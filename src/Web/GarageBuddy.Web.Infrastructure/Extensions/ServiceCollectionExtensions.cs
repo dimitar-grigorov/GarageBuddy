@@ -6,7 +6,9 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using System.Linq;
     using System.Reflection;
 
+    using Data;
     using Data.DataProvider;
+    using Data.Repositories;
 
     using DataTables.AspNet.AspNetCore;
 
@@ -14,11 +16,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using GarageBuddy.Common.Core;
     using GarageBuddy.Common.Core.Settings;
     using GarageBuddy.Common.Core.Settings.Mail;
-    using GarageBuddy.Data;
     using GarageBuddy.Data.Common.Repositories;
-    using GarageBuddy.Data.Repositories;
     using GarageBuddy.Services.Data.Contracts;
-    using GarageBuddy.Services.Messaging.Email;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
@@ -31,6 +30,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 
     using Services.Data.Options;
     using Services.Messaging.Contracts;
+    using Services.Messaging.Email;
     using Services.Messaging.Services;
 
     using ViewRenderer;

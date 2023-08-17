@@ -1,12 +1,10 @@
 ﻿namespace GarageBuddy.Common.Core.Settings
 {
-    using static GarageBuddy.Common.Constants.GlobalConstants;
+    using static Constants.GlobalConstants;
 
     public class LoggerSettings
     {
         public string AppName { get; set; } = SystemName;
-
-        public string ElasticSearchUrl { get; set; } = string.Empty;
 
         public bool WriteToFile { get; set; } = false;
 

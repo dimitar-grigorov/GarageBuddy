@@ -3,12 +3,14 @@
     using System;
     using System.Threading.Tasks;
 
+    using Data.Models;
+
     using GarageBuddy.Data.Common.Repositories;
-    using GarageBuddy.Data.Models;
     using GarageBuddy.Services.Data.Contracts;
-    using GarageBuddy.Web.ViewModels.Settings;
 
     using Microsoft.AspNetCore.Mvc;
+
+    using ViewModels.Settings;
 
     public class SettingsController : BaseController
     {

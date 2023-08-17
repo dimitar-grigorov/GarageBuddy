@@ -7,9 +7,10 @@
 
     using AutoMapper;
 
+    using Common.Core.Enums;
+
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
-    using GarageBuddy.Common.Core.Enums;
 
     using Microsoft.AspNetCore.Mvc;
 

@@ -4,9 +4,8 @@
 
     using Base;
 
-    using GarageBuddy.Services.Mapping;
-
     using Services.Data.Models.Vehicle.DriveType;
+    using Services.Mapping;
 
     using static Common.Constants.EntityValidationConstants.DriveType;
 

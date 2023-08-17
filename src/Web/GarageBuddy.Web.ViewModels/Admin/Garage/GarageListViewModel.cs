@@ -1,10 +1,10 @@
 ﻿namespace GarageBuddy.Web.ViewModels.Admin.Garage
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
 
     using GarageBuddy.Services.Data.Models;
-    using GarageBuddy.Services.Mapping;
+
+    using Services.Mapping;
 
     public class GarageListViewModel : IMapFrom<GarageServiceModel>
     {

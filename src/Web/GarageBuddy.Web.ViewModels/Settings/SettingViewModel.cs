@@ -4,8 +4,9 @@
 
     using AutoMapper;
 
-    using GarageBuddy.Data.Models;
-    using GarageBuddy.Services.Mapping;
+    using Data.Models;
+
+    using Services.Mapping;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {

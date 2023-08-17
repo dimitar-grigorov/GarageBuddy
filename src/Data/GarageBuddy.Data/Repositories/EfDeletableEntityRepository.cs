@@ -3,13 +3,10 @@
     using System;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Threading.Tasks;
 
     using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Models;
     using GarageBuddy.Data.Common.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
 
     public class EfDeletableEntityRepository<TEntity, TKey> : EfRepository<TEntity, TKey>, IDeletableEntityRepository<TEntity, TKey>
         where TEntity : BaseDeletableModel<TKey>

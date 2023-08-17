@@ -105,7 +105,7 @@
 
         public async Task<IResult<Guid>> CreateAsync(BrandModelServiceModel model)
         {
-            var isValid = base.ValidateModel(model);
+            var isValid = ValidateModel(model);
             if (!isValid)
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(BrandModel)));

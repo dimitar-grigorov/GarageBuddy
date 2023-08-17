@@ -2,9 +2,10 @@
 {
     using AutoMapper;
 
+    using Contracts;
+
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
-    using GarageBuddy.Services.Data.Contracts;
 
     using Microsoft.EntityFrameworkCore;
 

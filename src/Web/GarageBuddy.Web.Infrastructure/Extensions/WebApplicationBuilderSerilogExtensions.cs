@@ -21,7 +21,6 @@
             {
                 LoggerSettings loggerSettings = sp.GetRequiredService<IOptions<LoggerSettings>>().Value;
                 string appName = loggerSettings.AppName;
-                string elasticSearchUrl = loggerSettings.ElasticSearchUrl;
                 bool writeToFile = loggerSettings.WriteToFile;
                 bool structuredConsoleLogging = loggerSettings.StructuredConsoleLogging;
                 string minLogLevel = loggerSettings.MinimumLogLevel;

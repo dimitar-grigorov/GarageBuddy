@@ -7,14 +7,13 @@
 
     using Base;
 
-    using GarageBuddy.Services.Mapping.TypeConverters;
-
     using Services.Data.Models;
     using Services.Mapping;
+    using Services.Mapping.TypeConverters;
 
+    using static Common.Constants.GlobalValidationConstants;
+    using static Common.Constants.MessageConstants;
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Garage;
-    using static GarageBuddy.Common.Constants.GlobalValidationConstants;
-    using static GarageBuddy.Common.Constants.MessageConstants;
 
     public class GarageCreateOrEditViewModel : BaseCreateOrEditViewModel,
         IMapTo<GarageServiceModel>,

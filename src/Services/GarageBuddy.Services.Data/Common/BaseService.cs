@@ -267,7 +267,7 @@
                           && (targetProperty.GetSetMethod(true) != null && !targetProperty.GetSetMethod(true)!.IsPrivate)
                           && (targetProperty.GetSetMethod()!.Attributes & MethodAttributes.Static) == 0
                           && targetProperty.PropertyType.IsAssignableFrom(srcProp.PropertyType)
-                          select new { sourceProperty = srcProp, targetProperty = targetProperty };
+                          select new { sourceProperty = srcProp, targetProperty };
 
             // Map the properties
             foreach (var props in results)

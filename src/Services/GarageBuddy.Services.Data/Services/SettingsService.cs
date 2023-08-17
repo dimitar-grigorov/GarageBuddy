@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using Contracts;
+
     using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
-    using GarageBuddy.Services.Data.Contracts;
-    using GarageBuddy.Services.Mapping;
+
+    using Mapping;
 
     public class SettingsService : ISettingsService
     {

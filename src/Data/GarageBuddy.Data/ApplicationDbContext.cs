@@ -6,12 +6,13 @@
     using System.Threading.Tasks;
 
     using GarageBuddy.Data.Common.Models;
-    using GarageBuddy.Data.Models;
-    using GarageBuddy.Data.Models.Job;
-    using GarageBuddy.Data.Models.Vehicle;
 
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
+    using Models;
+    using Models.Job;
+    using Models.Vehicle;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {

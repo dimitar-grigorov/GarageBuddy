@@ -46,7 +46,7 @@
 
         public async Task<IResult<int>> CreateAsync(DriveTypeServiceModel model)
         {
-            var isValid = base.ValidateModel(model);
+            var isValid = ValidateModel(model);
             if (!isValid)
             {
                 return await Result<int>.FailAsync(string.Format(Errors.EntityNotFound, "Vehicle drive type"));

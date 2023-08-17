@@ -7,7 +7,7 @@
     using System.Threading.Tasks;
 
     using GarageBuddy.Common.Core.Enums;
-    using GarageBuddy.Data.Common.Models;
+    using Models;
 
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
