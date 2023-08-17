@@ -21,5 +21,7 @@
         public Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel);
 
         public Task<IResult> EditAsync(Guid id, BrandServiceModel brandServiceModel);
+
+        public Task<ICollection<ModelCountByBrandServiceModel>> GetModelCountByBrandAsync(int brandsLimit, bool shuffledData = true);
     }
 }

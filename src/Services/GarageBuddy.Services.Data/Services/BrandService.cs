@@ -127,5 +127,31 @@
 
             return await Result<Guid>.SuccessAsync();
         }
+
+        public async Task<ICollection<ModelCountByBrandServiceModel>> GetModelCountByBrandAsync(int brandsLimit, bool shuffledData)
+        {
+            var brandData = await brandRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.NotDeleted)
+                .Include(b => b.BrandModels)
+                .OrderByDescending(b => b.BrandModels.Count())
+                .Take(brandsLimit)
+                .Select(b => new ModelCountByBrandServiceModel
+                {
+                    BrandName = b.BrandName,
+                    ModelCount = b.BrandModels.Count(),
+                }).ToListAsync();
+
+            if (shuffledData)
+            {
+                var random = new Random();
+                int n = brandData.Count;
+                while (n > 1)
+                {
+                    n--;
+                    var k = random.Next(n + 1);
+                    (brandData[k], brandData[n]) = (brandData[n], brandData[k]);
+                }
+            }
+            return brandData;
+        }
     }
 }

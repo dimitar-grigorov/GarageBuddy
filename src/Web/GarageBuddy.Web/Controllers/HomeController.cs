@@ -11,21 +11,33 @@
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Extensions.Logging;
 
+    using Services.Data.Contracts;
+
     using ViewModels;
 
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IGarageService garageService;
+
+        private readonly IBrandService brandService;
+
+        public HomeController(ILogger<HomeController> logger,
+            IGarageService garageService,
+            IBrandService brandService)
         {
             this.logger = logger;
+            this.garageService = garageService;
+            this.brandService = brandService;
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            var modelsByBrandList = await this.brandService.GetModelCountByBrandAsync(15);
+
+            return this.View(modelsByBrandList);
         }
 
         [AllowAnonymous]

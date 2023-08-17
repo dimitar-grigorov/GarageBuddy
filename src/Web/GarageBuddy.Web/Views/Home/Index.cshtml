@@ -1,7 +1,71 @@
-﻿@{
+﻿@model ICollection<ModelCountByBrandServiceModel>
+
+@{
     this.ViewData["Title"] = "Home Page";
+
+    var brandNames = Model.Select(brand => brand.BrandName).ToList();
+    var modelCounts = Model.Select(brand => brand.ModelCount).ToList();
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Registered brands and models </h4>
+                </div>
+                <div class="card-body">
+                    <div id="chart-profile-visit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+@section Scripts {
+    <script>
+        var optionsProfileVisit = {
+            annotations: {
+                position: "back",
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            chart: {
+                type: "bar",
+                height: 300,
+                toolbar: {
+                    show: false
+                },
+            },
+            fill: {
+                opacity: 1,
+            },
+            plotOptions: {},
+            series: [
+                {
+                    name: "Model Count",
+                    data: @Html.Raw(Json.Serialize(modelCounts))
+                },
+            ],
+            colors: "#435ebe",
+            xaxis: {
+                categories: @Html.Raw(Json.Serialize(brandNames))
+            },
+        }
+
+        var chartProfileVisit = new ApexCharts(
+            document.querySelector("#chart-profile-visit"),
+            optionsProfileVisit
+        );
+
+        chartProfileVisit.render();
+    </script>
+}
+
+@section HeadScripts {
+    <script src="~/themes/mazer/dist/assets/extensions/apexcharts/apexcharts.min.js"></script>
+}

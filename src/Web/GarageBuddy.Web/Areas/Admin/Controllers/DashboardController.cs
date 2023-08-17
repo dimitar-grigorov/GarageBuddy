@@ -1,8 +1,8 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
     using GarageBuddy.Services.Data.Contracts;
+
     using Microsoft.AspNetCore.Mvc;
-    using ViewModels.Admin.Dashboard;
 
     public class DashboardController : AdminController
     {
@@ -17,10 +17,10 @@
         public IActionResult Index()
         {
             // TODO: Remove
-            //return RedirectToAction("Index", "BrandModel");
+            return RedirectToAction("Index", "Garage");
 
-            var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
-            return this.View(viewModel);
+            /*var viewModel = new IndexViewModel { SettingsCount = this.settingsService.GetCount(), };
+            return this.View(viewModel);*/
         }
     }
 }
