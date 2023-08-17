@@ -6,7 +6,8 @@
 
     using AutoMapper;
 
-    using Common.Constants;
+    using Base;
+
     using GarageBuddy.Services.Mapping.TypeConverters;
 
     using Services.Data.Models.Vehicle.Brand;
@@ -15,7 +16,11 @@
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.BrandModel;
 
-    public class BrandModelCreateOrEditViewModel : IMapTo<BrandModelServiceModel>, IMapFrom<BrandModelServiceModel>, IHaveCustomMappings
+    public class BrandModelCreateOrEditViewModel :
+        BaseCreateOrEditViewModel,
+        IMapTo<BrandModelServiceModel>,
+        IMapFrom<BrandModelServiceModel>,
+        IHaveCustomMappings
     {
         public Guid Id { get; set; }
 
@@ -23,12 +28,6 @@
         [Display(Name = "Model Name")]
         [StringLength(BrandModelNameMaxLength, MinimumLength = BrandModelNameMinLength)]
         public string ModelName { get; set; } = null!;
-
-        [Display(Name = "Deactivated")]
-        public bool IsDeleted { get; set; } = false;
-
-        [Display(Name = "Deactivated On")]
-        public string? DeletedOn { get; set; }
 
         [Required]
         [Display(Name = "Brand")]

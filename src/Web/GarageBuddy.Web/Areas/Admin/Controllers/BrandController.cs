@@ -73,7 +73,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(BrandCreateViewModel model)
+        public async Task<IActionResult> Create(BrandCreateOrEditViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -104,13 +104,13 @@
             }
 
             var brand = await this.brandService.GetAsync(id);
-            var model = mapper.Map<BrandViewModel>(brand.Data);
+            var model = mapper.Map<BrandCreateOrEditViewModel>(brand.Data);
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Guid id, BrandViewModel model)
+        public async Task<IActionResult> Edit(Guid id, BrandCreateOrEditViewModel model)
         {
             if (!ModelState.IsValid)
             {

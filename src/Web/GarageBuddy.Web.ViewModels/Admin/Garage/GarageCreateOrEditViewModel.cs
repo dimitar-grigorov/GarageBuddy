@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using AutoMapper;
+    using AutoMapper;using Base;
 
     using GarageBuddy.Services.Mapping.TypeConverters;
 
@@ -14,7 +14,8 @@
     using static GarageBuddy.Common.Constants.GlobalValidationConstants;
     using static GarageBuddy.Common.Constants.MessageConstants;
 
-    public class GarageCreateOrEditViewModel : IMapTo<GarageServiceModel>,
+    public class GarageCreateOrEditViewModel : BaseCreateOrEditViewModel,
+        IMapTo<GarageServiceModel>,
         IMapFrom<GarageServiceModel>, IHaveCustomMappings
     {
         public Guid Id { get; set; }
@@ -54,13 +55,7 @@
         [RegularExpression(CoordinatesRegex, ErrorMessage = Errors.InvalidCoordinates)]
         [Display(Name = "Garage location (coordinates)")]
         public string? Coordinates { get; set; }
-
-        [Display(Name = "Deactivated")]
-        public bool IsDeleted { get; set; } = false;
-
-        [Display(Name = "Deactivated On")]
-        public string? DeletedOn { get; set; }
-
+        
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<DateTime?, string?>().ConvertUsing(new ReverseDateTimeTypeConverter());

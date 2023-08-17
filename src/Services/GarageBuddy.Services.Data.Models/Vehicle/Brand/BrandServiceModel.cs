@@ -3,7 +3,9 @@
     using System;
 
     using AutoMapper;
+
     using Base;
+
     using GarageBuddy.Data.Models.Vehicle;
 
     using Mapping;
@@ -13,7 +15,7 @@
         public Guid Id { get; set; }
 
         public string BrandName { get; set; } = null!;
-        
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration

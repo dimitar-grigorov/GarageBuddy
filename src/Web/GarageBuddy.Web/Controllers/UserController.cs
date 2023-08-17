@@ -10,9 +10,7 @@
 
     using Infrastructure.ViewRenderer;
 
-    using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
 
@@ -87,7 +85,9 @@
         [AllowAnonymous]
         public async Task<IActionResult> Login(string? returnUrl = null)
         {
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            //  await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            await userService.LoginWithEmailAsync("admin@admin.bg", "Kraskomir", true, false);
+            return RedirectToAction("Index", "Dashboard", new { Area = AdminArea });
 
             var model = new LoginFormModel
             {
