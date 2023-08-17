@@ -85,11 +85,8 @@
         [AllowAnonymous]
         public async Task<IActionResult> Login(string? returnUrl = null)
         {
-            //  await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            await userService.LoginWithEmailAsync("admin@admin.bg", "Kraskomir", true, false);
-            return RedirectToAction("Index", "Dashboard", new { Area = AdminArea });
-
-            var model = new LoginFormModel
+            // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+             var model = new LoginFormModel
             {
                 ReturnUrl = returnUrl,
             };
