@@ -32,14 +32,14 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore GarageBuddy.sln
       working-directory: ./src
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore GarageBuddy.sln
       working-directory: ./src
     - name: Test
       run: |
         #dotnet user-secrets init --project Tests/GarageBuddy.Web.Tests/GarageBuddy.Web.Tests.csproj
         #dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=localhost,1433;Initial Catalog=GarageBuddyTest;User Id=sa;Password=MyTestPassword;" --project Tests/GarageBuddy.Web.Tests/GarageBuddy.Web.Tests.csproj
-        dotnet test --no-build --verbosity normal
+        dotnet test --no-build --verbosity normal GarageBuddy.sln
       working-directory: ./src
