@@ -14,6 +14,7 @@
     using Services.Data.Contracts;
 
     using ViewModels;
+    using ViewModels.Home;
 
     public class HomeController : BaseController
     {
@@ -35,9 +36,20 @@
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var modelsByBrandList = await this.brandService.GetModelCountByBrandAsync(15);
+            var model = new HomeViewModel
+            {
+                ModelsCountByBrand = await this.brandService.GetModelCountByBrandAsync(15),
+            };
 
-            return this.View(modelsByBrandList);
+            var coordinatesResult = await this.garageService.GetCoordinatesOfTheActiveGarageAsync();
+            if (!coordinatesResult.Succeeded)
+            {
+                this.TempData[NotifyWarning] = Errors.NoValidGarageCoordinates;
+            }
+
+            model.ActiveGarageCoordinates = coordinatesResult.Data;
+
+            return this.View(model);
         }
 
         [AllowAnonymous]

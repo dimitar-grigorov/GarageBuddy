@@ -55,6 +55,8 @@
             public const string SourceOrDestinationNull = "Source or/and Destination Objects are null";
 
             public const string NoMoreThanOneActiveGarage = "There can be only one active garage. Deactivate the other one.";
+
+            public const string NoValidGarageCoordinates = "No valid garage coordinates found.";
         }
 
         public static class Success

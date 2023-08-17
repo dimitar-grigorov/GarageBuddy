@@ -99,5 +99,23 @@
             return await garageRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.NotDeleted)
                 .AnyAsync(g => g.Id.ToString() != excludeId.ToString());
         }
+
+        public async Task<IResult<string>> GetCoordinatesOfTheActiveGarageAsync()
+        {
+            var garage = await garageRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.NotDeleted)
+                .FirstOrDefaultAsync();
+            if (garage == null)
+            {
+                return await Result<string>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Garage)));
+            }
+
+            var coordinates = garage.Coordinates;
+            if (string.IsNullOrEmpty(coordinates))
+            {
+                return await Result<string>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Garage)));
+            }
+
+            return await Result<string>.SuccessAsync(data: coordinates);
+        }
     }
 }

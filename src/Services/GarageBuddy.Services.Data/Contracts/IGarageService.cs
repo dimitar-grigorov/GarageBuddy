@@ -17,5 +17,7 @@
         public Task<IResult> EditAsync(Guid id, GarageServiceModel model);
 
         public Task<bool> AtLeastOneActiveGarageExistsAsync(Guid excludeId);
+
+        public Task<IResult<string>> GetCoordinatesOfTheActiveGarageAsync();
     }
 }

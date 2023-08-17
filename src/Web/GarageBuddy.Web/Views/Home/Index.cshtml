@@ -1,15 +1,15 @@
-﻿@model ICollection<ModelCountByBrandServiceModel>
+﻿@model HomeViewModel
 
 @{
     this.ViewData["Title"] = "Home Page";
 
-    var brandNames = Model.Select(brand => brand.BrandName).ToList();
-    var modelCounts = Model.Select(brand => brand.ModelCount).ToList();
+    var brandNames = Model.ModelsCountByBrand.Select(brand => brand.BrandName).ToList();
+    var modelCounts = Model.ModelsCountByBrand.Select(brand => brand.ModelCount).ToList();
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    
+
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -22,7 +22,19 @@
             </div>
         </div>
     </div>
-
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Active Garage Location</h4>
+                </div>
+                <div class="card-body">
+                    <div id="mapContainer" style="height: 400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
@@ -64,8 +76,44 @@
 
         chartProfileVisit.render();
     </script>
+    
+    <script>
+        function initMap() {
+            const activeGarageCoordinates = '@Model.ActiveGarageCoordinates';
+            console.log(activeGarageCoordinates);
+            let initialCoordinates = [42.7339, 25.4858];
+
+            if (activeGarageCoordinates && validateCoordinates(activeGarageCoordinates)) {
+                const coords = activeGarageCoordinates.split(',').map(coord => parseFloat(coord.trim()));
+                if (coords.length === 2) {
+                    initialCoordinates = coords;
+                }
+            }
+
+            const map = L.map('mapContainer').setView(initialCoordinates, 12);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: ''
+            }).addTo(map);
+
+            const marker = L.marker(initialCoordinates).addTo(map)
+                .bindPopup('Garage location');
+
+            // You don't need the dragend event listener anymore
+        }
+
+        function validateCoordinates(coordString) {
+            const regex = /^[-]?[0-9]+(\.[0-9]+)?,\s*[-]?[0-9]+(\.[0-9]+)?$/;
+            return regex.test(coordString);
+        }
+
+        // Initialize the map when the page is loaded
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
 }
 
 @section HeadScripts {
     <script src="~/themes/mazer/dist/assets/extensions/apexcharts/apexcharts.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 }
