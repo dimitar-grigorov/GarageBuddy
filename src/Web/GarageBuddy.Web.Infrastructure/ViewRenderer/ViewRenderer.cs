@@ -2,6 +2,8 @@
 {
     using System;
     using System.IO;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Http;
@@ -42,8 +44,8 @@
             }
             else
             {
-                var mailTemplateViewPath = Path.Combine(viewPath, viewName + ".cshtml");
-                viewEngineResult = viewEngine.GetView(mailTemplateViewPath, mailTemplateViewPath, isMainPage: false);
+                var (fixedViewPath, fixedViewName) = GetProperViewPathAndName(viewPath, viewName);
+                viewEngineResult = viewEngine.GetView(fixedViewPath, fixedViewName, isMainPage: false);
             }
 
             if (!viewEngineResult.Success)
@@ -73,6 +75,28 @@
             await view.RenderAsync(viewContext);
 
             return output.ToString();
+        }
+
+        private static (string, string) GetProperViewPathAndName(string viewPath, string viewName)
+        {
+            if (!viewName.EndsWith(".cshtml"))
+            {
+                viewName += ".cshtml";
+            }
+
+            if (!viewPath.EndsWith(Path.DirectorySeparatorChar))
+            {
+                viewPath += Path.DirectorySeparatorChar;
+            }
+
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return (viewPath, viewName);
+            }
+
+            var executingFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            var mailTemplateViewPath = Path.Combine(viewPath, viewName);
+            return (executingFilePath, mailTemplateViewPath);
         }
 
         private ActionContext GetActionContext()

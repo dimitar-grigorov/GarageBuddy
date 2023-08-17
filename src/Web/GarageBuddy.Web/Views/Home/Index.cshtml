@@ -26,7 +26,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4>Active Garage Location</h4>
+                    <h4>Garage Location</h4>
                 </div>
                 <div class="card-body">
                     <div id="mapContainer" style="height: 400px;"></div>
@@ -38,14 +38,9 @@
 
 @section Scripts {
     <script src="~/js/apexChartBrandModel.min.js"></script>
-    <script>
-        renderApexChart(@Html.Raw(Json.Serialize(modelCounts)), @Html.Raw(Json.Serialize(brandNames)), "#chart-profile-visit");
-    </script>
-    
+    <script>renderApexChart(@Html.Raw(Json.Serialize(modelCounts)), @Html.Raw(Json.Serialize(brandNames)), "#chart-profile-visit");</script>
     <script src="~/js/mapStaticLocation.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', initMapStaticLocation('mapContainer', '@Model.ActiveGarageCoordinates'));
-    </script>
+    <script>document.addEventListener('DOMContentLoaded', initMapStaticLocation('mapContainer', '@Model.ActiveGarageCoordinates'));</script>
 }
 
 @section HeadScripts {

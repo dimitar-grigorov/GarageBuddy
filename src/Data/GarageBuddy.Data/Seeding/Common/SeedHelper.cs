@@ -12,7 +12,7 @@
 
     public static class SeedHelper
     {
-        private const string SeedPath = "Seeding\\Data";
+        private static readonly string SeedPath = Path.Combine("Seeding", "Data");
 
         public static async Task<List<TEntity>> GetSeedDataFromJson<TEntity>(string fileName)
         {
