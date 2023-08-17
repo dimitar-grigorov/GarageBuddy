@@ -22,7 +22,6 @@
             </div>
         </div>
     </div>
-    
     <div class="row mt-4">
         <div class="col-12">
             <div class="card">
@@ -38,77 +37,14 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/apexChartBrandModel.min.js"></script>
     <script>
-        var optionsProfileVisit = {
-            annotations: {
-                position: "back",
-            },
-            dataLabels: {
-                enabled: false,
-            },
-            chart: {
-                type: "bar",
-                height: 300,
-                toolbar: {
-                    show: false
-                },
-            },
-            fill: {
-                opacity: 1,
-            },
-            plotOptions: {},
-            series: [
-                {
-                    name: "Model Count",
-                    data: @Html.Raw(Json.Serialize(modelCounts))
-                },
-            ],
-            colors: "#435ebe",
-            xaxis: {
-                categories: @Html.Raw(Json.Serialize(brandNames))
-            },
-        }
-
-        var chartProfileVisit = new ApexCharts(
-            document.querySelector("#chart-profile-visit"),
-            optionsProfileVisit
-        );
-
-        chartProfileVisit.render();
+        renderApexChart(@Html.Raw(Json.Serialize(modelCounts)), @Html.Raw(Json.Serialize(brandNames)), "#chart-profile-visit");
     </script>
     
+    <script src="~/js/mapStaticLocation.min.js"></script>
     <script>
-        function initMap() {
-            const activeGarageCoordinates = '@Model.ActiveGarageCoordinates';
-            console.log(activeGarageCoordinates);
-            let initialCoordinates = [42.7339, 25.4858];
-
-            if (activeGarageCoordinates && validateCoordinates(activeGarageCoordinates)) {
-                const coords = activeGarageCoordinates.split(',').map(coord => parseFloat(coord.trim()));
-                if (coords.length === 2) {
-                    initialCoordinates = coords;
-                }
-            }
-
-            const map = L.map('mapContainer').setView(initialCoordinates, 12);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: ''
-            }).addTo(map);
-
-            const marker = L.marker(initialCoordinates).addTo(map)
-                .bindPopup('Garage location');
-
-            // You don't need the dragend event listener anymore
-        }
-
-        function validateCoordinates(coordString) {
-            const regex = /^[-]?[0-9]+(\.[0-9]+)?,\s*[-]?[0-9]+(\.[0-9]+)?$/;
-            return regex.test(coordString);
-        }
-
-        // Initialize the map when the page is loaded
-        document.addEventListener('DOMContentLoaded', initMap);
+        document.addEventListener('DOMContentLoaded', initMapStaticLocation('mapContainer', '@Model.ActiveGarageCoordinates'));
     </script>
 }
 

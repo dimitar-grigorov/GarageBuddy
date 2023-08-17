@@ -8,7 +8,7 @@
         return regex.test(input);
     }
 
-    function initMap() {
+    function initMap(mapContainer) {
         const coordinatesInput = document.getElementById('coordinates');
         let initialCoordinates = [42.7339, 25.4858];
 
@@ -19,7 +19,7 @@
             }
         }
 
-        map = L.map('mapContainer').setView(initialCoordinates, 7);
+        map = L.map(mapContainer).setView(initialCoordinates, 7);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: ''
@@ -58,6 +58,6 @@
             }
         });
 
-        initMap();
+        initMap('mapContainer');
     });
 </script>

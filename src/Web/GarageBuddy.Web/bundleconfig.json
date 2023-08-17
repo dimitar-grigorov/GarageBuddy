@@ -13,12 +13,32 @@
     "inputFiles": [
       "wwwroot/js/site.js"
     ],
-    // Optionally specify minification options
     "minify": {
       "enabled": true,
       "renameLocals": true
     },
-    // Optionally generate .map file
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/mapStaticLocation.min.js",
+    "inputFiles": [
+      "wwwroot/js/mapStaticLocation.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/apexChartBrandModel.min.js",
+    "inputFiles": [
+      "wwwroot/js/apexChartBrandModel.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
     "sourceMap": false
   }
 ]

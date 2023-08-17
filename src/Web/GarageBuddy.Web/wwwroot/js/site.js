@@ -116,3 +116,13 @@ function jQueryAjaxDelete(form) {
 
     return false;
 }
+
+/**
+ * Validates a string of coordinates with the format of "-xx.xxxx, -xx.xxxx"
+ * @param {string} coordString - The string containing coordinates to validate
+ * @returns {boolean} - Returns true if the string contains valid coordinates, false otherwise.
+ */
+function validateCoordinates(coordString) {
+    const regex = /^[-]?[0-9]+(\.[0-9]+)?,\s*[-]?[0-9]+(\.[0-9]+)?$/;
+    return regex.test(coordString);
+}
