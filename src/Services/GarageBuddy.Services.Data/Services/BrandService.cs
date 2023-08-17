@@ -143,7 +143,7 @@
             if (shuffledData)
             {
                 var random = new Random();
-                int n = brandData.Count;
+                var n = brandData.Count;
                 while (n > 1)
                 {
                     n--;
@@ -151,6 +151,7 @@
                     (brandData[k], brandData[n]) = (brandData[n], brandData[k]);
                 }
             }
+
             return brandData;
         }
     }

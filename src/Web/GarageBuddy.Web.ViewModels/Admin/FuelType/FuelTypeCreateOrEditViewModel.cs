@@ -1,13 +1,15 @@
 ﻿namespace GarageBuddy.Web.ViewModels.Admin.FuelType
 {
     using System.ComponentModel.DataAnnotations;
+
     using Base;
+
     using GarageBuddy.Services.Data.Models.Vehicle.FuelType;
     using GarageBuddy.Services.Mapping;
 
     using static Common.Constants.EntityValidationConstants.FuelType;
 
-    public class FuelTypeCreateOrEditViewModel : 
+    public class FuelTypeCreateOrEditViewModel :
         BaseCreateOrEditViewModel,
         IMapFrom<FuelTypeServiceModel>,
         IMapTo<FuelTypeServiceModel>

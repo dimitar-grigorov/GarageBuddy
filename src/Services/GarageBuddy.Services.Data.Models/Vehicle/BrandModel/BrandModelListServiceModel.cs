@@ -1,6 +1,8 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Vehicle.BrandModel
 {
-    using AutoMapper;using Base;
+    using AutoMapper;
+
+    using Base;
 
     using GarageBuddy.Data.Models.Vehicle;
 
@@ -11,7 +13,7 @@
         public Guid Id { get; init; }
 
         public string ModelName { get; set; } = null!;
-        
+
         public Guid BrandId { get; set; }
 
         public string BrandName { get; set; } = null!;

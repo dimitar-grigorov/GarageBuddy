@@ -1,0 +1,48 @@
+﻿@model DriveTypeCreateOrEditViewModel
+
+@{
+    ViewData["Title"] = "Create Drive Type";
+}
+
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-6 col-12 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form asp-area="Admin" asp-controller="DriveType" asp-action="Create" class="form form-vertical" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label asp-for="@Model.DriveTypeName"></label>
+                                            <input type="text" class="form-control" asp-for="@Model.DriveTypeName" placeholder="Drive Type Name">
+                                            <span class="form-text text-danger" asp-validation-for="@Model.DriveTypeName"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between">
+                                        <a asp-area="Admin" asp-controller="DriveType" asp-action="Index" class="btn btn-secondary me-1 mb-1">
+                                            <i class="bi bi-gear"></i>
+                                            Drive Types
+                                        </a>
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -10,7 +10,7 @@
 
     using static Common.Constants.EntityValidationConstants.DriveType;
 
-    public class DriveTypeCreateOrEditViewModel : 
+    public class DriveTypeCreateOrEditViewModel :
         BaseCreateOrEditViewModel,
         IMapFrom<DriveTypeServiceModel>, IMapTo<DriveTypeServiceModel>
     {

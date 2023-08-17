@@ -3,7 +3,9 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    using AutoMapper;using Base;
+    using AutoMapper;
+
+    using Base;
 
     using GarageBuddy.Services.Mapping.TypeConverters;
 
@@ -55,7 +57,7 @@
         [RegularExpression(CoordinatesRegex, ErrorMessage = Errors.InvalidCoordinates)]
         [Display(Name = "Garage location (coordinates)")]
         public string? Coordinates { get; set; }
-        
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<DateTime?, string?>().ConvertUsing(new ReverseDateTimeTypeConverter());

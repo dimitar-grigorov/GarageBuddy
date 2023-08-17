@@ -2,7 +2,7 @@
 {
     public enum DeletedFilter
     {
-        //All = 0,
+        // All = 0,
         NotDeleted = 1,
         Deleted = 2,
     }

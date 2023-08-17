@@ -1,6 +1,6 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Vehicle.GearboxType
 {
-    public class GearBoxTypeSelectServiceModel
+    public class GearboxTypeSelectServiceModel
     {
         public int Id { get; set; }
 

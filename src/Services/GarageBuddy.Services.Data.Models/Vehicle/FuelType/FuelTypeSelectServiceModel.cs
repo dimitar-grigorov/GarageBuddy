@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
 
-        public string FuelName { get; set; }
+        public string FuelName { get; set; } = null!;
     }
 }

@@ -5,7 +5,7 @@
     /// </summary>
     public class ModelCountByBrandServiceModel
     {
-        public string BrandName { get; set; }
+        public string BrandName { get; set; } = null!;
 
         public int ModelCount { get; set; }
     }

@@ -43,5 +43,27 @@
                     DriveTypeName = b.DriveTypeName,
                 }).ToListAsync();
         }
+
+        public async Task<IResult<int>> CreateAsync(DriveTypeServiceModel model)
+        {
+            var isValid = base.ValidateModel(model);
+            if (!isValid)
+            {
+                return await Result<int>.FailAsync(string.Format(Errors.EntityNotFound, "Vehicle drive type"));
+            }
+
+            var driveType = this.Mapper.Map<DriveType>(model);
+
+            var entity = await driveTypeRepository.AddAsync(driveType);
+            await driveTypeRepository.SaveChangesAsync();
+            var id = entity?.Entity.Id ?? UnknownId;
+
+            if (entity?.Entity.Id > 0)
+            {
+                return await Result<int>.SuccessAsync(id);
+            }
+
+            return await Result<int>.FailAsync(string.Format(Errors.EntityNotCreated, "Vehicle drive type"));
+        }
     }
 }

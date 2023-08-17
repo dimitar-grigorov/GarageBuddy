@@ -6,7 +6,9 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
+
     using Common.Core.Enums;
+
     using DataTables.AspNet.AspNetCore;
     using DataTables.AspNet.Core;
 
@@ -110,7 +112,6 @@
             return RedirectToAction(Actions.Index);
         }
 
-
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
@@ -121,7 +122,7 @@
 
             var serviceModel = await this.brandModelService.GetAsync(id);
             var model = mapper.Map<BrandModelCreateOrEditViewModel>(serviceModel.Data);
-            
+
             model.Brands = await this.brandService.GetAllSelectAsync();
             return View(model);
         }

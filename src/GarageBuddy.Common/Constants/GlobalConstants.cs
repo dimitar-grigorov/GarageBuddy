@@ -26,6 +26,8 @@
 
         public const string NoValue = "None";
 
+        public const int UnknownId = -1;
+
         /// <summary>
         /// Gets a default timeout (in milliseconds) before restarting the application.
         /// </summary>

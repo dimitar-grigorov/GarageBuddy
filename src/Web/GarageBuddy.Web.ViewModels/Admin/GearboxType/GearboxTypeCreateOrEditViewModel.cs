@@ -11,8 +11,8 @@
 
     public class GearboxTypeCreateOrEditViewModel :
         BaseCreateOrEditViewModel,
-        IMapFrom<GearBoxTypeServiceModel>,
-        IMapTo<GearBoxTypeServiceModel>
+        IMapFrom<GearboxTypeServiceModel>,
+        IMapTo<GearboxTypeServiceModel>
     {
         [Required]
         [StringLength(GearboxTypeNameMaxLength, MinimumLength = GearboxTypeNameMinLength)]

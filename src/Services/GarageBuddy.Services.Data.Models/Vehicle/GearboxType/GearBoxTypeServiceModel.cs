@@ -9,7 +9,7 @@
 
     using static GarageBuddy.Common.Constants.EntityValidationConstants.GearboxType;
 
-    public class GearBoxTypeServiceModel : BaseListServiceModel, IMapFrom<GearboxType>, IMapTo<GearboxType>
+    public class GearboxTypeServiceModel : BaseListServiceModel, IMapFrom<GearboxType>, IMapTo<GearboxType>
     {
         [Required]
         public int Id { get; set; }
