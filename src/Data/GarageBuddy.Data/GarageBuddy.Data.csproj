@@ -47,6 +47,9 @@
     <None Update="Seeding\Data\FuelTypeSeed.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Seeding\Data\GarageSeed.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Seeding\Data\JobItemTypeSeed.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

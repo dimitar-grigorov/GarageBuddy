@@ -21,6 +21,7 @@
                         <th>Image</th>
                         <th>Working Hours</th>
                         <th>Description</th>
+                        <th>Active</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -40,6 +41,16 @@
                             </td>
                             <td>@garage.WorkingHours</td>
                             <td>@garage.Description</td>
+                            <td>
+                                @if (@garage.IsDeleted)
+                                {
+                                    <span class="badge bg-danger">Inactive</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Active</span>
+                                }
+                            </td>
                             <td>
                                 <a class="btn btn-primary" asp-area="Admin" asp-controller="Garage" asp-action="Edit" asp-route-id="@garage.Id">Edit</a>
                             </td>

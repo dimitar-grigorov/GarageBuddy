@@ -1,0 +1,32 @@
+﻿[
+  {
+    "Name": "Best Garage",
+    "Address": "My Address",
+    "Email": "garage@garages.com",
+    "Phone": "0888888888",
+    "ImageUrl": "https://img.freepik.com/free-photo/beautiful-girl-with-long-hair-garage-repairing-motorcycle_1321-1385.jpg",
+    "WorkingHours": "08:00 - 18:00",
+    "Description": "Best Garage in the world",
+    "Coordinates": "42.698334, 23.319941",
+    "IsDeleted": false,
+    "DeletedOn": null,
+    "Id": "29bffe8f-cdb4-4138-9abe-cd235d78c609",
+    "CreatedOn": "0001-01-01T00:00:00",
+    "ModifiedOn": null
+  },
+  {
+    "Name": "Worst Garage",
+    "Address": "My Address",
+    "Email": "worst@garage.com",
+    "Phone": "09999999999",
+    "ImageUrl": "https://img.freepik.com/free-photo/roller-door-roller-shutter-using-factory-warehouse-generative-ai_91128-2383.jpg",
+    "WorkingHours": "08:00 - 18:00",
+    "Description": "Worst Garage in the world",
+    "Coordinates": "42.698334, 23.319941",
+    "IsDeleted": true,
+    "DeletedOn": null,
+    "Id": "575cf773-acb5-426d-b60a-d8d47eb9e2a0",
+    "CreatedOn": "0001-01-01T00:00:00",
+    "ModifiedOn": null
+  }
+]

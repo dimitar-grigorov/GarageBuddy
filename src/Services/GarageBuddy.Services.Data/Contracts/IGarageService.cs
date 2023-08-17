@@ -16,6 +16,6 @@
 
         public Task<IResult> EditAsync(Guid id, GarageServiceModel model);
 
-        public Task<bool> AtLeastOneActiveGarageExistsAsync();
+        public Task<bool> AtLeastOneActiveGarageExistsAsync(Guid excludeId);
     }
 }

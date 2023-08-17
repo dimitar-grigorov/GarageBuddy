@@ -52,7 +52,7 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Garage)));
             }
 
-            if (!model.IsDeleted && await AtLeastOneActiveGarageExistsAsync())
+            if (!model.IsDeleted && await AtLeastOneActiveGarageExistsAsync(Guid.Empty))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.NoMoreThanOneActiveGarage));
             }
@@ -78,7 +78,7 @@
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(GarageServiceModel)));
             }
 
-            if (!model.IsDeleted && await AtLeastOneActiveGarageExistsAsync())
+            if (!model.IsDeleted && await AtLeastOneActiveGarageExistsAsync(id))
             {
                 return await Result.FailAsync(string.Format(Errors.NoMoreThanOneActiveGarage));
             }
@@ -94,10 +94,10 @@
             return await Result<Guid>.SuccessAsync();
         }
 
-        public async Task<bool> AtLeastOneActiveGarageExistsAsync()
+        public async Task<bool> AtLeastOneActiveGarageExistsAsync(Guid excludeId)
         {
             return await garageRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.NotDeleted)
-                .AnyAsync();
+                .AnyAsync(g => g.Id.ToString() != excludeId.ToString());
         }
     }
 }

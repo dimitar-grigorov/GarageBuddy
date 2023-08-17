@@ -42,6 +42,7 @@
                               new DriveTypeSeeder(),
                               new FuelTypeSeeder(),
                               new GearboxTypeSeeder(),
+                              new GarageSeeder(),
                           };
 
             foreach (var seeder in seeders)

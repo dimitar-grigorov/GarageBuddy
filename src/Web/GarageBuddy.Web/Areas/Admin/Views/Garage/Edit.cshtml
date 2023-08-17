@@ -17,64 +17,85 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-body">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.Name"></label>
+                                            <label asp-for="@Model.Name">Garage Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <input type="text" class="form-control" asp-for="@Model.Name" placeholder="Garage Name">
                                             <span class="form-text text-danger" asp-validation-for="@Model.Name"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.Address"></label>
+                                            <label asp-for="@Model.Address">Address</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <input type="text" class="form-control" asp-for="@Model.Address" placeholder="Address">
                                             <span class="form-text text-danger" asp-validation-for="@Model.Address"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.Email"></label>
+                                            <label asp-for="@Model.Email">Email</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <input type="email" class="form-control" asp-for="@Model.Email" placeholder="Email">
                                             <span class="form-text text-danger" asp-validation-for="@Model.Email"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.Phone"></label>
+                                            <label asp-for="@Model.Phone">Phone</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <input type="text" class="form-control" asp-for="@Model.Phone" placeholder="Phone">
                                             <span class="form-text text-danger" asp-validation-for="@Model.Phone"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.ImageUrl"></label>
+                                            <label asp-for="@Model.ImageUrl">Image URL</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <input type="text" class="form-control" asp-for="@Model.ImageUrl" placeholder="Image URL">
                                             <span class="form-text text-danger" asp-validation-for="@Model.ImageUrl"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.WorkingHours"></label>
+                                            <label asp-for="@Model.WorkingHours">Working Hours</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <input type="text" class="form-control" asp-for="@Model.WorkingHours" placeholder="Working Hours">
                                             <span class="form-text text-danger" asp-validation-for="@Model.WorkingHours"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <div class="col-md-4">
                                         <div class="form-group">
-                                            <label asp-for="@Model.Description"></label>
+                                            <label asp-for="@Model.Description">Description</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
                                             <textarea class="form-control" asp-for="@Model.Description" placeholder="Description"></textarea>
                                             <span class="form-text text-danger" asp-validation-for="@Model.Description"></span>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="form-group">
-                                            <label asp-for="@Model.Coordinates"></label>
-                                            <input type="text" class="form-control" asp-for="@Model.Coordinates" placeholder="Coordinates">
-                                            <span class="form-text text-danger" asp-validation-for="@Model.Coordinates"></span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-12">
+                                    <div class="col-md-4"><div class="form-check"></div></div>
+                                    <div class="col-md-8">
                                         <div class="form-check">
                                             <div class="checkbox">
                                                 <input type="checkbox" asp-for="@Model.IsDeleted" class="form-check-input form-check-danger">
@@ -84,21 +105,47 @@
                                     </div>
                                     @if (Model.IsDeleted)
                                     {
-                                        <div class="col-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label asp-for="@Model.DeletedOn"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
                                                 <input type="text" class="form-control" asp-for="@Model.DeletedOn" placeholder="Deleted On" readonly>
                                             </div>
                                         </div>
                                     }
-                                    <div class="col-12 d-flex justify-content-between">
-                                        <a asp-area="Admin" asp-controller="Garage" asp-action="Index" class="btn btn-secondary me-1 mb-1">
-                                            <i class="bi bi-building"></i>
-                                            Garages
-                                        </a>
-                                        <button type="submit" class="btn btn-primary me-1 mb-1">
-                                            Submit
-                                        </button>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <a href="#mapCollapse" class="btn btn-primary" id="getLocationBtn">Get Location</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" asp-for="@Model.Coordinates" id="coordinates" placeholder="Enter coordinates">
+                                            <span class="form-text text-danger" asp-validation-for="@Model.Coordinates"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-1">
+                                        <div class="accordion accordion-flush" id="mapAccordion">
+                                            <div class="accordion-item">
+                                                <div class="accordion-header" id="mapHeading">
+                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#mapCollapse" aria-expanded="false" aria-controls="mapCollapse">
+                                                        Show Map
+                                                    </button>
+                                                </div>
+                                                <div id="mapCollapse" class="accordion-collapse collapse" aria-labelledby="mapHeading" data-bs-parent="#mapAccordion">
+                                                    <div class="accordion-body">
+                                                        <div id="mapContainer"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="col-sm-12 d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary me-1 mb-1">Edit</button>
                                     </div>
                                 </div>
                             </div>
@@ -110,6 +157,11 @@
     </div>
 </section>
 
+@section HeadScripts {
+    <partial name="Map/_MapCollapseHeaderScriptsPartial" />
+}
+
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <partial name="Map/_MapCollapseScriptsPartial" />
 }
