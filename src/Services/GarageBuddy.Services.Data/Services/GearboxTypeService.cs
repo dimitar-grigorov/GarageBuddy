@@ -47,23 +47,12 @@
 
         public async Task<IResult<int>> CreateAsync(GearboxTypeServiceModel model)
         {
-            if (!ValidateModel(model))
-            {
-                return await Result<int>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, "Gearbox type"));
-            }
+            return await CreateBasicAsync(model, "Gearbox type");
+        }
 
-            var gearboxType = this.Mapper.Map<GearboxType>(model);
-
-            var entity = await gearboxTypeRepository.AddAsync(gearboxType);
-            await gearboxTypeRepository.SaveChangesAsync();
-            var id = entity?.Entity.Id ?? UnknownId;
-
-            if (entity?.Entity.Id > 0)
-            {
-                return await Result<int>.SuccessAsync(id);
-            }
-
-            return await Result<int>.FailAsync(string.Format(Errors.EntityNotCreated, "Gearbox type"));
+        public async Task<IResult> EditAsync(int id, GearboxTypeServiceModel model)
+        {
+            return await base.EditAsync(id, model, "Gearbox type");
         }
     }
 }

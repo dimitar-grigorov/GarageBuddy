@@ -185,6 +185,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
                                 e => e.MigrationsAssembly("GarageBuddy.Data"))
                             .UseLoggerFactory(LoggerFactory.Create(b => b.AddSerilog()));
                     }
+
                 default:
                     throw new InvalidOperationException($"DB Provider {dbProvider} is not supported.");
             }

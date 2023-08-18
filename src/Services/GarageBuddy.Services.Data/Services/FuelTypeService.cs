@@ -47,23 +47,12 @@
 
         public async Task<IResult<int>> CreateAsync(FuelTypeServiceModel model)
         {
-            if (!ValidateModel(model))
-            {
-                return await Result<int>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, "Fuel type"));
-            }
+            return await CreateBasicAsync(model, "Fuel type");
+        }
 
-            var fuelType = this.Mapper.Map<FuelType>(model);
-
-            var entity = await fuelTypeRepository.AddAsync(fuelType);
-            await fuelTypeRepository.SaveChangesAsync();
-            var id = entity?.Entity.Id ?? UnknownId;
-
-            if (entity?.Entity.Id > 0)
-            {
-                return await Result<int>.SuccessAsync(id);
-            }
-
-            return await Result<int>.FailAsync(string.Format(Errors.EntityNotCreated, "Fuel type"));
+        public async Task<IResult> EditAsync(int id, FuelTypeServiceModel model)
+        {
+            return await base.EditAsync(id, model, "Fuel type");
         }
     }
 }

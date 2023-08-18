@@ -136,9 +136,7 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            await base.EditAsync(id, model, "Brand Model");
-
-            return await Result<Guid>.SuccessAsync();
+            return await base.EditAsync(id, model, "Brand Model");
         }
     }
 }

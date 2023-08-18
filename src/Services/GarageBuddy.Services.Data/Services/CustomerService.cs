@@ -123,6 +123,7 @@
             {
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Customer)));
             }
+
             // If user id is pointing to non existent user
             if (model.ApplicationUserId != null)
             {

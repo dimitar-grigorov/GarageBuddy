@@ -15,12 +15,16 @@
     public class VehicleController : AdminController
     {
         private readonly IVehicleService vehicleService;
-        private readonly ICustomerService customerService;
-        private readonly IBrandService brandService;
-        private readonly IFuelTypeService fuelTypeService;
-        private readonly IGearboxTypeService gearboxTypeService;
-        private readonly IDriveTypeService driveTypeService;
 
+        private readonly ICustomerService customerService;
+
+        private readonly IBrandService brandService;
+
+        private readonly IFuelTypeService fuelTypeService;
+
+        private readonly IGearboxTypeService gearboxTypeService;
+
+        private readonly IDriveTypeService driveTypeService;
 
         private readonly IMapper mapper;
 
@@ -71,7 +75,6 @@
             var serviceModel = mapper.Map<VehicleServiceModel>(model);
 
             // TODO: check check check!
-
             var result = await this.vehicleService.CreateAsync(serviceModel);
 
             if (!result.Succeeded)
@@ -84,7 +87,6 @@
 
             TempData[NotifySuccess] = string.Format(Success.SuccessfullyCreatedEntity, "Vehicle");
             return RedirectToAction(Actions.Index);
-
         }
 
         [HttpGet]

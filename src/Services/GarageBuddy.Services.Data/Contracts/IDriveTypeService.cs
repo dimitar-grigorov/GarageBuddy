@@ -14,7 +14,6 @@
 
         public Task<IResult<int>> CreateAsync(DriveTypeServiceModel model);
 
-
         public Task<IResult> EditAsync(int id, DriveTypeServiceModel model);
     }
 }
