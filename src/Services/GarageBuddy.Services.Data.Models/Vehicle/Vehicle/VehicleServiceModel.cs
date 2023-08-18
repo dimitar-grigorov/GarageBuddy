@@ -45,11 +45,10 @@
                 .CreateMap<VehicleServiceModel, Vehicle>()
                 .ForMember(d => d.Id,
                     opt => opt.Ignore());
-
-            configuration
-                .CreateMap<Vehicle, VehicleServiceModel>()
+            configuration.CreateMap<Vehicle, VehicleServiceModel>()
                 .ForMember(d => d.DateOfManufacture,
-                                       opt => opt.MapFrom(s => s.DateOfManufacture ?? default));
+                    opt
+                        => opt.MapFrom(s => DateOnly.FromDateTime(s.DateOfManufacture ?? DateTime.MinValue)));
         }
     }
 }

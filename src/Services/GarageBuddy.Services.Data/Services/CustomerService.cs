@@ -88,8 +88,7 @@
 
         public async Task<IResult<Guid>> CreateAsync(CustomerServiceModel model)
         {
-            var isValid = ValidateModel(model);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Customer)));
             }

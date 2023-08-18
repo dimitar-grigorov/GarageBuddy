@@ -1,0 +1,150 @@
+﻿@model VehicleCreateOrEditViewModel
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.CustomerId">Select Customer</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <select asp-for="@Model.CustomerId" class="form-control" asp-items="@(new SelectList(Model.Customer, "Id", "CustomerName"))">
+            <option value="">Select a Customer</option>
+        </select>
+        <span class="form-text text-danger" asp-validation-for="@Model.CustomerId"></span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.BrandId">Select Brand</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <select asp-for="@Model.BrandId" class="form-control" asp-items="@(new SelectList(Model.Brand, "Id", "BrandName"))">
+            <option value="">Select a Brand</option>
+        </select>
+        <span class="form-text text-danger" asp-validation-for="@Model.BrandId"></span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.BrandModelId">Select Model</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <select asp-for="@Model.BrandModelId" class="form-control" asp-items="@(new SelectList(Model.BrandModel, "Id", "BrandName"))">
+            <option value="">Select a Model</option>
+        </select>
+        <span class="form-text text-danger" asp-validation-for="@Model.BrandModelId"></span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.VehicleIdentificationNumber">VIN</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <input type="text" class="form-control" asp-for="@Model.VehicleIdentificationNumber" placeholder="VIN">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.RegistrationNumber">Registration Number</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <input type="text" class="form-control" asp-for="@Model.RegistrationNumber" placeholder="Registration Number">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.DateOfManufacture">Date of Manufacture</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <input type="date" class="form-control" asp-for="@Model.DateOfManufacture">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.FuelTypeId">Select Fuel Type</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <select asp-for="@Model.FuelTypeId" class="form-control" asp-items="@(new SelectList(Model.FuelType, "Id", "FuelName"))">
+            <option value="">Select a Fuel Type</option>
+        </select>
+        <span class="form-text text-danger" asp-validation-for="@Model.FuelTypeId"></span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.GearboxTypeId">Select Gearbox Type</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <select asp-for="@Model.GearboxTypeId" class="form-control" asp-items="@(new SelectList(Model.GearboxType, "Id", "GearboxTypeName"))">
+            <option value="">Select a Gearbox Type</option>
+        </select>
+        <span class="form-text text-danger" asp-validation-for="@Model.GearboxTypeId"></span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.DriveTypeId">Select Drive Type</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <select asp-for="@Model.DriveTypeId" class="form-control" asp-items="@(new SelectList(Model.DriveType, "Id", "DriveTypeName"))">
+            <option value="">Select a Drive Type</option>
+        </select>
+        <span class="form-text text-danger" asp-validation-for="@Model.DriveTypeId"></span>
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.EngineCapacity">Engine Capacity</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <input type="number" class="form-control" asp-for="@Model.EngineCapacity">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.EngineHorsePower">Engine Horse Power</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <input type="number" class="form-control" asp-for="@Model.EngineHorsePower">
+    </div>
+</div>
+
+<div class="col-md-4">
+    <div class="form-group">
+        <label asp-for="@Model.Description">Engine Torque</label>
+    </div>
+</div>
+<div class="col-md-8">
+    <div class="form-group">
+        <input type="text" class="form-control" asp-for="@Model.Description" placeholder="Engine Torque">
+    </div>
+</div>

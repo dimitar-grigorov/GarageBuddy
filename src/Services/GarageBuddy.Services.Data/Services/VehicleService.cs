@@ -81,17 +81,42 @@
 
         public async Task<bool> ExistsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await vehicleRepository.ExistsAsync(id);
         }
 
         public async Task<IResult<VehicleServiceModel>> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            if (!await ExistsAsync(id))
+            {
+                return await Result<VehicleServiceModel>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Vehicle)));
+            }
+
+            var model = await base.GetAsync<VehicleServiceModel>(id);
+            return await Result<VehicleServiceModel>.SuccessAsync(model);
         }
 
         public async Task<IResult<Guid>> CreateAsync(VehicleServiceModel model)
         {
-            throw new NotImplementedException();
+            var isValid = ValidateModel(model);
+            if (!isValid)
+            {
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Vehicle)));
+            }
+
+            //TODO: check check check.
+
+            var serviceModel = this.Mapper.Map<Vehicle>(model);
+
+            var entity = await vehicleRepository.AddAsync(serviceModel);
+            await vehicleRepository.SaveChangesAsync();
+            var id = entity?.Entity.Id ?? Guid.Empty;
+
+            if (entity?.Entity.Id != Guid.Empty)
+            {
+                return await Result<Guid>.SuccessAsync(id);
+            }
+
+            return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotCreated, nameof(Vehicle)));
         }
 
         public async Task<IResult> EditAsync(Guid id, VehicleServiceModel model)

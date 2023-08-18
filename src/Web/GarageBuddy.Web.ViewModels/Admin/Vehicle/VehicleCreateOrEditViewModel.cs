@@ -21,9 +21,9 @@
     using static Common.Constants.EntityValidationConstants.Vehicle;
     using static Common.Constants.GlobalValidationConstants;
 
-    internal class VehicleCreateOrEditViewModel : BaseCreateOrEditViewModel,
-        IMapTo<VehicleSelectServiceModel>,
-        IMapFrom<VehicleSelectServiceModel>,
+    public class VehicleCreateOrEditViewModel : BaseCreateOrEditViewModel,
+        IMapTo<VehicleServiceModel>,
+        IMapFrom<VehicleServiceModel>,
         IHaveCustomMappings
     {
         public Guid Id { get; set; }

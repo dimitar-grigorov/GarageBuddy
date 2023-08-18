@@ -1,0 +1,40 @@
+﻿@model VehicleCreateOrEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Vehicle";
+}
+
+<section id="basic-vertical-layouts">
+    <div class="row match-height">
+        <div class="col-md-6 col-12 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">@ViewData["Title"]</h4>
+                </div>
+                <div class="card-content">
+                    <div class="card-body">
+                        <form asp-area="Admin" asp-controller="Vehicle" asp-action="Edit" class="form form-vertical" method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-body">
+                                <div class="row">
+                                    
+                                    <partial name="_VehicleEditFormFieldsPartial" model="@Model" />
+
+                                    <div class="col-12 mb-1">
+                                        <div class="col-sm-12 d-flex justify-content-end">
+                                            <button type="submit" class="btn btn-primary me-1 mb-1">Edit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
