@@ -4,8 +4,9 @@
 
     using AutoMapper;
 
+    using Base;
+
     using GarageBuddy.Data.Models;
-    using GarageBuddy.Services.Data.Models.Base;
 
     using Mapping;
 

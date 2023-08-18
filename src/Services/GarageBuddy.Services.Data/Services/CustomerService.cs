@@ -46,27 +46,27 @@
         {
             var result = await customerRepository.All(asReadOnly, includeDeleted)
                 .Include(c => c.ApplicationUser)
-                .OrderBy(c => c.IsDeleted)
-                .ThenBy(c => c.Name)
-                .ThenBy(c => c.Phone)
-                .Select(c => new
+                .Select(c => new CustomerListServiceModel()
                 {
-                    Customer = c,
-                    c.ApplicationUser,
-                })
-                .Select(c => new CustomerListServiceModel
-                {
-                    Id = c.Customer.Id,
-                    Name = c.Customer.Name,
-                    Address = c.Customer.Address ?? string.Empty,
-                    Phone = c.Customer.Phone ?? string.Empty,
-                    Email = c.Customer.Email ?? string.Empty,
-                    CompanyName = c.Customer.CompanyName ?? string.Empty,
-                    ImageUrl = c.Customer.ImageUrl ?? string.Empty,
-                    Description = c.Customer.Description ?? string.Empty,
-                    ApplicationUserId = c.Customer.ApplicationUserId,
+                    Id = c.Id,
+                    Name = c.Name,
+                    Address = c.Address ?? string.Empty,
+                    Phone = c.Phone ?? string.Empty,
+                    Email = c.Email ?? string.Empty,
+                    CompanyName = c.CompanyName ?? string.Empty,
+                    ImageUrl = c.ImageUrl ?? string.Empty,
+                    Description = c.Description ?? string.Empty,
+                    ApplicationUserId = c.ApplicationUserId,
                     UserName = c.ApplicationUser != null ? c.ApplicationUser.UserName ?? string.Empty : string.Empty,
-                }).ToListAsync();
+                    CreatedOn = c.CreatedOn,
+                    ModifiedOn = c.ModifiedOn,
+                    IsDeleted = c.IsDeleted,
+                    DeletedOn = c.DeletedOn,
+                })
+                .OrderBy(c => c.Name)
+                .ThenBy(c => c.Phone)
+                .ToListAsync();
+
             return result;
         }
 
