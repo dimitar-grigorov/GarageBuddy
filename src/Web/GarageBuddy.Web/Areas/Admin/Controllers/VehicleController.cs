@@ -20,6 +20,8 @@
 
         private readonly IBrandService brandService;
 
+        private readonly IBrandModelService brandModelService;
+
         private readonly IFuelTypeService fuelTypeService;
 
         private readonly IGearboxTypeService gearboxTypeService;
@@ -32,6 +34,7 @@
             IVehicleService vehicleService,
             ICustomerService customerService,
             IBrandService brandService,
+            IBrandModelService brandModelService,
             IFuelTypeService fuelTypeService,
             IGearboxTypeService gearboxTypeService,
             IDriveTypeService driveTypeService)
@@ -40,6 +43,7 @@
             this.mapper = mapper;
             this.customerService = customerService;
             this.brandService = brandService;
+            this.brandModelService = brandModelService;
             this.fuelTypeService = fuelTypeService;
             this.gearboxTypeService = gearboxTypeService;
             this.driveTypeService = driveTypeService;
@@ -112,6 +116,14 @@
             model.FuelType = await this.fuelTypeService.GetAllSelectAsync();
             model.GearboxType = await this.gearboxTypeService.GetAllSelectAsync();
             model.DriveType = await this.driveTypeService.GetAllSelectAsync();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetModelsByBrand(string brandId)
+        {
+            var modelsForBrand = await brandModelService.GetAllSelectAsync(Guid.Parse(brandId));
+
+            return Json(modelsForBrand);
         }
     }
 }

@@ -103,9 +103,13 @@
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Vehicle)));
             }
 
-            //TODO: check check check.
-
+            // TODO: check check check.
             var serviceModel = this.Mapper.Map<Vehicle>(model);
+
+            if (serviceModel.BrandModelId == Guid.Empty)
+            {
+                serviceModel.BrandModelId = null;
+            }
 
             var entity = await vehicleRepository.AddAsync(serviceModel);
             await vehicleRepository.SaveChangesAsync();

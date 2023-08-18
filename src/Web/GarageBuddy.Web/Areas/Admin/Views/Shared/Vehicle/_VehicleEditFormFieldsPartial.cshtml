@@ -20,7 +20,7 @@
 </div>
 <div class="col-md-8">
     <div class="form-group">
-        <select asp-for="@Model.BrandId" class="form-control" asp-items="@(new SelectList(Model.Brand, "Id", "BrandName"))">
+        <select id="brandSelect" asp-for="@Model.BrandId" class="form-control" asp-items="@(new SelectList(Model.Brand, "Id", "BrandName"))">
             <option value="">Select a Brand</option>
         </select>
         <span class="form-text text-danger" asp-validation-for="@Model.BrandId"></span>
@@ -34,7 +34,7 @@
 </div>
 <div class="col-md-8">
     <div class="form-group">
-        <select asp-for="@Model.BrandModelId" class="form-control" asp-items="@(new SelectList(Model.BrandModel, "Id", "BrandName"))">
+        <select id="modelSelect" asp-for="@Model.BrandModelId" class="form-control" asp-items="@(new SelectList(Model.BrandModel, "Id", "ModelName"))">
             <option value="">Select a Model</option>
         </select>
         <span class="form-text text-danger" asp-validation-for="@Model.BrandModelId"></span>

@@ -8,7 +8,6 @@
 
     using Microsoft.EntityFrameworkCore;
 
-    using Models.Vehicle.Brand;
     using Models.Vehicle.BrandModel;
 
     public class BrandModelService : BaseService<BrandModel, Guid>, IBrandModelService
@@ -62,19 +61,25 @@
             return PaginatedResult<BrandModelListServiceModel>.Success(modelList, totalCount);
         }
 
-        public async Task<ICollection<BrandSelectServiceModel>> GetAllSelectAsync(Guid brandId)
+        public async Task<ICollection<BrandModelSelectServiceModel>> GetAllSelectAsync(Guid brandId)
         {
-            return await brandModelRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
+            var result = await brandModelRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
                 .OrderBy(b => b.IsDeleted)
                 .ThenBy(b => b.ModelName)
                 .Include(b => b.Brand)
                 .Where(b => b.BrandId == brandId)
-                .Select(b => new BrandSelectServiceModel
+                .Select(b => new BrandModelSelectServiceModel
                 {
-                    Id = b.Id.ToString(),
-                    BrandName = b.ModelName,
+                    Id = b.Id,
+                    ModelName = b.ModelName,
                 })
                 .ToListAsync();
+            result.Insert(0, new BrandModelSelectServiceModel
+            {
+                Id = Guid.Empty,
+                ModelName = "Select Model",
+            });
+            return result;
         }
 
         public async Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(Guid brandId,

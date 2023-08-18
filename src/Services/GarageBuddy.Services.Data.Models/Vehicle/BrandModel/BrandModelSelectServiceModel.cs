@@ -1,9 +1,11 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Vehicle.BrandModel
 {
+    using System;
+
     public class BrandModelSelectServiceModel
     {
-        public string Id { get; set; } = null!;
+        public Guid Id { get; set; }
 
-        public string BrandName { get; set; } = null!;
+        public string ModelName { get; set; } = null!;
     }
 }

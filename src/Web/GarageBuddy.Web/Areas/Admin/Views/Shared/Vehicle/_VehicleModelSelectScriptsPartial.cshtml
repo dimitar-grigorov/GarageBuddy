@@ -1,0 +1,41 @@
+﻿@using GarageBuddy.Common.Constants
+@{
+    var modelsUrl = Url.Action("GetModelsByBrand", "Vehicle", new { Area = GlobalConstants.AdminArea });
+}
+<script>
+    $(document).ready(function () {
+        var selectedBrandId = $('#brandSelect').val(); // Get the initially selected brand
+
+        $('#brandSelect').change(function () {
+            selectedBrandId = $(this).val(); // Update the selected brand
+            if (selectedBrandId) {
+                $.get('@modelsUrl',
+                    { brandId: selectedBrandId },
+                    function (data) {
+                        $('#modelSelect').empty();
+                        $.each(data,
+                            function (index, model) {
+                                $('#modelSelect').append($('<option>',
+                                    {
+                                        value: model.id,
+                                        text: model.modelName
+                                    }));
+                            });
+
+                        // Select the model based on the pre-selected value
+                        var selectedModelId = '@Model.BrandModelId'; // Get the initially selected model ID
+                        if (selectedModelId) {
+                            $('#modelSelect').val(selectedModelId);
+                        }
+                    });
+            } else {
+                $('#modelSelect').empty();
+            }
+        });
+
+        // Trigger the initial change event if there's a selected brand (when editing)
+        if (selectedBrandId) {
+            $('#brandSelect').trigger('change');
+        }
+    });
+</script>

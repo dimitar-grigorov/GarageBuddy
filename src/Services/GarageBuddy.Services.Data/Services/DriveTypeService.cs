@@ -64,7 +64,6 @@
 
         public async Task<IResult<int>> CreateAsync(DriveTypeServiceModel model)
         {
-
             return await this.CreateBasicAsync(model, "Vehicle drive type");
         }
 

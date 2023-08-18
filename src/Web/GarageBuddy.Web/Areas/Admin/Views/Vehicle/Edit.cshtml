@@ -1,4 +1,5 @@
-﻿@model VehicleCreateOrEditViewModel
+﻿@using GarageBuddy.Common.Constants
+@model VehicleCreateOrEditViewModel
 
 @{
     ViewData["Title"] = "Edit Vehicle";
@@ -17,8 +18,8 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-body">
                                 <div class="row">
-                                    
-                                    <partial name="_VehicleEditFormFieldsPartial" model="@Model" />
+
+                                    <partial name="Vehicle/_VehicleEditFormFieldsPartial" model="@Model" />
 
                                     <div class="col-12 mb-1">
                                         <div class="col-sm-12 d-flex justify-content-end">
@@ -36,5 +37,6 @@
 </section>
 
 @section Scripts {
+    <partial name="Vehicle/_VehicleModelSelectScriptsPartial"/>
     <partial name="_ValidationScriptsPartial" />
 }
