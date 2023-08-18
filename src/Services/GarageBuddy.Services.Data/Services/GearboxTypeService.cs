@@ -47,10 +47,9 @@
 
         public async Task<IResult<int>> CreateAsync(GearboxTypeServiceModel model)
         {
-            var isValid = ValidateModel(model);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
-                return await Result<int>.FailAsync(string.Format(Errors.EntityNotFound, "Gearbox type"));
+                return await Result<int>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, "Gearbox type"));
             }
 
             var gearboxType = this.Mapper.Map<GearboxType>(model);

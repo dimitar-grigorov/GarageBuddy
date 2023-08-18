@@ -18,9 +18,9 @@
 
         public Task<bool> BrandNameExistsAsync(string brandName, Guid excludeId);
 
-        public Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel);
+        public Task<IResult<Guid>> CreateAsync(BrandServiceModel model);
 
-        public Task<IResult> EditAsync(Guid id, BrandServiceModel brandServiceModel);
+        public Task<IResult> EditAsync(Guid id, BrandServiceModel model);
 
         public Task<ICollection<ModelCountByBrandServiceModel>> GetModelCountByBrandAsync(int brandsLimit, bool shuffledData = true);
     }

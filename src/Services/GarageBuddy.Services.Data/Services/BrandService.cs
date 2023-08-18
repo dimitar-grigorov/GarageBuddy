@@ -76,21 +76,20 @@
                 .AnyAsync(b => b.BrandName == brandName && b.Id.ToString() != excludeId.ToString());
         }
 
-        public async Task<IResult<Guid>> CreateAsync(BrandServiceModel brandServiceModel)
+        public async Task<IResult<Guid>> CreateAsync(BrandServiceModel model)
         {
-            var isValid = ValidateModel(brandServiceModel);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Brand)));
             }
 
-            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName, Guid.Empty))
+            if (await this.BrandNameExistsAsync(model.BrandName, Guid.Empty))
             {
-                return await Result<Guid>.FailAsync(string.Format(string.Format(
-                        Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), brandServiceModel.BrandName)));
+                return await Result<Guid>.FailAsync(string.Format(
+                    Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), model.BrandName));
             }
 
-            var brand = this.Mapper.Map<Brand>(brandServiceModel);
+            var brand = this.Mapper.Map<Brand>(model);
 
             var entity = await brandRepository.AddAsync(brand);
             await brandRepository.SaveChangesAsync();
@@ -104,26 +103,25 @@
             return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotCreated, nameof(Brand)));
         }
 
-        public async Task<IResult> EditAsync(Guid id, BrandServiceModel brandServiceModel)
+        public async Task<IResult> EditAsync(Guid id, BrandServiceModel model)
         {
             if (!await ExistsAsync(id))
             {
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            if (await this.BrandNameExistsAsync(brandServiceModel.BrandName, id))
+            if (await this.BrandNameExistsAsync(model.BrandName, id))
             {
-                return await Result<Guid>.FailAsync(string.Format(string.Format(
-                    Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), brandServiceModel.BrandName)));
+                return await Result<Guid>.FailAsync(string.Format(
+                    Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), model.BrandName));
             }
 
-            var isValid = base.ValidateModel(brandServiceModel);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Brand)));
             }
 
-            await base.EditAsync(id, brandServiceModel);
+            await base.EditAsync(id, model);
 
             return await Result<Guid>.SuccessAsync();
         }

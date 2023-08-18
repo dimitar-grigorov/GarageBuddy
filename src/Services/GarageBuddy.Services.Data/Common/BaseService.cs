@@ -78,7 +78,7 @@
             if (!isValid)
             {
                 throw new ArgumentException(
-                    string.Format(Errors.EntitysModelStateIsNotValid, "Entity"),
+                    string.Format(Errors.EntityModelStateIsNotValid, "Entity"),
                     nameof(model));
             }
 
@@ -104,7 +104,7 @@
             if (!isValid)
             {
                 throw new ArgumentException(
-                    string.Format(Errors.EntitysModelStateIsNotValid, "Entity"),
+                    string.Format(Errors.EntityModelStateIsNotValid, "Entity"),
                     nameof(model));
             }
 

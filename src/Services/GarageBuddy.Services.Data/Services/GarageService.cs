@@ -49,7 +49,7 @@
             var isValid = ValidateModel(model);
             if (!isValid)
             {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Garage)));
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Garage)));
             }
 
             if (!model.IsDeleted && await AtLeastOneActiveGarageExistsAsync(Guid.Empty))
@@ -83,10 +83,9 @@
                 return await Result.FailAsync(string.Format(Errors.NoMoreThanOneActiveGarage));
             }
 
-            var isValid = base.ValidateModel(model);
-            if (!isValid)
+            if (!base.ValidateModel(model))
             {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(GarageServiceModel)));
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Garage)));
             }
 
             await base.EditAsync(id, model);

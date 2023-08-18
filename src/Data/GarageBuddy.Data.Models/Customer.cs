@@ -24,7 +24,7 @@
         public string? ImageUrl { get; set; }
 
         [MaxLength(DefaultDescriptionMaxLength)]
-        public string? Description { get; set; } = null!;
+        public string? Description { get; set; }
 
         public Guid? ApplicationUserId { get; set; }
 

@@ -105,10 +105,9 @@
 
         public async Task<IResult<Guid>> CreateAsync(BrandModelServiceModel model)
         {
-            var isValid = ValidateModel(model);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(BrandModel)));
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(BrandModel)));
             }
 
             if (!await this.brandService.ExistsAsync(model.BrandId))
@@ -137,10 +136,9 @@
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(BrandModel)));
             }
 
-            var isValid = base.ValidateModel(model);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Brand)));
             }
 
             if (!await this.brandService.ExistsAsync(model.BrandId))

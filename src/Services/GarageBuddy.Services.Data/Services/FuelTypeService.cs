@@ -47,10 +47,9 @@
 
         public async Task<IResult<int>> CreateAsync(FuelTypeServiceModel model)
         {
-            var isValid = ValidateModel(model);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
-                return await Result<int>.FailAsync(string.Format(Errors.EntityNotFound, "Fuel type"));
+                return await Result<int>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, "Fuel type"));
             }
 
             var fuelType = this.Mapper.Map<FuelType>(model);

@@ -10,6 +10,8 @@
 
             public const string NoEntityWithPropertyFound = "Entity {0} with property {1} was not found!";
 
+            public const string NoEntityWithPropertyValuesFound = "Entity {0} with property {1} and value {2} was not found!";
+
             public const string DeserializationFailed = "Deserialization of the file {0} failed!";
 
             public const string InvalidDirectoryPath = "Invalid directory path!";
@@ -20,19 +22,9 @@
 
             public const string AccountLockedOut = "Account locked out. Try again later";
 
-            public const string UserNotFound = "User not found.";
-
             public const string PasswordsDoNotMatch = "Passwords do not match.";
 
             public const string SomethingWentWrong = "Something went wrong. Please try again later.";
-
-            public const string ConnectionStringWrongFormat = "Connection string is in wrong format!";
-
-            public const string DatabaseCreationFailed = "Database creation failed! Errors: {0}";
-
-            public const string DatabaseNotExists = "Database does not exist!";
-
-            public const string DatabaseInstallationFailed = "Database installation failed! Errors: {0}";
 
             public const string SendGridApiKeyNotProvided = "SendGrid API key is not provided.";
 
@@ -40,7 +32,7 @@
 
             public const string GeneralErrorSendEmail = "Errors occured while sending email.";
 
-            public const string EntitysModelStateIsNotValid = "{0} model state is not valid.";
+            public const string EntityModelStateIsNotValid = "{0} model state is not valid.";
 
             public const string EntityNotFound = "The {0} cannot be found.";
 

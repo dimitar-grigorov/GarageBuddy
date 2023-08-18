@@ -7,9 +7,10 @@
     using System.Threading.Tasks;
 
     using GarageBuddy.Common.Core.Enums;
-    using Models;
 
     using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+    using Models;
 
     public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : class, IEntity<TKey>
