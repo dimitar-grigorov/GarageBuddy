@@ -10,7 +10,6 @@
         [Required]
         public Guid BrandId { get; set; }
 
-        // TODO: Consider if its required
         public Guid? BrandModelId { get; set; }
 
         [MaxLength(VehicleVinNumberMaxLength)]
@@ -43,7 +42,7 @@
         public Brand Brand { get; set; } = null!;
 
         [ForeignKey(nameof(BrandModelId))]
-        public BrandModel BrandModel { get; set; } = null!;
+        public BrandModel? BrandModel { get; set; } = null!;
 
         [ForeignKey(nameof(FuelTypeId))]
         public FuelType? FuelType { get; set; }
