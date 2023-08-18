@@ -1,5 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Contracts
 {
+    using GarageBuddy.Services.Data.Models.Vehicle.Brand;
+
     using Models.Vehicle.BrandModel;
 
     public interface IBrandModelService
@@ -10,6 +12,8 @@
 
         public Task<PaginatedResult<BrandModelListServiceModel>> GetAllAsync(
             QueryOptions<BrandModelListServiceModel> queryOptions);
+
+        public Task<ICollection<BrandSelectServiceModel>> GetAllSelectAsync(Guid brandId);
 
         public Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(
             Guid brandId, QueryOptions<BrandModelListServiceModel> queryOptions);

@@ -6,9 +6,10 @@
 
     using Microsoft.AspNetCore.Mvc;
 
+    using ViewModels.Admin.Vehicle;
+
     public class VehicleController : AdminController
     {
-
         private readonly IVehicleService vehicleService;
 
         private readonly IMapper mapper;
@@ -24,9 +25,10 @@
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var model = await this.vehicleService.GetAllAsync();
+            var serviceModel = await this.vehicleService.GetAllAsync();
+            var model = mapper.Map<ICollection<VehicleListViewModel>>(serviceModel);
 
-            return this.View();
+            return this.View(model);
         }
     }
 }

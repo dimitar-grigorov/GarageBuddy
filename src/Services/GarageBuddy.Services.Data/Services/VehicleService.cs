@@ -67,7 +67,6 @@
                     RegistrationNumber = v.RegistrationNumber,
                     DateOfManufacture = DateOnly.FromDateTime(v.DateOfManufacture ?? DateTime.MinValue),
                     FuelTypeId = v.FuelTypeId,
-                    FuelTypeName = v.FuelType == null ? string.Empty : v.FuelType.FuelName,
                     GearboxTypeId = v.GearboxTypeId,
                     DriveTypeId = v.DriveTypeId,
                     EngineCapacity = v.EngineCapacity,

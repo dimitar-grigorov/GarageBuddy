@@ -7,7 +7,5 @@
         public string BrandName { get; set; } = null!;
 
         public string? ModelName { get; set; }
-
-        public string? FuelTypeName { get; set; }
     }
 }

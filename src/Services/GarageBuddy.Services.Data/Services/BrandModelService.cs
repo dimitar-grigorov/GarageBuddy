@@ -5,6 +5,7 @@
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
+    using GarageBuddy.Services.Data.Models.Vehicle.Brand;
 
     using Microsoft.EntityFrameworkCore;
 
@@ -59,6 +60,21 @@
             var totalCount = await GetTotalCountForPagination(queryOptions);
 
             return PaginatedResult<BrandModelListServiceModel>.Success(modelList, totalCount);
+        }
+
+        public async Task<ICollection<BrandSelectServiceModel>> GetAllSelectAsync(Guid brandId)
+        {
+            return await brandModelRepository.All(ReadOnlyOption.ReadOnly, DeletedFilter.Deleted)
+                .OrderBy(b => b.IsDeleted)
+                .ThenBy(b => b.ModelName)
+                .Include(b => b.Brand)
+                .Where(b => b.BrandId == brandId)
+                .Select(b => new BrandSelectServiceModel
+                {
+                    Id = b.Id.ToString(),
+                    BrandName = b.ModelName,
+                })
+                .ToListAsync();
         }
 
         public async Task<PaginatedResult<BrandModelListServiceModel>> GetAllByBrandIdAsync(Guid brandId,
