@@ -50,13 +50,14 @@
 
         [Display(Name = "VIN")]
         [StringLength(VehicleVinNumberMaxLength)]
+        [Sanitize]
         public string? VehicleIdentificationNumber { get; set; }
 
         [Display(Name = "Registration Number")]
         [StringLength(VehicleRegistrationNumberMaxLength)]
+        [Sanitize]
         public string? RegistrationNumber { get; set; }
 
-        //[DataType(DataType.Date)]
         [Display(Name = "Date of Manufacture")]
         public string? DateOfManufacture { get; set; }
 
@@ -86,6 +87,7 @@
 
         [Display(Name = "Engine Torque")]
         [StringLength(DefaultDescriptionMaxLength)]
+        [Sanitize]
         public string? Description { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

@@ -20,9 +20,10 @@
         private readonly IUserService userService;
 
         public CustomerController(
+            IHtmlSanitizer sanitizer,
             IMapper mapper,
             ICustomerService customerService,
-            IUserService userService)
+            IUserService userService) : base(sanitizer)
         {
             this.mapper = mapper;
             this.customerService = customerService;
@@ -57,7 +58,7 @@
                 model.Users = await this.userService.GetAllSelectAsync();
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<CustomerServiceModel>(model);
 
             // If user is selected and it does not exist in the database
@@ -104,7 +105,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<CustomerServiceModel>(model);
             var result = await this.customerService.EditAsync(id, serviceModel);
 

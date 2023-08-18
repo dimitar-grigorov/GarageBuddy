@@ -30,14 +30,16 @@
 
         private readonly IMapper mapper;
 
-        public VehicleController(IMapper mapper,
+        public VehicleController(
+            IHtmlSanitizer sanitizer,
+            IMapper mapper,
             IVehicleService vehicleService,
             ICustomerService customerService,
             IBrandService brandService,
             IBrandModelService brandModelService,
             IFuelTypeService fuelTypeService,
             IGearboxTypeService gearboxTypeService,
-            IDriveTypeService driveTypeService)
+            IDriveTypeService driveTypeService) : base(sanitizer)
         {
             this.vehicleService = vehicleService;
             this.mapper = mapper;
@@ -54,6 +56,7 @@
         {
             var serviceModel = await this.vehicleService.GetAllAsync();
             var model = mapper.Map<ICollection<VehicleListViewModel>>(serviceModel);
+            SanitizeModel(model);
 
             return this.View(model);
         }
@@ -76,6 +79,7 @@
                 return View(model);
             }
 
+            SanitizeModel(model);
             var serviceModel = mapper.Map<VehicleServiceModel>(model);
 
 
@@ -109,6 +113,14 @@
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetModelsByBrand(string brandId)
+        {
+            var modelsForBrand = await brandModelService.GetAllSelectAsync(Guid.Parse(brandId));
+
+            return Json(modelsForBrand);
+        }
+
         [NonAction]
         private async Task PopulateSelectLists(VehicleCreateOrEditViewModel model)
         {
@@ -117,14 +129,6 @@
             model.FuelType = await this.fuelTypeService.GetAllSelectAsync();
             model.GearboxType = await this.gearboxTypeService.GetAllSelectAsync();
             model.DriveType = await this.driveTypeService.GetAllSelectAsync();
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetModelsByBrand(string brandId)
-        {
-            var modelsForBrand = await brandModelService.GetAllSelectAsync(Guid.Parse(brandId));
-
-            return Json(modelsForBrand);
         }
     }
 }

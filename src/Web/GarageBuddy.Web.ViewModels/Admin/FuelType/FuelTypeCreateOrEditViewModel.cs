@@ -20,6 +20,7 @@
         [Required]
         [StringLength(FuelTypeNameMaxLength, MinimumLength = FuelTypeNameMinLength)]
         [Display(Name = "Fuel name")]
+        [Sanitize]
         public string FuelName { get; set; } = null!;
     }
 }

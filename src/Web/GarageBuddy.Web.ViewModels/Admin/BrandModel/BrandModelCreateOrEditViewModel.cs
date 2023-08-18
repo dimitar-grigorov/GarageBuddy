@@ -26,6 +26,7 @@
         [Required]
         [Display(Name = "Model Name")]
         [StringLength(BrandModelNameMaxLength, MinimumLength = BrandModelNameMinLength)]
+        [Sanitize]
         public string ModelName { get; set; } = null!;
 
         [Required]

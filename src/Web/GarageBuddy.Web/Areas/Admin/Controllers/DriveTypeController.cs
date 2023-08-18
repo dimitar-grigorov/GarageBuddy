@@ -18,8 +18,9 @@
         private readonly IMapper mapper;
 
         public DriveTypeController(
+            IHtmlSanitizer sanitizer,
             IDriveTypeService driveTypeService,
-            IMapper mapper)
+            IMapper mapper) : base(sanitizer)
         {
             this.driveTypeService = driveTypeService;
             this.mapper = mapper;
@@ -45,7 +46,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<DriveTypeServiceModel>(model);
             var result = await this.driveTypeService.CreateAsync(serviceModel);
 
@@ -82,7 +83,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<DriveTypeServiceModel>(model);
             var result = await this.driveTypeService.EditAsync(id, serviceModel);
 

@@ -18,8 +18,9 @@
         private readonly IMapper mapper;
 
         public FuelTypeController(
+            IHtmlSanitizer sanitizer,
             IFuelTypeService fuelTypeService,
-            IMapper mapper)
+            IMapper mapper) : base(sanitizer)
         {
             this.fuelTypeService = fuelTypeService;
             this.mapper = mapper;
@@ -45,7 +46,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<FuelTypeServiceModel>(model);
             var result = await this.fuelTypeService.CreateAsync(serviceModel);
 
@@ -82,7 +83,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<FuelTypeServiceModel>(model);
             var result = await this.fuelTypeService.EditAsync(id, serviceModel);
 

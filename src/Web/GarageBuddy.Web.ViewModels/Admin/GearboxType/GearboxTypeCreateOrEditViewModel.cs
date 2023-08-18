@@ -20,6 +20,7 @@
         [Required]
         [StringLength(GearboxTypeNameMaxLength, MinimumLength = GearboxTypeNameMinLength)]
         [Display(Name = "Gearbox type")]
+        [Sanitize]
         public string GearboxTypeName { get; set; } = null!;
     }
 }

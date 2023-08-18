@@ -4,6 +4,8 @@
 
     using AutoMapper;
 
+    using Common.Attributes;
+
     using Data.Models;
 
     using Services.Mapping;
@@ -12,10 +14,13 @@
     {
         public Guid Id { get; set; }
 
+        [Sanitize]
         public string Name { get; set; } = null!;
 
+        [Sanitize]
         public string Value { get; set; } = null!;
 
+        [Sanitize]
         public string NameAndValue { get; set; } = null!;
 
         public void CreateMappings(IProfileExpression configuration)

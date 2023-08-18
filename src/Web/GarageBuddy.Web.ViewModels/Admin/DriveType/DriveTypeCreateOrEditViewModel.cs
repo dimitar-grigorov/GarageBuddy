@@ -18,6 +18,7 @@
         [Required]
         [StringLength(DriveTypeNameMaxLength, MinimumLength = DriveTypeNameMinLength)]
         [Display(Name = "Drive type name")]
+        [Sanitize]
         public string DriveTypeName { get; set; } = null!;
     }
 }

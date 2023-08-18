@@ -26,8 +26,9 @@
         private readonly IMapper mapper;
 
         public BrandController(
+            IHtmlSanitizer sanitizer,
             IBrandService brandService,
-            IMapper mapper)
+            IMapper mapper) : base(sanitizer)
         {
             this.brandService = brandService;
             this.mapper = mapper;
@@ -81,6 +82,7 @@
                 return View(model);
             }
 
+            SanitizeModel(model);
             var brandServiceModel = mapper.Map<BrandServiceModel>(model);
             var result = await this.brandService.CreateAsync(brandServiceModel);
 
@@ -118,6 +120,7 @@
                 return View(model);
             }
 
+            SanitizeModel(model);
             var serviceModel = mapper.Map<BrandServiceModel>(model);
             var result = await this.brandService.EditAsync(id, serviceModel);
 

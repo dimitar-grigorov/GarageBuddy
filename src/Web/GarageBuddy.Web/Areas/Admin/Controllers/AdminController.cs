@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
-    using GarageBuddy.Common.Constants;
+    using Common.Constants;
+
     using GarageBuddy.Web.Controllers;
 
     using Microsoft.AspNetCore.Authorization;
@@ -10,5 +11,9 @@
     [Area("Admin")]
     public class AdminController : BaseController
     {
+        public AdminController(IHtmlSanitizer sanitizer) : base(sanitizer)
+        {
+            // Nothing to do here
+        }
     }
 }

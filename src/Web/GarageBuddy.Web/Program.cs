@@ -1,4 +1,6 @@
-﻿using GarageBuddy.Data;
+﻿using Ganss.Xss;
+
+using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
 using GarageBuddy.Data.Seeding;
 using GarageBuddy.Web.Configurations;
@@ -31,6 +33,10 @@ try
     builder.Services.ConfigureCookiePolicy();
     builder.Services.ConfigureApplicationCookie();
     builder.Services.AddCors();
+
+    builder.Services.AddSingleton<IHtmlSanitizer>(
+        new HtmlSanitizer(new HtmlSanitizerOptions()));
+
     builder.Services.AddControllersWithViews()
         .AddMvcOptions(options => // TODO: Add model binder providers
         {

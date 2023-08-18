@@ -6,6 +6,8 @@
 
     using Common.Constants;
 
+    using Ganss.Xss;
+
     using Infrastructure.Extensions;
 
     using Infrastructure.ViewRenderer;
@@ -23,20 +25,23 @@
 
     public class UserController : BaseController
     {
+        private readonly ILogger<UserController> logger;
         private readonly IUserService userService;
         private readonly IEmailService emailService;
         private readonly IViewRenderer viewRenderer;
-        private readonly ILogger<UserController> logger;
 
-        public UserController(IUserService userService,
+        public UserController(
+            IHtmlSanitizer sanitizer,
+            ILogger<UserController> logger,
+            IUserService userService,
             IEmailService emailService,
-            IViewRenderer viewRenderer,
-            ILogger<UserController> logger)
+            IViewRenderer viewRenderer
+            ) : base(sanitizer)
         {
+            this.logger = logger;
             this.userService = userService;
             this.emailService = emailService;
             this.viewRenderer = viewRenderer;
-            this.logger = logger;
         }
 
         [HttpGet]
@@ -86,7 +91,7 @@
         public IActionResult Login(string? returnUrl = null)
         {
             // await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-             var model = new LoginFormModel
+            var model = new LoginFormModel
             {
                 ReturnUrl = returnUrl,
             };

@@ -18,8 +18,11 @@
 
         private readonly IDeletableEntityRepository<Setting, Guid> repository;
 
-        public SettingsController(ISettingsService settingsService,
+        public SettingsController(
+            IHtmlSanitizer htmlSanitizer,
+            ISettingsService settingsService,
             IDeletableEntityRepository<Setting, Guid> repository)
+            : base(htmlSanitizer)
         {
             this.settingsService = settingsService;
             this.repository = repository;

@@ -8,7 +8,9 @@
     {
         private readonly ISettingsService settingsService;
 
-        public DashboardController(ISettingsService settingsService)
+        public DashboardController(
+            IHtmlSanitizer sanitizer,
+            ISettingsService settingsService) : base(sanitizer)
         {
             this.settingsService = settingsService;
         }

@@ -9,7 +9,9 @@
         private readonly IJobItemTypeService jobItemTypeService;
 
         public JobItemTypeController(
+            IHtmlSanitizer sanitizer,
             IJobItemTypeService jobItemTypeService)
+            : base(sanitizer)
         {
             this.jobItemTypeService = jobItemTypeService;
         }

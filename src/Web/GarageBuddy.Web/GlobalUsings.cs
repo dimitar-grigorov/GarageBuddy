@@ -3,6 +3,8 @@ global using System;
 global using System.Collections.Generic;
 global using System.Threading.Tasks;
 
+global using Ganss.Xss;
+
 global using static GarageBuddy.Common.Constants.ControllersAndActionsConstants;
 global using static GarageBuddy.Common.Constants.GlobalConstants;
 global using static GarageBuddy.Common.Constants.MessageConstants;

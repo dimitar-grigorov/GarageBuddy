@@ -18,8 +18,9 @@
         private readonly IMapper mapper;
 
         public GearboxTypeController(
+            IHtmlSanitizer sanitizer,
             IGearboxTypeService gearboxTypeService,
-            IMapper mapper)
+            IMapper mapper) : base(sanitizer)
         {
             this.gearboxTypeService = gearboxTypeService;
             this.mapper = mapper;
@@ -45,7 +46,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<GearboxTypeServiceModel>(model);
             var result = await this.gearboxTypeService.CreateAsync(serviceModel);
 
@@ -82,7 +83,7 @@
             {
                 return View(model);
             }
-
+            SanitizeModel(model);
             var serviceModel = mapper.Map<GearboxTypeServiceModel>(model);
             var result = await this.gearboxTypeService.EditAsync(id, serviceModel);
 

@@ -4,6 +4,8 @@
 
     using Common.Constants;
 
+    using Ganss.Xss;
+
     using Humanizer;
 
     using Microsoft.AspNetCore.Authorization;
@@ -24,9 +26,12 @@
 
         private readonly IBrandService brandService;
 
-        public HomeController(ILogger<HomeController> logger,
+        public HomeController(
+            IHtmlSanitizer sanitizer,
+            ILogger<HomeController> logger,
             IGarageService garageService,
             IBrandService brandService)
+            : base(sanitizer)
         {
             this.logger = logger;
             this.garageService = garageService;
