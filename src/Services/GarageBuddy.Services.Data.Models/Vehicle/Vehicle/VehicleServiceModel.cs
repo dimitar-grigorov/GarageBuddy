@@ -25,7 +25,7 @@
 
         public string? RegistrationNumber { get; set; }
 
-        public DateOnly? DateOfManufacture { get; set; }
+        public string? DateOfManufacture { get; set; }
 
         public int? FuelTypeId { get; set; }
 
@@ -45,10 +45,6 @@
                 .CreateMap<VehicleServiceModel, Vehicle>()
                 .ForMember(d => d.Id,
                     opt => opt.Ignore());
-            configuration.CreateMap<Vehicle, VehicleServiceModel>()
-                .ForMember(d => d.DateOfManufacture,
-                    opt
-                        => opt.MapFrom(s => DateOnly.FromDateTime(s.DateOfManufacture ?? DateTime.MinValue)));
         }
     }
 }

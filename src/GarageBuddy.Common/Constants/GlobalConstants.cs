@@ -24,6 +24,10 @@
 
         public const string DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
+        public const string DefaultDateFormat = "yyyy-MM-dd";
+
+        public const int MinValidYear = 1900;
+
         public const string NoValue = "None";
 
         public const int UnknownId = -1;

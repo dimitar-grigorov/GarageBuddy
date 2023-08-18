@@ -56,9 +56,9 @@
         [StringLength(VehicleRegistrationNumberMaxLength)]
         public string? RegistrationNumber { get; set; }
 
-        [DataType(DataType.Date)]
+        //[DataType(DataType.Date)]
         [Display(Name = "Date of Manufacture")]
-        public DateOnly? DateOfManufacture { get; set; }
+        public string? DateOfManufacture { get; set; }
 
         [Display(Name = "Fuel Type")]
         public int? FuelTypeId { get; set; }

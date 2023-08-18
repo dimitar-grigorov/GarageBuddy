@@ -4,6 +4,7 @@
 
     using Contracts;
 
+    using GarageBuddy.Common.Constants;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
 
@@ -65,7 +66,7 @@
                     ModelName = v.BrandModel == null ? string.Empty : v.BrandModel.ModelName,
                     VehicleIdentificationNumber = v.VehicleIdentificationNumber,
                     RegistrationNumber = v.RegistrationNumber,
-                    DateOfManufacture = DateOnly.FromDateTime(v.DateOfManufacture ?? DateTime.MinValue),
+                    DateOfManufacture = v.DateOfManufacture == null ? string.Empty : v.DateOfManufacture.Value.ToString(GlobalConstants.DefaultDateFormat),
                     FuelTypeId = v.FuelTypeId,
                     GearboxTypeId = v.GearboxTypeId,
                     DriveTypeId = v.DriveTypeId,
@@ -109,6 +110,11 @@
             if (serviceModel.BrandModelId == Guid.Empty)
             {
                 serviceModel.BrandModelId = null;
+            }
+
+            if (serviceModel.DateOfManufacture != null && serviceModel.DateOfManufacture.Value.Year < 2000)
+            {
+                serviceModel.DateOfManufacture = null;
             }
 
             var entity = await vehicleRepository.AddAsync(serviceModel);

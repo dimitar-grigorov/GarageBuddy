@@ -6,6 +6,7 @@
     using System.Reflection;
 
     using AutoMapper;
+
     using TypeConverters;
 
     public static class AutoMapperConfig
@@ -48,7 +49,7 @@
                         map.CreateMappings(configuration);
                     }
 
-                    configuration.CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
+                    configuration.CreateMap<string, DateTime?>().ConvertUsing(new DateTimeTypeConverter());
                 });
             MapperInstance = new Mapper(new MapperConfiguration(config));
         }
