@@ -24,6 +24,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
 
     using Serilog;
@@ -34,6 +35,8 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
     using Services.Messaging.Services;
 
     using ViewRenderer;
+
+    using ILogger = Serilog.ILogger;
 
     /// <summary>
     /// Represents extensions of IServiceCollection.
@@ -174,12 +177,17 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 
         private static DbContextOptionsBuilder UseDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString)
         {
-            return dbProvider.ToLowerInvariant() switch
+            switch (dbProvider.ToLowerInvariant())
             {
-                DbProviderKeys.SqlServer => builder.UseSqlServer(connectionString, e =>
-                    e.MigrationsAssembly("GarageBuddy.Data")),
-                _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
-            };
+                case DbProviderKeys.SqlServer:
+                    {
+                        return builder.UseSqlServer(connectionString,
+                                e => e.MigrationsAssembly("GarageBuddy.Data"))
+                            .UseLoggerFactory(LoggerFactory.Create(b => b.AddSerilog()));
+                    }
+                default:
+                    throw new InvalidOperationException($"DB Provider {dbProvider} is not supported.");
+            }
         }
     }
 }
