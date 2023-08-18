@@ -37,12 +37,12 @@
         {
             if (string.IsNullOrWhiteSpace(username.Trim()))
             {
-                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Username"), nameof(username));
+                throw new ArgumentException(string.Format(Errors.CannotBeNullOrWhitespace, "Username"), nameof(username));
             }
 
             if (string.IsNullOrWhiteSpace(password.Trim()))
             {
-                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
+                throw new ArgumentException(string.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
             }
 
             var user = await this.userManager.FindByNameAsync(username);
@@ -55,12 +55,12 @@
         {
             if (string.IsNullOrWhiteSpace(email.Trim()))
             {
-                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Email"), nameof(email));
+                throw new ArgumentException(string.Format(Errors.CannotBeNullOrWhitespace, "Email"), nameof(email));
             }
 
             if (string.IsNullOrWhiteSpace(password.Trim()))
             {
-                throw new ArgumentException(String.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
+                throw new ArgumentException(string.Format(Errors.CannotBeNullOrWhitespace, "Password"), nameof(password));
             }
 
             var user = await this.userManager.FindByEmailAsync(email);

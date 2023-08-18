@@ -4,8 +4,9 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Data;
-    using GarageBuddy.Data.Seeding.Common;
+    using Common;
+
+    using Data;
 
     using Job;
 
@@ -43,6 +44,7 @@
                               new FuelTypeSeeder(),
                               new GearboxTypeSeeder(),
                               new GarageSeeder(),
+                              new CustomerSeeder(),
                           };
 
             foreach (var seeder in seeders)

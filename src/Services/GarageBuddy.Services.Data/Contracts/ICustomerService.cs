@@ -6,7 +6,7 @@
     {
         public Task<ICollection<CustomerSelectServiceModel>> GetAllSelectAsync();
 
-        public Task<ICollection<CustomerServiceModel>> GetAllAsync(
+        public Task<ICollection<CustomerListServiceModel>> GetAllAsync(
             ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.Deleted);
 

@@ -40,6 +40,8 @@
 
             public const string EntityWithTheSameNameAlreadyExists = "The {0} with the same name ({1}) already exists.";
 
+            public const string EntityDoesNotExist = "The {0} does not exist.";
+
             public const string InvalidEntityName = "Invalid {0}.";
 
             public const string InvalidCoordinates = "Invalid coordinates.";

@@ -40,11 +40,34 @@
                 }).ToListAsync();
         }
 
-        public async Task<ICollection<CustomerServiceModel>> GetAllAsync(
+        public async Task<ICollection<CustomerListServiceModel>> GetAllAsync(
             ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.Deleted)
         {
-            return await base.GetAllAsync<CustomerServiceModel>(asReadOnly, includeDeleted);
+            var result = await customerRepository.All(asReadOnly, includeDeleted)
+                .Include(c => c.ApplicationUser)
+                .OrderBy(c => c.IsDeleted)
+                .ThenBy(c => c.Name)
+                .ThenBy(c => c.Phone)
+                .Select(c => new
+                {
+                    Customer = c,
+                    c.ApplicationUser,
+                })
+                .Select(c => new CustomerListServiceModel
+                {
+                    Id = c.Customer.Id,
+                    Name = c.Customer.Name,
+                    Address = c.Customer.Address ?? string.Empty,
+                    Phone = c.Customer.Phone ?? string.Empty,
+                    Email = c.Customer.Email ?? string.Empty,
+                    CompanyName = c.Customer.CompanyName ?? string.Empty,
+                    ImageUrl = c.Customer.ImageUrl ?? string.Empty,
+                    Description = c.Customer.Description ?? string.Empty,
+                    ApplicationUserId = c.Customer.ApplicationUserId,
+                    UserName = c.ApplicationUser != null ? c.ApplicationUser.UserName ?? string.Empty : string.Empty,
+                }).ToListAsync();
+            return result;
         }
 
         public async Task<bool> ExistsAsync(Guid id)
