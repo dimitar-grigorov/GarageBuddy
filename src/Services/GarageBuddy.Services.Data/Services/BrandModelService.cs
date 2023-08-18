@@ -121,48 +121,22 @@
 
         public async Task<IResult<Guid>> CreateAsync(BrandModelServiceModel model)
         {
-            if (!ValidateModel(model))
-            {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(BrandModel)));
-            }
-
-            if (!await this.brandService.ExistsAsync(model.BrandId))
+            if (!await brandService.ExistsAsync(model.BrandId))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            var brandModel = this.Mapper.Map<BrandModel>(model);
-
-            var entity = await brandModelRepository.AddAsync(brandModel);
-            await brandModelRepository.SaveChangesAsync();
-            var id = entity?.Entity.Id ?? Guid.Empty;
-
-            if (entity?.Entity.Id != Guid.Empty)
-            {
-                return await Result<Guid>.SuccessAsync(id);
-            }
-
-            return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotCreated, nameof(BrandModel)));
+            return await CreateBasicAsync(model, "Brand model");
         }
 
         public async Task<IResult> EditAsync(Guid id, BrandModelServiceModel model)
         {
-            if (!await ExistsAsync(id))
-            {
-                return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(BrandModel)));
-            }
-
-            if (!ValidateModel(model))
-            {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Brand)));
-            }
-
             if (!await this.brandService.ExistsAsync(model.BrandId))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Brand)));
             }
 
-            await base.EditAsync(id, model);
+            await base.EditAsync(id, model, "Brand Model");
 
             return await Result<Guid>.SuccessAsync();
         }

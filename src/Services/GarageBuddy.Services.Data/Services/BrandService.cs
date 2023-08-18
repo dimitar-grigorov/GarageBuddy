@@ -116,14 +116,7 @@
                     Errors.EntityWithTheSameNameAlreadyExists, nameof(Brand), model.BrandName));
             }
 
-            if (!ValidateModel(model))
-            {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Brand)));
-            }
-
-            await base.EditAsync(id, model);
-
-            return await Result<Guid>.SuccessAsync();
+            return await base.EditAsync(id, model, nameof(Brand));
         }
 
         public async Task<ICollection<ModelCountByBrandServiceModel>> GetModelCountByBrandAsync(int brandsLimit, bool shuffledData)

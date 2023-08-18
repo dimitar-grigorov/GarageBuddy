@@ -90,22 +90,21 @@
             return result.Entity.Id ?? default!;
         }
 
-        public virtual async Task EditAsync<TModel>(TKey id, TModel model)
+        public virtual async Task<IResult<TKey>> EditAsync<TModel>(TKey id, TModel model, string entityName)
         {
-            ArgumentNullException.ThrowIfNull(model, nameof(model));
-
-            if (!await this.ExistsAsync<TModel>(id))
+            if (model == null)
             {
-                throw new InvalidOperationException(string.Format(Errors.EntityNotFound, "entity"));
+                return await Result<TKey>.FailAsync(string.Format(Errors.EntityCannotBeNull, entityName));
             }
 
-            var isValid = this.ValidateModel(model);
-
-            if (!isValid)
+            if (!await entityRepository.ExistsAsync(id))
             {
-                throw new ArgumentException(
-                    string.Format(Errors.EntityModelStateIsNotValid, "Entity"),
-                    nameof(model));
+                return await Result<TKey>.FailAsync(string.Format(Errors.EntityNotFound, entityName));
+            }
+
+            if (!ValidateModel(model))
+            {
+                return await Result<TKey>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, entityName));
             }
 
             var oldEntity = await this.entityRepository.FindAsync(id, ReadOnlyOption.Normal);
@@ -133,6 +132,8 @@
             oldEntity.ModifiedOn = DateTime.Now;
 
             await this.entityRepository.SaveChangesAsync();
+
+            return await Result<TKey>.SuccessAsync();
         }
 
         public virtual async Task DeleteAsync<TModel>(TKey id)
@@ -166,6 +167,27 @@
             }
 
             return result;
+        }
+
+        public async Task<IResult<TKey>> CreateBasicAsync<TModel>(TModel model, string entityName)
+        {
+            if (!ValidateModel(model))
+            {
+                return await Result<TKey>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, entityName));
+            }
+
+            var serviceModel = mapper.Map<TEntity>(model);
+
+            var entity = await entityRepository.AddAsync(serviceModel);
+            await entityRepository.SaveChangesAsync();
+            var newId = entity.Entity.Id;
+
+            if (newId != null)
+            {
+                return await Result<TKey>.SuccessAsync(newId);
+            }
+
+            return await Result<TKey>.FailAsync(string.Format(Errors.EntityNotCreated, entityName));
         }
 
         protected IQueryable<TModel> ModifyQuery<TModel>(IQueryable<TModel> query, QueryOptions<TModel> queryOptions)

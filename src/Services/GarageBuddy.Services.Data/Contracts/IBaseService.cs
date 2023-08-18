@@ -20,10 +20,12 @@
 
         public Task<TKey> CreateAsync<TModel>(TModel model);
 
-        public Task EditAsync<TModel>(TKey id, TModel model);
-
         public Task DeleteAsync<TModel>(TKey id);
 
         public Task<bool> ExistsAsync<TModel>(TKey id, QueryOptions<TModel>? queryOptions = null);
+
+        public Task<IResult<TKey>> EditAsync<TModel>(TKey id, TModel model, string entityName);
+
+        public Task<IResult<TKey>> CreateBasicAsync<TModel>(TModel model, string entityName);
     }
 }

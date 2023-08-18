@@ -123,12 +123,6 @@
             {
                 return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Customer)));
             }
-
-            if (!ValidateModel(model))
-            {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Customer)));
-            }
-
             // If user id is pointing to non existent user
             if (model.ApplicationUserId != null)
             {
@@ -139,9 +133,7 @@
                 }
             }
 
-            await base.EditAsync(id, model);
-
-            return await Result<Guid>.SuccessAsync();
+            return await base.EditAsync(id, model, "Customer");
         }
     }
 }

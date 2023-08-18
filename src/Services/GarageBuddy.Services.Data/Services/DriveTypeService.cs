@@ -1,7 +1,5 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
-    using System;
-
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
 
@@ -66,40 +64,13 @@
 
         public async Task<IResult<int>> CreateAsync(DriveTypeServiceModel model)
         {
-            if (!ValidateModel(model))
-            {
-                return await Result<int>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, "Vehicle drive type"));
-            }
 
-            var driveType = this.Mapper.Map<DriveType>(model);
-
-            var entity = await driveTypeRepository.AddAsync(driveType);
-            await driveTypeRepository.SaveChangesAsync();
-            var id = entity?.Entity.Id ?? UnknownId;
-
-            if (entity?.Entity.Id > 0)
-            {
-                return await Result<int>.SuccessAsync(id);
-            }
-
-            return await Result<int>.FailAsync(string.Format(Errors.EntityNotCreated, "Vehicle drive type"));
+            return await this.CreateBasicAsync(model, "Vehicle drive type");
         }
 
         public async Task<IResult> EditAsync(int id, DriveTypeServiceModel model)
         {
-            if (!await ExistsAsync(id))
-            {
-                return await Result.FailAsync(string.Format(Errors.EntityNotFound, "Vehicle drive type"));
-            }
-
-            if (!ValidateModel(model))
-            {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, "Vehicle drive type"));
-            }
-
-            await base.EditAsync(id, model);
-
-            return await Result<Guid>.SuccessAsync();
+            return await base.EditAsync(id, model, "Vehicle drive type");
         }
     }
 }

@@ -75,7 +75,7 @@
         {
             if (!await ExistsAsync(id))
             {
-                return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(GarageServiceModel)));
+                return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Garage)));
             }
 
             if (!model.IsDeleted && await AtLeastOneActiveGarageExistsAsync(id))
@@ -83,14 +83,7 @@
                 return await Result.FailAsync(string.Format(Errors.NoMoreThanOneActiveGarage));
             }
 
-            if (!base.ValidateModel(model))
-            {
-                return await Result<Guid>.FailAsync(string.Format(Errors.EntityModelStateIsNotValid, nameof(Garage)));
-            }
-
-            await base.EditAsync(id, model);
-
-            return await Result<Guid>.SuccessAsync();
+            return await base.EditAsync(id, model, nameof(Garage));
         }
 
         public async Task<bool> AtLeastOneActiveGarageExistsAsync(Guid excludeId)

@@ -36,6 +36,10 @@
 
             public const string EntityNotFound = "The {0} cannot be found.";
 
+            public const string EntityCannotBeNull = "The {0} cannot be null.";
+
+            public const string EntityAlreadyExists = "The {0} already exists.";
+
             public const string EntityNotCreated = "The {0} cannot be created.";
 
             public const string EntityWithTheSameNameAlreadyExists = "The {0} with the same name ({1}) already exists.";
