@@ -13,6 +13,8 @@
         BaseCreateOrEditViewModel,
         IMapFrom<DriveTypeServiceModel>, IMapTo<DriveTypeServiceModel>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(DriveTypeNameMaxLength, MinimumLength = DriveTypeNameMinLength)]
         [Display(Name = "Drive type name")]

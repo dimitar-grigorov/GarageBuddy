@@ -4,11 +4,11 @@
 
     public interface ICustomerService
     {
-        public Task<ICollection<CustomerSelectServiceModel>> GetAllSelectAsync();
-
         public Task<ICollection<CustomerListServiceModel>> GetAllAsync(
             ReadOnlyOption asReadOnly = ReadOnlyOption.Normal,
             DeletedFilter includeDeleted = DeletedFilter.Deleted);
+
+        public Task<ICollection<CustomerSelectServiceModel>> GetAllSelectAsync();
 
         public Task<bool> ExistsAsync(Guid id);
 

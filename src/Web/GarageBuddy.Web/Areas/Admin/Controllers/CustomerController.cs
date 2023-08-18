@@ -115,7 +115,7 @@
                 TempData[NotifyError] = errors;
             }
 
-            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Garage");
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Customer");
             return RedirectToAction(Actions.Index);
         }
     }

@@ -1,5 +1,7 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
+    using System.Net;
+
     using AutoMapper;
 
     using Microsoft.AspNetCore.Mvc;
@@ -44,8 +46,8 @@
                 return View(model);
             }
 
-            var brandServiceModel = mapper.Map<DriveTypeServiceModel>(model);
-            var result = await this.driveTypeService.CreateAsync(brandServiceModel);
+            var serviceModel = mapper.Map<DriveTypeServiceModel>(model);
+            var result = await this.driveTypeService.CreateAsync(serviceModel);
 
             if (!result.Succeeded)
             {
@@ -56,6 +58,42 @@
             }
 
             TempData[NotifySuccess] = string.Format(Success.SuccessfullyCreatedEntity, "Vehicle drive type");
+            return RedirectToAction(Actions.Index);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            if (!await this.driveTypeService.ExistsAsync(id))
+            {
+                return ShowError(string.Format(Errors.EntityNotFound, "Vehicle drive type"), (int)HttpStatusCode.NotFound);
+            }
+
+            var serviceModelResult = await this.driveTypeService.GetAsync(id);
+            var model = mapper.Map<DriveTypeCreateOrEditViewModel>(serviceModelResult.Data);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, DriveTypeCreateOrEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var serviceModel = mapper.Map<DriveTypeServiceModel>(model);
+            var result = await this.driveTypeService.EditAsync(id, serviceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+            }
+
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Vehicle drive type");
             return RedirectToAction(Actions.Index);
         }
     }
