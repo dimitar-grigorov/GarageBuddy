@@ -1,14 +1,9 @@
-﻿using System.Reflection;
-
-using GarageBuddy.Data;
+﻿using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
 using GarageBuddy.Data.Seeding;
-using GarageBuddy.Services.Data.Models.Vehicle.Brand;
-using GarageBuddy.Services.Mapping;
 using GarageBuddy.Web.Configurations;
 using GarageBuddy.Web.Infrastructure.Common;
 using GarageBuddy.Web.Infrastructure.Extensions;
-using GarageBuddy.Web.ViewModels;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -35,21 +30,12 @@ try
 
     builder.Services.ConfigureCookiePolicy();
     builder.Services.ConfigureApplicationCookie();
-
+    builder.Services.AddCors();
     builder.Services.AddControllersWithViews()
         .AddMvcOptions(options => // TODO: Add model binder providers
         {
             options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
         });
-
-    // AutoMapper configuration
-    var assemblies = new[]
-    {
-        typeof(ErrorViewModel).GetTypeInfo().Assembly,
-        typeof(BrandServiceModel).GetTypeInfo().Assembly,
-    };
-    AutoMapperConfig.RegisterMappings(assemblies);
-    builder.Services.AddSingleton(AutoMapperConfig.MapperInstance);
 
     var app = builder.Build();
 

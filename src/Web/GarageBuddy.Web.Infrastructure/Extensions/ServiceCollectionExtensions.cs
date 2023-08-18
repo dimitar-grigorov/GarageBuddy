@@ -29,10 +29,14 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
 
     using Serilog;
 
+    using Services.Data.Models.Vehicle.Brand;
     using Services.Data.Options;
+    using Services.Mapping;
     using Services.Messaging.Contracts;
     using Services.Messaging.Email;
     using Services.Messaging.Services;
+
+    using ViewModels;
 
     using ViewRenderer;
 
@@ -52,6 +56,7 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             return services
                 .AddPersistence()
                 .AddApplicationServices(typeof(IBrandModelService))
+                .AddAutoMapper()
                 .AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -138,6 +143,19 @@ namespace GarageBuddy.Web.Infrastructure.Extensions
             // Options manager
             services.AddSingleton<IOptionsManager, OptionsManager>();
 
+            return services;
+        }
+
+        internal static IServiceCollection AddAutoMapper(this IServiceCollection services)
+        {
+            // AutoMapper configuration
+            var assemblies = new[]
+            {
+                typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(BrandServiceModel).GetTypeInfo().Assembly,
+            };
+            AutoMapperConfig.RegisterMappings(assemblies);
+            services.AddSingleton(AutoMapperConfig.MapperInstance);
             return services;
         }
 
