@@ -104,8 +104,8 @@
                 return ShowError(string.Format(Errors.EntityNotFound, "Vehicle Brand"), (int)HttpStatusCode.NotFound);
             }
 
-            var brand = await this.brandService.GetAsync(id);
-            var model = mapper.Map<BrandCreateOrEditViewModel>(brand.Data);
+            var brandResult = await this.brandService.GetAsync(id);
+            var model = mapper.Map<BrandCreateOrEditViewModel>(brandResult.Data);
 
             return View(model);
         }
@@ -118,8 +118,8 @@
                 return View(model);
             }
 
-            var brandServiceModel = mapper.Map<BrandServiceModel>(model);
-            var result = await this.brandService.EditAsync(id, brandServiceModel);
+            var serviceModel = mapper.Map<BrandServiceModel>(model);
+            var result = await this.brandService.EditAsync(id, serviceModel);
 
             if (!result.Succeeded)
             {

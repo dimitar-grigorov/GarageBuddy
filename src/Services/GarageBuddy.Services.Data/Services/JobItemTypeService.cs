@@ -44,5 +44,15 @@
                     JobTypeName = b.JobTypeName,
                 }).ToListAsync();
         }
+
+        public async Task<IResult<Guid>> CreateAsync(JobItemTypeServiceModel model)
+        {
+            return await CreateBasicAsync(model, "Job type");
+        }
+
+        public async Task<IResult> EditAsync(Guid id, JobItemTypeServiceModel model)
+        {
+            return await base.EditAsync(id, model, "Job type");
+        }
     }
 }

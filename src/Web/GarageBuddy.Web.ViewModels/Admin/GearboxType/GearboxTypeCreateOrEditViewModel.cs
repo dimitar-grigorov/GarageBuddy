@@ -5,6 +5,7 @@
     using Base;
 
     using GarageBuddy.Services.Data.Models.Vehicle.GearboxType;
+
     using Services.Mapping;
 
     using static Common.Constants.EntityValidationConstants.GearboxType;
@@ -14,6 +15,8 @@
         IMapFrom<GearboxTypeServiceModel>,
         IMapTo<GearboxTypeServiceModel>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(GearboxTypeNameMaxLength, MinimumLength = GearboxTypeNameMinLength)]
         [Display(Name = "Gearbox type")]

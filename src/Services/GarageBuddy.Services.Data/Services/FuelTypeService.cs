@@ -45,6 +45,22 @@
                 }).ToListAsync();
         }
 
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await fuelTypeRepository.ExistsAsync(id);
+        }
+
+        public async Task<IResult<FuelTypeServiceModel>> GetAsync(int id)
+        {
+            if (!await ExistsAsync(id))
+            {
+                return await Result<FuelTypeServiceModel>.FailAsync(string.Format(Errors.EntityNotFound, "Fuel type"));
+            }
+
+            var model = await base.GetAsync<FuelTypeServiceModel>(id);
+            return await Result<FuelTypeServiceModel>.SuccessAsync(model);
+        }
+
         public async Task<IResult<int>> CreateAsync(FuelTypeServiceModel model)
         {
             return await CreateBasicAsync(model, "Fuel type");

@@ -45,6 +45,22 @@
                 }).ToListAsync();
         }
 
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await gearboxTypeRepository.ExistsAsync(id);
+        }
+
+        public async Task<IResult<GearboxTypeServiceModel>> GetAsync(int id)
+        {
+            if (!await ExistsAsync(id))
+            {
+                return await Result<GearboxTypeServiceModel>.FailAsync(string.Format(Errors.EntityNotFound, "Gearbox type"));
+            }
+
+            var model = await base.GetAsync<GearboxTypeServiceModel>(id);
+            return await Result<GearboxTypeServiceModel>.SuccessAsync(model);
+        }
+
         public async Task<IResult<int>> CreateAsync(GearboxTypeServiceModel model)
         {
             return await CreateBasicAsync(model, "Gearbox type");

@@ -5,6 +5,7 @@
     using Base;
 
     using GarageBuddy.Services.Data.Models.Vehicle.FuelType;
+
     using Services.Mapping;
 
     using static Common.Constants.EntityValidationConstants.FuelType;
@@ -14,6 +15,8 @@
         IMapFrom<FuelTypeServiceModel>,
         IMapTo<FuelTypeServiceModel>
     {
+        public int Id { get; set; }
+
         [Required]
         [StringLength(FuelTypeNameMaxLength, MinimumLength = FuelTypeNameMinLength)]
         [Display(Name = "Fuel name")]

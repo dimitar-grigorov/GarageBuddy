@@ -5,10 +5,10 @@
 
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
-    using GarageBuddy.Services.Data.Models.Vehicle.Brand;
 
     using Microsoft.EntityFrameworkCore;
 
+    using Models.Vehicle.Brand;
     using Models.Vehicle.BrandModel;
 
     public class BrandModelService : BaseService<BrandModel, Guid>, IBrandModelService
