@@ -1,5 +1,4 @@
-﻿
-namespace GarageBuddy.Services.Data.Tests.BaseService
+﻿namespace GarageBuddy.Services.Data.Tests.BaseService
 {
     using AutoMapper;
 

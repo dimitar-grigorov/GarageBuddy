@@ -234,6 +234,34 @@
         }
 
         [Test]
+        [TestCase("99a27f29-97ee-4847-b8e8-5d8cb969c724")]
+        public void ExistAsyncShouldReturnTrueWhenEntityExists(string id)
+        {
+            // Arrange
+            var repository = new EfRepository<Brand, Guid>(this.dbContext);
+
+            // Act
+            var result = repository.ExistsAsync(Guid.Parse(id));
+
+            // Assert
+            Assert.That(result.Result, Is.True, "The entity should exist.");
+        }
+
+        [Test]
+        [TestCase("022f6770-dd45-4c02-b9ed-5d8cb969c000")]
+        public void ExistAsyncShouldReturnFalseWhenEntityDoesNotExist(string id)
+        {
+            // Arrange
+            var repository = new EfRepository<Brand, Guid>(this.dbContext);
+
+            // Act
+            var result = repository.ExistsAsync(Guid.Parse(id));
+
+            // Assert
+            Assert.That(result.Result, Is.False, "The entity should not exist.");
+        }
+
+        [Test]
         [TestCase("I was added by Add() method.")]
         public async Task AddShouldAddEntityToDatabaseAndReturnEntityEntry(string brandName)
         {
@@ -287,8 +315,8 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
             var brandList = new List<Brand>()
             {
-                new() { BrandName = brandName1 },
-                new() { BrandName = brandName2 },
+                new () { BrandName = brandName1 },
+                new () { BrandName = brandName2 },
             };
 
             // Act
@@ -614,6 +642,29 @@
 
             // Assert
             Assert.ThrowsAsync<InvalidOperationException>(async () => await Code(), "Invalid operation exception should be thrown.");
+        }
+
+        [Test]
+        [TestCase("99a27f29-97ee-4847-b8e8-5d8cb969c725")]
+        public void DeleteShouldSetDeletedOnDate(string id)
+        {
+            // Arrange
+            var repository = new EfDeletableEntityRepository<Brand, Guid>(this.dbContext);
+            var guid = Guid.Parse(id);
+            var brand = new Brand() { Id = guid, BrandName = "I'm going to be deleted :(" };
+            this.dbContext.Add(brand);
+            this.dbContext.SaveChanges();
+
+            // Act
+            repository.Delete(brand);
+            repository.SaveChangesAsync().GetAwaiter().GetResult();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(brand.DeletedOn, Is.Not.Null, "DeletedOn should not be null.");
+                Assert.That(brand.DeletedOn!.Value.Year, Is.EqualTo(DateTime.UtcNow.Year), "DeletedOn year is not the same.");
+            });
         }
 
         [Test]

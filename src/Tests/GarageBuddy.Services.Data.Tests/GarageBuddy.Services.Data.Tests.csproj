@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\GarageBuddy.Data\GarageBuddy.Data.csproj" />
     <ProjectReference Include="..\..\GarageBuddy.Common\GarageBuddy.Common.csproj" />
     <ProjectReference Include="..\..\Services\GarageBuddy.Services.Data\GarageBuddy.Services.Data.csproj" />
     <ProjectReference Include="..\GarageBuddy.Tests.Common\GarageBuddy.Tests.Common.csproj" />

@@ -106,6 +106,14 @@
                         return entity;
                     });
 
+                mock.Setup(m => m.ExistsAsync(It.IsAny<TKey>()).Result)
+                    .Returns((TKey id) =>
+                    {
+                        ArgumentNullException.ThrowIfNull(id);
+
+                        return Entities.Any(e => EqualityComparer<TKey>.Default.Equals(e.Id, id));
+                    });
+
                 mock.Setup(m => m.DeleteAsync(It.IsAny<TKey>()))
                     .Returns((TKey id) =>
                     {

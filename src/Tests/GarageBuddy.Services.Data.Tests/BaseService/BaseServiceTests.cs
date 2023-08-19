@@ -7,6 +7,8 @@
 
     using AutoMapper;
 
+    using BaseService;
+
     using Common;
 
     using GarageBuddy.Common.Core.Enums;
@@ -25,7 +27,7 @@
     [TestFixture]
     public class BaseServiceTests
     {
-        private readonly ICollection<Brand> reservationNotes = new List<Brand>()
+        private readonly ICollection<Brand> brandNotes = new List<Brand>()
         {
             new()
             {
@@ -56,7 +58,7 @@
             this.mapper = MapperMock.Instance;
             this.repository = DeletableEntityRepositoryMock<Brand, Guid>.Instance;
 
-            foreach (var item in this.reservationNotes)
+            foreach (var item in this.brandNotes)
             {
                 await this.repository.AddAsync(item);
             }
