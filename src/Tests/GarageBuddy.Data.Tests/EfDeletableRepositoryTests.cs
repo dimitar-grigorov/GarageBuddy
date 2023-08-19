@@ -227,10 +227,10 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
 
             // Act
-            Func<Task> code = async () => await repository.FindAsync(Guid.Parse(id), ReadOnlyOption.Normal);
+            async Task Code() => await repository.FindAsync(Guid.Parse(id), ReadOnlyOption.Normal);
 
             // Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await code(), "Invalid operation exception should be thrown.");
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Code(), "Invalid operation exception should be thrown.");
         }
 
         [Test]
@@ -241,7 +241,7 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
 
             // Act
-            var result = repository.Add(new Brand() { BrandName = brandName });
+            var result = await repository.AddAsync(new Brand() { BrandName = brandName });
             await repository.SaveChangesAsync();
 
             // Assert
@@ -287,16 +287,16 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
             var brandList = new List<Brand>()
             {
-                new Brand() { BrandName = brandName1 },
-                new Brand() { BrandName = brandName2 },
+                new() { BrandName = brandName1 },
+                new() { BrandName = brandName2 },
             };
 
             // Act
-            repository.AddRange(brandList);
+            await repository.AddRangeAsync(brandList);
             await repository.SaveChangesAsync();
 
             // Assert
-            var entity1 = await this.dbContext
+            var entity1 = await dbContext
                 .Brands
                 .FirstAsync(rn => rn.BrandName == brandName1);
             Assert.Multiple(() =>
@@ -306,7 +306,7 @@
                 Assert.That(brandName1, Is.EqualTo(entity1.BrandName), "Entity data is not set or is not matching.");
             });
 
-            var entity2 = await this.dbContext
+            var entity2 = await dbContext
                 .Brands
                 .FirstAsync(rn => rn.BrandName == brandName2);
 
@@ -323,11 +323,11 @@
         public async Task AddRangeAsyncShouldAddEntitiesToDatabase(string brandName1, string brandName2)
         {
             // Arrange
-            var repository = new EfRepository<Brand, Guid>(this.dbContext);
+            var repository = new EfRepository<Brand, Guid>(dbContext);
             var brandList = new List<Brand>()
             {
-                new Brand() { BrandName = brandName1 },
-                new Brand() { BrandName = brandName2 },
+                new () { BrandName = brandName1 },
+                new () { BrandName = brandName2 },
             };
 
             // Act
@@ -502,10 +502,10 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
 
             // Act
-            Func<Task> code = async () => await repository.UpdateAsync(Guid.Parse(id));
+            async Task Code() => await repository.UpdateAsync(Guid.Parse(id));
 
             // Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await code(), "Invalid operation exception should be thrown.");
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Code(), "Invalid operation exception should be thrown.");
         }
 
         [Test]
@@ -516,8 +516,8 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
             var brandList = new List<Brand>()
             {
-                new Brand() { BrandName = brandName1 },
-                new Brand() { BrandName = brandName2 },
+                new () { BrandName = brandName1 },
+                new () { BrandName = brandName2 },
             };
             await repository.AddRangeAsync(brandList);
             await repository.SaveChangesAsync();
@@ -610,10 +610,10 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
 
             // Act
-            Func<Task> code = async () => await repository.DeleteAsync(Guid.Parse(id));
+            async Task Code() => await repository.DeleteAsync(Guid.Parse(id));
 
             // Assert
-            Assert.ThrowsAsync<InvalidOperationException>(async () => await code(), "Invalid operation exception should be thrown.");
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Code(), "Invalid operation exception should be thrown.");
         }
 
         [Test]
@@ -624,8 +624,8 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
             var brandList = new List<Brand>()
             {
-                new Brand() { BrandName = brandName1 },
-                new Brand() { BrandName = brandName2 },
+                new () { BrandName = brandName1 },
+                new () { BrandName = brandName2 },
             };
             await repository.AddRangeAsync(brandList);
             await repository.SaveChangesAsync();
