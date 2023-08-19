@@ -34,7 +34,6 @@
             var seeders = new List<ISeeder>
                           {
                               new RolesSeeder(),
-                              new SettingsSeeder(),
                               new JobStatusSeeder(),
 
                               // new JobItemTypeSeeder(),

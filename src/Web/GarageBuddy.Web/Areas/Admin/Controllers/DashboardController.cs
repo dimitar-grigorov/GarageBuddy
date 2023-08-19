@@ -1,18 +1,11 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
-    using GarageBuddy.Services.Data.Contracts;
-
     using Microsoft.AspNetCore.Mvc;
 
     public class DashboardController : AdminController
     {
-        private readonly ISettingsService settingsService;
-
-        public DashboardController(
-            IHtmlSanitizer sanitizer,
-            ISettingsService settingsService) : base(sanitizer)
+        public DashboardController(IHtmlSanitizer sanitizer) : base(sanitizer)
         {
-            this.settingsService = settingsService;
         }
 
         [HttpGet]
