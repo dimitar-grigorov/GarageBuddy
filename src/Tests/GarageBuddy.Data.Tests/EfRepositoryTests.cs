@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Data;
+
     using GarageBuddy.Common.Constants;
     using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Tests.Common;
@@ -18,26 +20,26 @@
     using Repositories;
 
     [TestFixture]
-    public class EfDeletableRepositoryTests
+    public class EfRepositoryTests
     {
         private readonly ICollection<Brand> brands = new List<Brand>
         {
             new Brand()
             {
-                Id = Guid.Parse("d2a8b7a1-2e19-4a8c-838e-b512d834241e"),
-                BrandName = "Brand 1",
+                Id = Guid.Parse("fe89e10c-cf70-457d-9723-3b248e5fae1d"),
+                BrandName = "Brand Name 1",
                 IsDeleted = false,
             },
             new Brand()
             {
-                Id = Guid.Parse("99a27f29-97ee-4847-b8e8-5d8cb969c724"),
-                BrandName = "Brand 2",
+                Id = Guid.Parse("bb2f7b6c-d8d9-4e2c-b14b-3bd98e18ad86"),
+                BrandName = "Brand Name 2",
                 IsDeleted = true,
             },
             new Brand()
             {
-                Id = Guid.Parse("449b6ca2-3640-4f35-a37a-986f9df4ab7b"),
-                BrandName = "Brand 3",
+                Id = Guid.Parse("73af5cc7-ecdf-430b-80a7-a54b874ee099"),
+                BrandName = "Brand Name 3",
                 IsDeleted = false,
             },
         }.AsReadOnly();
@@ -128,16 +130,15 @@
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
 
             // Act
-            var entities = await repository.All(rn => rn.BrandName == "No brand with this body should exist.",
-                ReadOnlyOption.Normal).ToListAsync();
+            var entities = await repository.All(rn => rn.BrandName == "No brand with this body should exist.", ReadOnlyOption.Normal).ToListAsync();
 
             // Assert
             Assert.That(entities, Is.Empty, "The collection contains entities.");
         }
 
         [Test]
-        [TestCase("d2a8b7a1-2e19-4a8c-838e-b512d834241e", "Brand 1")]
-        [TestCase("449b6ca2-3640-4f35-a37a-986f9df4ab7b", "Brand 3")]
+        [TestCase("fe89e10c-cf70-457d-9723-3b248e5fae1d", "Brand Name 1")]
+        [TestCase("73af5cc7-ecdf-430b-80a7-a54b874ee099", "Brand Name 3")]
         public async Task AllShouldReturnAllWithTrackingFiltered(string id, string brandName)
         {
             // Arrange
@@ -158,8 +159,8 @@
         }
 
         [Test]
-        [TestCase("d2a8b7a1-2e19-4a8c-838e-b512d834241e", "Brand 1")]
-        [TestCase("449b6ca2-3640-4f35-a37a-986f9df4ab7b", "Brand 3")]
+        [TestCase("fe89e10c-cf70-457d-9723-3b248e5fae1d", "Brand Name 1")]
+        [TestCase("73af5cc7-ecdf-430b-80a7-a54b874ee099", "Brand Name 3")]
         public async Task AllShouldReturnAllWithoutTrackingFiltered(string id, string brandName)
         {
             // Arrange
@@ -180,8 +181,8 @@
         }
 
         [Test]
-        [TestCase("d2a8b7a1-2e19-4a8c-838e-b512d834241e", "Brand 1")]
-        [TestCase("449b6ca2-3640-4f35-a37a-986f9df4ab7b", "Brand 3")]
+        [TestCase("fe89e10c-cf70-457d-9723-3b248e5fae1d", "Brand Name 1")]
+        [TestCase("73af5cc7-ecdf-430b-80a7-a54b874ee099", "Brand Name 3")]
         public async Task FindAsyncShouldReturnEntityWithIdWithoutTracking(string id, string brandName)
         {
             // Arrange
@@ -200,8 +201,8 @@
         }
 
         [Test]
-        [TestCase("d2a8b7a1-2e19-4a8c-838e-b512d834241e", "Brand 1")]
-        [TestCase("449b6ca2-3640-4f35-a37a-986f9df4ab7b", "Brand 3")]
+        [TestCase("fe89e10c-cf70-457d-9723-3b248e5fae1d", "Brand Name 1")]
+        [TestCase("73af5cc7-ecdf-430b-80a7-a54b874ee099", "Brand Name 3")]
         public async Task FindAsyncShouldReturnEntityWithIdWithTracking(string id, string brandName)
         {
             // Arrange
@@ -281,40 +282,40 @@
 
         [Test]
         [TestCase("I was added by AddRange() method.", "Me too.")]
-        public async Task AddRangeShouldAddEntitiesToDatabase(string brandName1, string brandName2)
+        public async Task AddRangeShouldAddEntitiesToDatabase(string body1, string body2)
         {
             // Arrange
             var repository = new EfRepository<Brand, Guid>(this.dbContext);
             var brandList = new List<Brand>()
             {
-                new Brand() { BrandName = brandName1 },
-                new Brand() { BrandName = brandName2 },
+                new Brand() { BrandName = body1 },
+                new Brand() { BrandName = body2 },
             };
 
             // Act
-            repository.AddRange(brandList);
+            await repository.AddRangeAsync(brandList);
             await repository.SaveChangesAsync();
 
             // Assert
             var entity1 = await this.dbContext
                 .Brands
-                .FirstAsync(rn => rn.BrandName == brandName1);
+                .FirstAsync(rn => rn.BrandName == body1);
             Assert.Multiple(() =>
             {
                 Assert.That(entity1, Is.Not.Null, "The entity cannot be found.");
                 Assert.That(entity1.CreatedOn, Is.Not.EqualTo(default(DateTime)), "Created should be set.");
-                Assert.That(brandName1, Is.EqualTo(entity1.BrandName), "Entity data is not set or is not matching.");
+                Assert.That(body1, Is.EqualTo(entity1.BrandName), "Entity data is not set or is not matching.");
             });
 
             var entity2 = await this.dbContext
                 .Brands
-                .FirstAsync(rn => rn.BrandName == brandName2);
+                .FirstAsync(rn => rn.BrandName == body2);
 
             Assert.Multiple(() =>
             {
                 Assert.That(entity2, Is.Not.Null, "The entity cannot be found.");
                 Assert.That(entity2.CreatedOn, Is.Not.EqualTo(default(DateTime)), "Created should be set.");
-                Assert.That(brandName2, Is.EqualTo(entity2.BrandName), "Entity data is not set or is not matching.");
+                Assert.That(body2, Is.EqualTo(entity2.BrandName), "Entity data is not set or is not matching.");
             });
         }
 
