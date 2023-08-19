@@ -23,7 +23,7 @@
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .EnableSensitiveDataLogging()
                 .UseInMemoryDatabase(databaseName: new Guid().ToString()).Options;
-            
+
             var dbContext = new ApplicationDbContext(options);
             await dbContext.Database.EnsureCreatedAsync();
 
