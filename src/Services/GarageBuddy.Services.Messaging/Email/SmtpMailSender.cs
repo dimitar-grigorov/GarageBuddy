@@ -5,7 +5,7 @@
     using System.IO;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Common.Core.Settings.Mail;
+    using Common.Core.Settings.Mail;
 
     using MailKit.Net.Smtp;
     using MailKit.Security;

@@ -1,7 +1,5 @@
 ﻿namespace GarageBuddy.Tests.Common
 {
-    using AutoMapper;
-
     using Data.Common.Repositories;
     using Data.Models.Vehicle;
 
@@ -36,15 +34,13 @@
         private static readonly IDeletableEntityRepository<Brand, Guid> BrandRepository
             = DeletableEntityRepositoryMock<Brand, Guid>.Instance;
 
-        private static IMapper mapper = MapperMock.Instance;
-
-        private static readonly bool IsInitialized = false;
+        private static bool isInitialized = false;
 
         public static IBrandService Instance
         {
             get
             {
-                if (!IsInitialized)
+                if (!isInitialized)
                 {
                     foreach (var item in Brands)
                     {
@@ -55,10 +51,9 @@
                 var mock = new Mock<IBrandService>();
 
                 mock.Setup(m => m.ExistsAsync(It.IsAny<Guid>()).Result)
-                    .Returns((Guid id) =>
-                    {
-                        return BrandRepository.ExistsAsync(id).GetAwaiter().GetResult();
-                    });
+                    .Returns((Guid id) => BrandRepository.ExistsAsync(id).GetAwaiter().GetResult());
+
+                isInitialized = true;
 
                 var service = mock.Object;
                 return service;

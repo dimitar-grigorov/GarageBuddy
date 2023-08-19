@@ -9,10 +9,11 @@
     using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models;
-    using GarageBuddy.Services.Data.Models.Customer;
     using GarageBuddy.Tests.Common;
 
     using Microsoft.EntityFrameworkCore;
+
+    using Models.Customer;
 
     using NUnit.Framework;
 

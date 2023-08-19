@@ -3,16 +3,15 @@
     using System;
     using System.Threading.Tasks;
 
-    using Common.Constants;
     using Common.Core.Wrapper;
 
     using Contracts;
 
-    using GarageBuddy.Services.Messaging.Email;
+    using Email;
 
     using Microsoft.Extensions.Logging;
 
-    using static GarageBuddy.Common.Constants.MessageConstants;
+    using static Common.Constants.MessageConstants;
 
     public class EmailService : IEmailService
     {

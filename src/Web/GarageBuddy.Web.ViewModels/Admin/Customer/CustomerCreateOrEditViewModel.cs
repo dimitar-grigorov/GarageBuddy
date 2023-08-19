@@ -8,11 +8,10 @@
 
     using Base;
 
-    using GarageBuddy.Services.Mapping.TypeConverters;
-
     using Services.Data.Models.ApplicationUser;
     using Services.Data.Models.Customer;
     using Services.Mapping;
+    using Services.Mapping.TypeConverters;
 
     using static Common.Constants.GlobalValidationConstants;
     using static GarageBuddy.Common.Constants.EntityValidationConstants.Customer;

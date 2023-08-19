@@ -3,9 +3,10 @@
     using System;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Data.Seeding.Common;
+    using Common;
 
     using Microsoft.EntityFrameworkCore;
+
     using Models.Vehicle;
 
     public class GearboxTypeSeeder : ISeeder

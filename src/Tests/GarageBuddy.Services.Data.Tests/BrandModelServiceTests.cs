@@ -7,14 +7,16 @@
 
     using AutoMapper;
 
+    using Common;
+
     using Contracts;
 
     using GarageBuddy.Common.Core.Enums;
     using GarageBuddy.Data.Common.Repositories;
     using GarageBuddy.Data.Models.Vehicle;
-    using GarageBuddy.Services.Data.Common;
-    using GarageBuddy.Services.Data.Models.Vehicle.BrandModel;
     using GarageBuddy.Tests.Common;
+
+    using Models.Vehicle.BrandModel;
 
     using NUnit.Framework;
 

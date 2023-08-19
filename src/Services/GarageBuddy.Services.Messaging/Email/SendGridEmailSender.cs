@@ -13,7 +13,7 @@
     using SendGrid;
     using SendGrid.Helpers.Mail;
 
-    using static GarageBuddy.Common.Constants.MessageConstants;
+    using static Common.Constants.MessageConstants;
 
     public class SendGridEmailSender : IEmailSender
     {

@@ -6,7 +6,7 @@
     using System.Reflection;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Data.Seeding.Job;
+    using Job;
 
     using Newtonsoft.Json;
 

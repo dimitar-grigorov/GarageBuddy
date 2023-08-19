@@ -1,4 +1,4 @@
-﻿namespace GarageBuddy.Services.Data.Tests.Base
+﻿namespace GarageBuddy.Services.Data.Tests.BaseService
 {
     using System;
     using System.Collections.Generic;
@@ -6,8 +6,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-
-    using BaseService;
 
     using Common;
 

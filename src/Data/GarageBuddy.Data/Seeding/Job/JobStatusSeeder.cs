@@ -3,9 +3,9 @@
     using System;
     using System.Threading.Tasks;
 
-    using Extensions;
+    using Common;
 
-    using GarageBuddy.Data.Seeding.Common;
+    using Extensions;
 
     using Microsoft.EntityFrameworkCore;
 

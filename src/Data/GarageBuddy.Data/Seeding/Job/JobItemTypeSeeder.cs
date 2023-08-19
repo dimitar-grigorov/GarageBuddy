@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using GarageBuddy.Data.Seeding.Common;
+    using Common;
 
     using Models.Job;
 
