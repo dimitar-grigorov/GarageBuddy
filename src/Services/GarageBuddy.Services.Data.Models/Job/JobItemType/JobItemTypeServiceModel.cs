@@ -1,5 +1,6 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Job.JobItemType
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     using Base;
@@ -13,7 +14,7 @@
     public class JobItemTypeServiceModel : BaseListServiceModel, IMapFrom<JobItemType>, IMapTo<JobItemType>
     {
         [Required]
-        public string Id { get; set; } = null!;
+        public Guid Id { get; set; }
 
         [Required]
         [StringLength(JobTypeNameMaxLength, MinimumLength = JobTypeNameMinLength)]

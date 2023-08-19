@@ -24,12 +24,12 @@
     {
         private readonly ICollection<Brand> brands = new List<Brand>()
         {
-            new Brand { Id = new System.Guid("00000000-0000-0000-0000-000000000001"), BrandName = "Audi" },
-            new Brand { Id = new System.Guid("00000000-0000-0000-0000-000000000002"), BrandName = "BMW" },
-            new Brand { Id = new System.Guid("00000000-0000-0000-0000-000000000003"), BrandName = "Mercedes" },
-            new Brand { Id = new System.Guid("00000000-0000-0000-0000-000000000004"), BrandName = "Volkswagen" },
-            new Brand { Id = new System.Guid("00000000-0000-0000-0000-000000000005"), BrandName = "Volvo" },
-            new Brand { Id = new System.Guid("00000000-0000-0000-0000-000000000006"), BrandName = "Yugo", IsDeleted = true, },
+            new() { Id = new Guid("00000000-0000-0000-0000-000000000001"), BrandName = "Audi" },
+            new() { Id = new Guid("00000000-0000-0000-0000-000000000002"), BrandName = "BMW" },
+            new() { Id = new Guid("00000000-0000-0000-0000-000000000003"), BrandName = "Mercedes" },
+            new() { Id = new Guid("00000000-0000-0000-0000-000000000004"), BrandName = "Volkswagen" },
+            new() { Id = new Guid("00000000-0000-0000-0000-000000000005"), BrandName = "Volvo" },
+            new() { Id = new Guid("00000000-0000-0000-0000-000000000006"), BrandName = "Yugo", IsDeleted = true, },
         }.AsReadOnly();
 
         private IMapper mapper = null!;
@@ -60,7 +60,7 @@
         public async Task GetAllAsync_ShouldReturnAllBrands()
         {
             TearDown();
-            SetUp();
+            await SetUp();
             var service = new BrandService(this.repository, this.mapper);
 
             var result = await service.GetAllAsync();
@@ -142,7 +142,6 @@
             Assert.That(result.Count, Is.EqualTo(limit));
         }
 
-        //BrandNameExistsAsync
         [Test]
         [Order(8)]
         [TestCase("Audi")]
@@ -250,7 +249,7 @@
                 BrandName = brandName,
             };
 
-            var result = await service.EditAsync(Guid.Parse(id), brand);
+            await service.EditAsync(Guid.Parse(id), brand);
 
             var editedBrand = await service.GetAsync(Guid.Parse(id));
 

@@ -185,9 +185,7 @@
             Assert.That(result, Is.True);
         }
 
-        //AtLeastOneActiveGarageExistsAsync
         [Test]
-
         [Order(10)]
         [TestCase("00000000-0000-0000-0000-000000000003")]
         public async Task AtLeastOneActiveGarageExistsAsync_WithExistingActiveGarage_ShouldReturnFalse(string id)
