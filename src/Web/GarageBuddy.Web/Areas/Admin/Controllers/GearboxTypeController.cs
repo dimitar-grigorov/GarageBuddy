@@ -46,6 +46,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<GearboxTypeServiceModel>(model);
             var result = await this.gearboxTypeService.CreateAsync(serviceModel);
@@ -83,6 +84,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<GearboxTypeServiceModel>(model);
             var result = await this.gearboxTypeService.EditAsync(id, serviceModel);

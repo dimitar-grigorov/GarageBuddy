@@ -82,7 +82,6 @@
             SanitizeModel(model);
             var serviceModel = mapper.Map<VehicleServiceModel>(model);
 
-
             // TODO: check check check!
             var result = await this.vehicleService.CreateAsync(serviceModel);
 

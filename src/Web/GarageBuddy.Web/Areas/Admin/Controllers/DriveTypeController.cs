@@ -46,6 +46,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<DriveTypeServiceModel>(model);
             var result = await this.driveTypeService.CreateAsync(serviceModel);
@@ -83,6 +84,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<DriveTypeServiceModel>(model);
             var result = await this.driveTypeService.EditAsync(id, serviceModel);

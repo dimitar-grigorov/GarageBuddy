@@ -46,6 +46,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<FuelTypeServiceModel>(model);
             var result = await this.fuelTypeService.CreateAsync(serviceModel);
@@ -83,6 +84,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<FuelTypeServiceModel>(model);
             var result = await this.fuelTypeService.EditAsync(id, serviceModel);

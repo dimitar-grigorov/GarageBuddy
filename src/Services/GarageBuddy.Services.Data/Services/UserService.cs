@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Services
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -247,6 +248,53 @@
             return roles.Select(r => r.Name);
         }
 
+        public async Task EditAsync(UserServiceModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            if (!this.Validate(model))
+            {
+                throw new ArgumentException(
+                    string.Format(Errors.EntityModelStateIsNotValid, "User"),
+                    nameof(model));
+            }
+
+            var id = model.Id?.ToString() ?? throw new ArgumentNullException(nameof(model.Id));
+
+            var user = await this.userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+
+            user.Email = model.Email;
+            user.UserName = model.UserName;
+
+            if (!string.IsNullOrWhiteSpace(model.Password))
+            {
+                var token = await this.userManager.GeneratePasswordResetTokenAsync(user);
+                await this.userManager.ResetPasswordAsync(user, token, model.Password);
+            }
+
+            foreach (var role in model.Roles)
+            {
+                await this.AddToRoleAsync(user.Id, role);
+            }
+
+            foreach (var userRole in await this.GetUserRolesAsync(user.Id))
+            {
+                if (!model.Roles.Contains(userRole))
+                {
+                    await this.RemoveFromRoleAsync(user.Id, userRole);
+                }
+            }
+
+            await this.userManager.UpdateAsync(user);
+        }
+
         public async Task AddToRoleAsync(Guid userId, string role)
         {
             var user = await this.userManager.FindByIdAsync(userId.ToString());
@@ -281,6 +329,18 @@
         {
             var user = await this.userManager.FindByIdAsync(id);
             return user != null;
+        }
+
+        private bool Validate<TModel>(TModel dto)
+        {
+            ArgumentNullException.ThrowIfNull(dto);
+
+            var context = new ValidationContext(dto, serviceProvider: null, items: null);
+            var validationResults = new List<ValidationResult>();
+
+            bool isValid = Validator.TryValidateObject(dto, context, validationResults, true);
+
+            return isValid;
         }
     }
 }

@@ -46,6 +46,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<GarageServiceModel>(model);
             var result = await this.garageService.CreateAsync(serviceModel);
@@ -78,6 +79,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<GarageServiceModel>(model);
             var result = await this.garageService.EditAsync(id, serviceModel);

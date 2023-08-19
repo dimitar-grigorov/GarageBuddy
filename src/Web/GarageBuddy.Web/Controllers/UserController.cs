@@ -35,8 +35,7 @@
             ILogger<UserController> logger,
             IUserService userService,
             IEmailService emailService,
-            IViewRenderer viewRenderer
-            ) : base(sanitizer)
+            IViewRenderer viewRenderer) : base(sanitizer)
         {
             this.logger = logger;
             this.userService = userService;

@@ -34,7 +34,7 @@
 
         public Task<IEnumerable<string>> GetAllRolesAsync();
 
-        // public Task EditAsync(UserDto userDto);
+        public Task EditAsync(UserServiceModel model);
         public Task AddToRoleAsync(Guid userId, string role);
 
         public Task RemoveFromRoleAsync(Guid userId, string role);
