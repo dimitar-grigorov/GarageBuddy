@@ -130,6 +130,7 @@
         }
 
         [Test]
+        [Order(6)]
         public async Task GetAllAsync_WithNoParameters_ShouldReturnAllBrandModelsOrderedByModelName()
         {
             // Arrange
@@ -177,6 +178,7 @@
 
         [Test]
         [TestCase("2bfff802-5afb-4bbb-96b3-27c98161ff00")]
+        [Order(3)]
         public async Task GetAllSelectAsync_ShouldReturnAllBrandModelsAsSelectListItems(string id)
         {
             // Arrange
@@ -197,6 +199,7 @@
 
         [Test]
         [TestCase("2bfff802-5afb-4bbb-96b3-27c98161ff00")]
+        [Order(4)]
         public async Task GetAllByBrandIdAsync_ShouldReturnAllBrandModelsByBrandId(string id)
         {
             // Arrange
@@ -245,6 +248,7 @@
 
         [Test]
         [TestCase("6460eef6-1aee-442f-a39f-9e43319ab49d")]
+        [Order(2)]
         public async Task GetAsync_WithExistingId_ShouldReturnBrandModel(string id)
         {
             // Arrange
@@ -281,6 +285,7 @@
 
         [Test]
         [TestCase("6460eef6-1aee-442f-a39f-9e43319ab49d")]
+        [Order(1)]
         public async Task GetAsync_WithExistingId_ShouldReturnBrandModelWithBrand(string id)
         {
             // Arrange
