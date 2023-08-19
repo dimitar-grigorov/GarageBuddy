@@ -2,6 +2,7 @@
 {
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Contracts;
@@ -9,6 +10,7 @@
 
     using ViewModels.Admin.Garage;
 
+    [Authorize(Policy = Policies.ManagerPolicy)]
     public class GarageController : AdminController
     {
         private readonly IGarageService garageService;

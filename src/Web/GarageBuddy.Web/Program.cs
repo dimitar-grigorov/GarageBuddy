@@ -1,6 +1,4 @@
-﻿using Ganss.Xss;
-
-using GarageBuddy.Data;
+﻿using GarageBuddy.Data;
 using GarageBuddy.Data.Models;
 using GarageBuddy.Data.Seeding;
 using GarageBuddy.Web.Configurations;
@@ -42,6 +40,20 @@ try
         {
             options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
         });
+
+    // Add response caching
+    builder.Services.AddResponseCaching();
+
+    // Add policies
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy(Policies.AdminPolicy, p =>
+            p.RequireRole(Roles.Administrator));
+        options.AddPolicy(Policies.ManagerPolicy, p =>
+            p.RequireRole(Roles.Administrator, Roles.Manager));
+        options.AddPolicy(Policies.MechanicPolicy, p =>
+            p.RequireRole(Roles.Administrator, Roles.Manager, Roles.Mechanic));
+    });
 
     var app = builder.Build();
 

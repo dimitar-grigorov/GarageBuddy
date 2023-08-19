@@ -50,7 +50,7 @@
         /// <returns>Returns a <see cref="bool"/> indicating whether the user is an admin.</returns>
         public static bool IsAdmin(this ClaimsPrincipal user)
         {
-            return user.IsInRole(GlobalConstants.AdministratorRoleName);
+            return user.IsInRole(GlobalConstants.Roles.Administrator);
         }
     }
 }

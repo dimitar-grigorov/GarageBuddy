@@ -1,7 +1,13 @@
 ﻿@using GarageBuddy.Web.Infrastructure.Extensions
 @using Microsoft.AspNetCore.Identity
 @using GarageBuddy.Data.Models
+@using Microsoft.AspNetCore.Authorization
 @inject SignInManager<ApplicationUser> SignInManager
+@inject IAuthorizationService AuthorizationService
+
+@{
+    var allowAdminArea = (await AuthorizationService.AuthorizeAsync(User, Policies.MechanicPolicy)).Succeeded;
+}
 
 <div class="header-top">
     <div class="container">
@@ -28,7 +34,7 @@
                 </a>
             </li>
 
-            @if (this.SignInManager.IsSignedIn(this.User) && this.User.IsAdmin())
+            @if (this.SignInManager.IsSignedIn(this.User) && allowAdminArea)
             {
                 <li class="menu-item">
                     <a class="menu-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">

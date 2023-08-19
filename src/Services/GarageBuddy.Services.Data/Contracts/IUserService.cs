@@ -26,8 +26,6 @@
 
         public Task<ICollection<UserSelectServiceModel>> GetAllSelectAsync();
 
-        // public Task<TUser> FindUserByIdAsync(string id);
-        // public Task<IEnumerable<TUser>> GetAllUsersAsync();
         public Task<IEnumerable<UserServiceModel>> GetAllUsersWithRolesAsync();
 
         public Task<IEnumerable<string>> GetUserRolesAsync(Guid userId);
@@ -35,6 +33,7 @@
         public Task<IEnumerable<string>> GetAllRolesAsync();
 
         public Task EditAsync(UserServiceModel model);
+
         public Task AddToRoleAsync(Guid userId, string role);
 
         public Task RemoveFromRoleAsync(Guid userId, string role);

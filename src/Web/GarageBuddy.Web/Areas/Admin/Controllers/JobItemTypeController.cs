@@ -1,9 +1,11 @@
 ﻿namespace GarageBuddy.Web.Areas.Admin.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Contracts;
 
+    [Authorize(Policy = Policies.ManagerPolicy)]
     public class JobItemTypeController : AdminController
     {
         private readonly IJobItemTypeService jobItemTypeService;

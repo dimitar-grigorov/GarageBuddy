@@ -4,8 +4,6 @@
     {
         public const string SystemName = "GarageBuddy";
 
-        public const string AdministratorRoleName = "Administrator";
-
         public const string AllRolesKey = "AllRoles";
 
         public const string AdminArea = "Admin";
@@ -32,11 +30,24 @@
 
         public const string NoValue = "None";
 
-        public const int UnknownId = -1;
+        public static class Roles
+        {
+            public const string Administrator = "Administrator";
 
-        /// <summary>
-        /// Gets a default timeout (in milliseconds) before restarting the application.
-        /// </summary>
-        public static int RestartTimeout => 3000;
+            public const string Manager = "Manager";
+
+            public const string Mechanic = "Mechanic";
+
+            public const string User = "User";
+        }
+
+        public static class Policies
+        {
+            public const string AdminPolicy = "AdminPolicy";
+
+            public const string ManagerPolicy = "ManagerPolicy";
+
+            public const string MechanicPolicy = "MechanicPolicy";
+        }
     }
 }

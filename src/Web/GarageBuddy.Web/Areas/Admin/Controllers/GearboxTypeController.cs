@@ -4,6 +4,7 @@
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Contracts;
@@ -11,6 +12,7 @@
 
     using ViewModels.Admin.GearboxType;
 
+    [Authorize(Policy = Policies.ManagerPolicy)]
     public class GearboxTypeController : AdminController
     {
         private readonly IGearboxTypeService gearboxTypeService;

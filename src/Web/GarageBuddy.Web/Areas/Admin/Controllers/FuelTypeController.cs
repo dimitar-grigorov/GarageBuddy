@@ -4,6 +4,7 @@
 
     using AutoMapper;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Contracts;
@@ -11,6 +12,7 @@
 
     using ViewModels.Admin.FuelType;
 
+    [Authorize(Policy = Policies.ManagerPolicy)]
     public class FuelTypeController : AdminController
     {
         private readonly IFuelTypeService fuelTypeService;

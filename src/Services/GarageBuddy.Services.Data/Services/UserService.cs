@@ -100,7 +100,7 @@
             // If it is the first user, make him admin
             if (this.userManager.Users.Count() == 1)
             {
-                await this.userManager.AddToRoleAsync(user, AdministratorRoleName);
+                await this.userManager.AddToRoleAsync(user, Roles.Administrator);
             }
 
             return result;
@@ -255,7 +255,7 @@
                 throw new ArgumentNullException(nameof(model));
             }
 
-            if (!this.Validate(model))
+            if (!Validate(model))
             {
                 throw new ArgumentException(
                     string.Format(Errors.EntityModelStateIsNotValid, "User"),
@@ -331,14 +331,14 @@
             return user != null;
         }
 
-        private bool Validate<TModel>(TModel dto)
+        private static bool Validate<TModel>(TModel dto)
         {
             ArgumentNullException.ThrowIfNull(dto);
 
             var context = new ValidationContext(dto, serviceProvider: null, items: null);
             var validationResults = new List<ValidationResult>();
 
-            bool isValid = Validator.TryValidateObject(dto, context, validationResults, true);
+            var isValid = Validator.TryValidateObject(dto, context, validationResults, true);
 
             return isValid;
         }

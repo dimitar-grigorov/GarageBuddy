@@ -4,11 +4,13 @@
 
     using Common.Constants;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services.Data.Contracts;
     using Services.Data.Models.ApplicationUser;
 
+    [Authorize(Policy = Policies.AdminPolicy)]
     public class UserManagerController : AdminController
     {
         private readonly IUserService userService;
