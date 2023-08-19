@@ -74,14 +74,6 @@
             return await this.DbSet.AddAsync(entity);
         }
 
-        public virtual void AddRange(IEnumerable<TEntity> entities)
-        {
-            foreach (var entity in entities)
-            {
-                this.Add(entity);
-            }
-        }
-
         public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
             foreach (var entity in entities)
