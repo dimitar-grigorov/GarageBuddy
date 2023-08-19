@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using System.Linq.Expressions;
     using System.Reflection;
     using System.Threading.Tasks;
 
@@ -212,7 +211,8 @@
             return query;
         }
 
-        protected virtual async Task<int> GetTotalCountForPagination<TModel>(QueryOptions<TModel> queryOptions)
+        protected virtual async Task<int> GetTotalCountForPagination<TModel>(
+            QueryOptions<TModel> queryOptions)
         {
             var totalCount = 0;
             if (queryOptions.Take.HasValue)
@@ -234,38 +234,6 @@
             var isValid = Validator.TryValidateObject(model, context, validationResults, true);
 
             return isValid;
-        }
-
-#pragma warning disable IDE0060 // Remove unused parameter / The parameter is used for generic intellisense
-        private PropertyInfo GetPropertyInfo<TSource, TProperty>(TSource source, Expression<Func<TSource, TProperty>> propertyLambda)
-#pragma warning restore IDE0060 // Remove unused parameter
-        {
-            Type type = typeof(TSource);
-            MemberExpression? member = propertyLambda.Body as MemberExpression;
-
-            if (member == null)
-            {
-                throw new ArgumentException(
-                    $"Expression '{propertyLambda}' refers to a method, not a property.");
-            }
-
-            PropertyInfo? propInfo = member.Member as PropertyInfo;
-
-            if (propInfo == null)
-            {
-                throw new ArgumentException(
-                    $"Expression '{propertyLambda}' refers to a field, not a property.");
-            }
-
-            if (type != propInfo.ReflectedType && !type.IsSubclassOf(propInfo.ReflectedType!))
-            {
-                throw new ArgumentException(string.Format(
-                    "Expression '{0}' refers to a property that is not from type {1}.",
-                    propertyLambda,
-                    type));
-            }
-
-            return propInfo;
         }
 
         private void CopyProperties(object source, object destination)

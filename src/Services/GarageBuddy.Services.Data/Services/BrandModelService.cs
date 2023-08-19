@@ -103,7 +103,13 @@
 
             var modelList = await ModifyQuery(query, queryOptions).ToListAsync();
 
-            var totalCount = await GetTotalCountForPagination(queryOptions);
+            var totalCount = 0;
+            if (queryOptions.Take.HasValue)
+            {
+                totalCount = await this.brandModelRepository
+                    .All(queryOptions.AsReadOnly, queryOptions.IncludeDeleted)
+                    .Where(bm => bm.BrandId == brandId).CountAsync();
+            }
 
             return PaginatedResult<BrandModelListServiceModel>.Success(modelList, totalCount);
         }

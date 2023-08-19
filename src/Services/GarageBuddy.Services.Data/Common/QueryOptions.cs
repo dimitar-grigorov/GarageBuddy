@@ -6,12 +6,6 @@
 
     /// <summary>
     /// This class is used to modify service queries. That way we eliminate the creating of multiple similar methods.
-    /// Example:
-    /// <code>GetAll();
-    /// GetAllOrderedByName();
-    /// GetAllOrderedByNameAsNoTracking();
-    /// GetAllOrderedByNameWithDeletedAsNoTracking();
-    /// </code>
     /// All of this can be achieved by using like this:
     /// <code>GetAll(QueryOptions options);</code>
     /// </summary>
