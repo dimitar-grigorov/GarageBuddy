@@ -15,7 +15,7 @@
         public static ApplicationDbContext DbContext { get; set; } = null!;
 
         /// <summary>
-        /// The method initializes the ApplicationDbContext
+        /// The method initializes the ApplicationDbContext.
         /// </summary>
         /// <returns>Returns a <see cref="Task{TResult}"/> with <see cref="ApplicationDbContext"/>.</returns>
         public static async Task<ApplicationDbContext> InitializeDbContextAsync()
