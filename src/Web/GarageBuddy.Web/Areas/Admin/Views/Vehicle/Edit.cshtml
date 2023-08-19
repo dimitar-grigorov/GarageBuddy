@@ -19,7 +19,28 @@
                                 <div class="row">
 
                                     <partial name="Vehicle/_VehicleEditFormFieldsPartial" model="@Model" />
-
+                                    <div class="col-md-4"><div class="form-check"></div></div>
+                                    <div class="col-md-8">
+                                        <div class="form-check">
+                                            <div class="checkbox">
+                                                <input type="checkbox" asp-for="@Model.IsDeleted" class="form-check-input form-check-danger">
+                                                <label asp-for="@Model.IsDeleted" class="form-check-label"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (Model.IsDeleted)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="@Model.DeletedOn"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control" asp-for="@Model.DeletedOn" placeholder="Deleted On" readonly>
+                                            </div>
+                                        </div>
+                                    }
                                     <div class="col-12 mb-1">
                                         <div class="col-sm-12 d-flex justify-content-end">
                                             <button type="submit" class="btn btn-primary me-1 mb-1">Edit</button>

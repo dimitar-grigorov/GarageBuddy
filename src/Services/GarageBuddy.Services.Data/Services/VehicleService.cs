@@ -16,12 +16,32 @@
     {
         private readonly IDeletableEntityRepository<Vehicle, Guid> vehicleRepository;
 
+        private readonly ICustomerService customerService;
+        private readonly IBrandService brandService;
+        private readonly IBrandModelService brandModelService;
+        private readonly IFuelTypeService fuelTypeService;
+        private readonly IGearboxTypeService gearboxTypeService;
+        private readonly IDriveTypeService driveTypeService;
+
         public VehicleService(
             IDeletableEntityRepository<Vehicle, Guid> entityRepository,
+            ICustomerService customerService,
+            IBrandService brandService,
+            IBrandModelService brandModelService,
+            IFuelTypeService fuelTypeService,
+            IGearboxTypeService gearboxTypeService,
+            IDriveTypeService driveTypeService,
             IMapper mapper)
             : base(entityRepository, mapper)
         {
             this.vehicleRepository = entityRepository;
+
+            this.customerService = customerService;
+            this.brandService = brandService;
+            this.brandModelService = brandModelService;
+            this.fuelTypeService = fuelTypeService;
+            this.gearboxTypeService = gearboxTypeService;
+            this.driveTypeService = driveTypeService;
         }
 
         public async Task<ICollection<VehicleSelectServiceModel>> GetAllSelectAsync()
@@ -98,26 +118,30 @@
 
         public async Task<IResult<Guid>> CreateAsync(VehicleServiceModel model)
         {
-            var isValid = ValidateModel(model);
-            if (!isValid)
+            if (!ValidateModel(model))
             {
                 return await Result<Guid>.FailAsync(string.Format(Errors.EntityNotFound, nameof(Vehicle)));
             }
 
-            // TODO: check check check.
-            var serviceModel = this.Mapper.Map<Vehicle>(model);
-
-            if (serviceModel.BrandModelId == Guid.Empty)
+            var relationValidation = await ValidateRelationsAsync(model);
+            if (!relationValidation.Succeeded)
             {
-                serviceModel.BrandModelId = null;
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityRelationsAreNotValid, nameof(Vehicle)));
             }
 
-            if (serviceModel.DateOfManufacture is { Year: < 2000 })
+            var entityModel = this.Mapper.Map<Vehicle>(model);
+
+            if (entityModel.BrandModelId == Guid.Empty)
             {
-                serviceModel.DateOfManufacture = null;
+                entityModel.BrandModelId = null;
             }
 
-            var entity = await vehicleRepository.AddAsync(serviceModel);
+            if (entityModel.DateOfManufacture is { Year: < 2000 })
+            {
+                entityModel.DateOfManufacture = null;
+            }
+
+            var entity = await vehicleRepository.AddAsync(entityModel);
             await vehicleRepository.SaveChangesAsync();
             var id = entity?.Entity.Id ?? Guid.Empty;
 
@@ -131,7 +155,63 @@
 
         public async Task<IResult> EditAsync(Guid id, VehicleServiceModel model)
         {
-            throw new NotImplementedException();
+            if (!await ExistsAsync(id))
+            {
+                return await Result.FailAsync(string.Format(Errors.EntityNotFound, nameof(Vehicle)));
+            }
+
+            if (model.BrandModelId == Guid.Empty)
+            {
+                model.BrandModelId = null;
+            }
+
+            var relationValidation = await ValidateRelationsAsync(model);
+            if (!relationValidation.Succeeded)
+            {
+                return await Result<Guid>.FailAsync(string.Format(Errors.EntityRelationsAreNotValid, nameof(Vehicle)));
+            }
+
+            return await base.EditAsync(id, model, nameof(Vehicle));
+        }
+
+        /// <inheritdoc/>
+        public async Task<IResult> ValidateRelationsAsync(VehicleServiceModel model)
+        {
+            var result = new Result();
+
+            if (!await customerService.ExistsAsync(model.CustomerId))
+            {
+                result.Messages.Add(nameof(model.CustomerId));
+            }
+
+            if (!await brandService.ExistsAsync(model.BrandId))
+            {
+                result.Messages.Add(nameof(model.BrandId));
+            }
+
+            if (model.BrandModelId != null &&
+                !await brandModelService.ExistsAsync(model.BrandModelId.Value))
+            {
+                result.Messages.Add(nameof(model.BrandModelId));
+            }
+
+            if (model.FuelTypeId != null && !await fuelTypeService.ExistsAsync(model.FuelTypeId.Value))
+            {
+                result.Messages.Add(nameof(model.FuelTypeId));
+            }
+
+            if (model.GearboxTypeId != null && !await gearboxTypeService.ExistsAsync(model.GearboxTypeId.Value))
+            {
+                result.Messages.Add(nameof(model.GearboxTypeId));
+            }
+
+            if (model.DriveTypeId != null && !await driveTypeService.ExistsAsync(model.DriveTypeId.Value))
+            {
+                result.Messages.Add(nameof(model.DriveTypeId));
+            }
+
+            result.Succeeded = !result.Messages.Any();
+            return result;
         }
     }
 }

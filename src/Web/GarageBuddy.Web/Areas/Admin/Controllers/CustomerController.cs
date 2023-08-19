@@ -104,6 +104,7 @@
         {
             if (!ModelState.IsValid)
             {
+                model.Users = await this.userService.GetAllSelectAsync();
                 return View(model);
             }
 
@@ -116,6 +117,8 @@
                 var errors = string.Join(Environment.NewLine, result.Messages);
                 ModelState.AddModelError(string.Empty, errors);
                 TempData[NotifyError] = errors;
+                model.Users = await this.userService.GetAllSelectAsync();
+                return View(model);
             }
 
             TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Customer");

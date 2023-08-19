@@ -15,19 +15,12 @@
     public class VehicleController : AdminController
     {
         private readonly IVehicleService vehicleService;
-
         private readonly ICustomerService customerService;
-
         private readonly IBrandService brandService;
-
         private readonly IBrandModelService brandModelService;
-
         private readonly IFuelTypeService fuelTypeService;
-
         private readonly IGearboxTypeService gearboxTypeService;
-
         private readonly IDriveTypeService driveTypeService;
-
         private readonly IMapper mapper;
 
         public VehicleController(
@@ -82,7 +75,18 @@
             SanitizeModel(model);
             var serviceModel = mapper.Map<VehicleServiceModel>(model);
 
-            // TODO: check check check!
+            var validationResult = await this.vehicleService.ValidateRelationsAsync(serviceModel);
+            if (!validationResult.Succeeded)
+            {
+                foreach (var error in validationResult.Messages)
+                {
+                    ModelState.AddModelError(error, Errors.InvalidValue);
+                }
+
+                await this.PopulateSelectLists(model);
+                return View(model);
+            }
+
             var result = await this.vehicleService.CreateAsync(serviceModel);
 
             if (!result.Succeeded)
@@ -110,6 +114,45 @@
             await this.PopulateSelectLists(model);
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Guid id, VehicleCreateOrEditViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                await this.PopulateSelectLists(model);
+                return View(model);
+            }
+
+            SanitizeModel(model);
+            var serviceModel = mapper.Map<VehicleServiceModel>(model);
+
+            var validationResult = await this.vehicleService.ValidateRelationsAsync(serviceModel);
+            if (!validationResult.Succeeded)
+            {
+                foreach (var error in validationResult.Messages)
+                {
+                    ModelState.AddModelError(error, Errors.InvalidValue);
+                }
+
+                await this.PopulateSelectLists(model);
+                return View(model);
+            }
+
+            var result = await this.vehicleService.EditAsync(id, serviceModel);
+
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(Environment.NewLine, result.Messages);
+                ModelState.AddModelError(string.Empty, errors);
+                TempData[NotifyError] = errors;
+                await this.PopulateSelectLists(model);
+                return View(model);
+            }
+
+            TempData[NotifySuccess] = string.Format(Success.SuccessfullyEditedEntity, "Customer");
+            return RedirectToAction(Actions.Index);
         }
 
         [HttpGet]
