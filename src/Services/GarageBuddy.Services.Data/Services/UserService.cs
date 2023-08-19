@@ -5,8 +5,6 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using Contracts;
-
     using GarageBuddy.Common.Core.Wrapper;
     using GarageBuddy.Common.Core.Wrapper.Generic;
     using GarageBuddy.Data.Models;
@@ -22,13 +20,18 @@
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<ApplicationRole> roleManager;
         private readonly ILogger<UserService> logger;
 
-        public UserService(SignInManager<ApplicationUser> signInManager,
-            UserManager<ApplicationUser> userManager, ILogger<UserService> logger)
+        public UserService(
+            SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager,
+            ILogger<UserService> logger)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.roleManager = roleManager;
             this.logger = logger;
         }
 
@@ -90,7 +93,7 @@
             var result = await this.userManager.CreateAsync(user, password);
             if (result.Succeeded)
             {
-                await this.signInManager.SignInAsync(user, isPersistent: false);
+                await this.signInManager.SignInAsync(user, isPersistent: true);
             }
 
             // If it is the first user, make him admin
@@ -98,8 +101,6 @@
             {
                 await this.userManager.AddToRoleAsync(user, AdministratorRoleName);
             }
-
-            await signInManager.SignInAsync(user, false);
 
             return result;
         }
@@ -203,6 +204,83 @@
                 .ThenBy(c => c.Email)
                 .ToListAsync();
             return users;
+        }
+
+        public async Task<IEnumerable<UserServiceModel>> GetAllUsersWithRolesAsync()
+        {
+            var users = await userManager.Users.ToListAsync();
+            var userModels = new List<UserServiceModel>();
+
+            foreach (var user in users)
+            {
+                var userRoles = await userManager.GetRolesAsync(user);
+                var userModel = new UserServiceModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    UserName = user.UserName,
+                    Roles = userRoles,
+                };
+                userModels.Add(userModel);
+            }
+
+            return userModels;
+        }
+
+        public async Task<IEnumerable<string>> GetUserRolesAsync(Guid userId)
+        {
+            var user = await this.userManager.FindByIdAsync(userId.ToString());
+
+            if (user == null)
+            {
+                return new List<string>();
+            }
+
+            var roles = await userManager.GetRolesAsync(user);
+
+            return roles;
+        }
+
+        public async Task<IEnumerable<string>> GetAllRolesAsync()
+        {
+            var roles = await this.roleManager.Roles.ToListAsync();
+            return roles.Select(r => r.Name);
+        }
+
+        public async Task AddToRoleAsync(Guid userId, string role)
+        {
+            var user = await this.userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return;
+            }
+
+            if (await this.roleManager.RoleExistsAsync(role)
+                && !await this.userManager.IsInRoleAsync(user, role))
+            {
+                await this.userManager.AddToRoleAsync(user, role);
+            }
+        }
+
+        public async Task RemoveFromRoleAsync(Guid userId, string role)
+        {
+            var user = await this.userManager.FindByIdAsync(userId.ToString());
+            if (user == null)
+            {
+                return;
+            }
+
+            if (await this.roleManager.RoleExistsAsync(role)
+                && await this.userManager.IsInRoleAsync(user, role))
+            {
+                await this.userManager.RemoveFromRoleAsync(user, role);
+            }
+        }
+
+        public async Task<bool> ExistsAsync(string id)
+        {
+            var user = await this.userManager.FindByIdAsync(id);
+            return user != null;
         }
     }
 }

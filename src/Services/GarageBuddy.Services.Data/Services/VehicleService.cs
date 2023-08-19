@@ -112,7 +112,7 @@
                 serviceModel.BrandModelId = null;
             }
 
-            if (serviceModel.DateOfManufacture != null && serviceModel.DateOfManufacture.Value.Year < 2000)
+            if (serviceModel.DateOfManufacture is { Year: < 2000 })
             {
                 serviceModel.DateOfManufacture = null;
             }

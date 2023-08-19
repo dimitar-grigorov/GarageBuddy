@@ -6,7 +6,6 @@
 
     public interface IUserService
     {
-        // TODO: Check if this is needed
         public Task<SignInResult> LoginWithUsernameAsync(string username, string password,
             bool isPersistent, bool lockoutOnFailure);
 
@@ -27,20 +26,19 @@
 
         public Task<ICollection<UserSelectServiceModel>> GetAllSelectAsync();
 
-        /*
-        public Task<TUser> FindUserByIdAsync(string id);
+        // public Task<TUser> FindUserByIdAsync(string id);
+        // public Task<IEnumerable<TUser>> GetAllUsersAsync();
+        public Task<IEnumerable<UserServiceModel>> GetAllUsersWithRolesAsync();
 
-        public Task<IEnumerable<TUser>> GetAllUsersAsync();
-
-        public Task<IEnumerable<string>> GetUserRolesAsync(TUser user);
+        public Task<IEnumerable<string>> GetUserRolesAsync(Guid userId);
 
         public Task<IEnumerable<string>> GetAllRolesAsync();
 
-        public Task EditAsync(UserDto userDto);
+        // public Task EditAsync(UserDto userDto);
+        public Task AddToRoleAsync(Guid userId, string role);
 
-        public Task AddToRoleAsync(TUser user, string role);
+        public Task RemoveFromRoleAsync(Guid userId, string role);
 
-        public Task RemoveFromRoleAsync(TUser user, string role);
-         */
+        public Task<bool> ExistsAsync(string id);
     }
 }

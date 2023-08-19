@@ -1,0 +1,18 @@
+﻿@using GarageBuddy.Common.Constants
+@model IEnumerable<UserServiceModel>
+
+@{
+    ViewData["Title"] = "User manager";
+    var allRoles = ViewData[AllRolesKey] as IEnumerable<string>;
+}
+
+<section id="basic-input-groups">
+    @foreach (var user in Model)
+    {
+        <partial name="User/_UserAdminEditPartial" model="@user" view-data="ViewData" />
+    }
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

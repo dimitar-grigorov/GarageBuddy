@@ -58,6 +58,7 @@
                 model.Users = await this.userService.GetAllSelectAsync();
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<CustomerServiceModel>(model);
 
@@ -105,6 +106,7 @@
             {
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<CustomerServiceModel>(model);
             var result = await this.customerService.EditAsync(id, serviceModel);

@@ -6,6 +6,8 @@
 
         public const string AdministratorRoleName = "Administrator";
 
+        public const string AllRolesKey = "AllRoles";
+
         public const string AdminArea = "Admin";
 
         public const string ErrorRoute = "/Home/Error";

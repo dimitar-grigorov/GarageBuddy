@@ -19,7 +19,8 @@
 
         public CustomerService(
             IDeletableEntityRepository<Customer, Guid> entityRepository,
-            IMapper mapper, IUserService userService)
+            IMapper mapper,
+            IUserService userService)
             : base(entityRepository, mapper)
         {
             this.customerRepository = entityRepository;

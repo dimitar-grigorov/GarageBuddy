@@ -55,8 +55,22 @@
                         <li class="submenu-item">
                             <a class="submenu-link" asp-area="Admin" asp-controller="GearboxType" asp-action="Index"><i class="bi bi-car-front"></i> Gearbox types</a>
                         </li>
-                         <li class="submenu-item">
+                        <li class="submenu-item">
                             <a class="submenu-link" asp-area="Admin" asp-controller="Vehicle" asp-action="Index"><i class="bi bi-car-front"></i> All Vehicles</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item has-sub active">
+                    <a href="#" class="sidebar-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>People</span>
+                    </a>
+                    <ul class="submenu">
+                        <li class="submenu-item active">
+                            <a class="submenu-link" asp-area="Admin" asp-controller="Customer" asp-action="Index"><i class="bi"></i> Customers</a>
+                        </li>
+                        <li class="submenu-item active">
+                            <a class="submenu-link" asp-area="Admin" asp-controller="UserManager" asp-action="Index"><i class="bi"></i> Users</a>
                         </li>
                     </ul>
                 </li>
@@ -65,11 +79,7 @@
                         <i class="bi bi-grid-1x2-fill"></i>
                         <span>General items</span>
                     </a>
-
                     <ul class="submenu">
-                        <li class="submenu-item active">
-                            <a class="submenu-link" asp-area="Admin" asp-controller="Customer" asp-action="Index"><i class="bi"></i> Customers</a>
-                        </li>
                         <li class="submenu-item">
                             <a class="submenu-link" asp-area="Admin" asp-controller="JobItemType" asp-action="Index"><i class="bi"></i> Job Types</a>
                         </li>
