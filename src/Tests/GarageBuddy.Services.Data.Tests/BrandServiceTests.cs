@@ -59,6 +59,8 @@
         [Order(1)]
         public async Task GetAllAsync_ShouldReturnAllBrands()
         {
+            TearDown();
+            SetUp();
             var service = new BrandService(this.repository, this.mapper);
 
             var result = await service.GetAllAsync();
@@ -206,6 +208,7 @@
 
         [Test]
         [TestCase("Audi")]
+        [Order(100)]
         public async Task CreateAsync_ShouldNotCreateBrand(string brandName)
         {
             var service = new BrandService(this.repository, this.mapper);

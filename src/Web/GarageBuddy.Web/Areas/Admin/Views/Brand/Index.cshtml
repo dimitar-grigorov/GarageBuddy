@@ -20,7 +20,7 @@
         $('#brandTable').dataTable({
             serverSide: true,
             responsive: true,
-            searching: true,
+            searching: false,
             ordering: true,
             ajax: {
                 url: "@Url.Action("BrandList", "Brand", new { Area = @GlobalConstants.AdminArea })",
