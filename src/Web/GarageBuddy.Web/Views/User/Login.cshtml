@@ -43,10 +43,10 @@
                         <span class="form-text text-danger" asp-validation-for="@Model.Password"></span>
                     </div>
                     <div class="form-check form-check-lg d-flex align-items-end">
-                        <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault" asp-for="@Model.RememberMe" />
-                        <label class="form-check-label text-gray-600" for="flexCheckDefault" asp-for="@Model.RememberMe">
-                            Keep me logged in
-                        </label>
+                        <div class="checkbox">
+                            <input class="form-check-input me-2" type="checkbox" asp-for="@Model.RememberMe">
+                            <label class="form-check-label text-gray-600" asp-for="@Model.RememberMe"> Keep me logged in</label>
+                        </div>
                     </div>
                     <button class="btn btn-primary btn-block btn-lg shadow-lg mt-5">Log in</button>
                 </form>

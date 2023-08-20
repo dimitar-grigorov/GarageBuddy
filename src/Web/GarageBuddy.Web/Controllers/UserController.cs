@@ -65,7 +65,6 @@
             {
                 var result = await this.userService.RegisterWithEmailAsync(model.Email, model.Password);
 
-                // TODO: Add confirmation email
                 if (!result.Succeeded)
                 {
                     foreach (var error in result.Errors)
