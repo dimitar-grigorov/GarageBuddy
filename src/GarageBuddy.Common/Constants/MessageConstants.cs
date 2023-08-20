@@ -26,10 +26,6 @@
 
             public const string SomethingWentWrong = "Something went wrong. Please try again later.";
 
-            public const string SendGridApiKeyNotProvided = "SendGrid API key is not provided.";
-
-            public const string MailSubjectAndMessageNotProvided = "Subject and message should be provided.";
-
             public const string GeneralErrorSendEmail = "Errors occured while sending email.";
 
             public const string EntityModelStateIsNotValid = "{0} model state is not valid.";

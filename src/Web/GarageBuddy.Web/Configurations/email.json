@@ -2,9 +2,6 @@
   "EmailSettings": {
     "SenderEmail": "example@mail.com",
     "SenderName": "Example Sender",
-    "SendGridSettings": {
-      "ApiKey": ""
-    },
     "SmtpSettings": {
       "Host": "smtp.example.com",
       "Port": 587,
