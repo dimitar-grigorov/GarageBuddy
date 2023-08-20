@@ -18,7 +18,8 @@
         /// <returns>Returns a <see cref="Guid"/> representing the user id.</returns>
         public static Guid GetId(this ClaimsPrincipal user)
         {
-            return Guid.Parse(user.FindFirstValue(ClaimTypes.NameIdentifier));
+            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            return userId == null ? Guid.Empty : Guid.Parse(userId);
         }
 
         /// <summary>

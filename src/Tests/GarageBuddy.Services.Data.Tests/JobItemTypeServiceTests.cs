@@ -19,7 +19,7 @@
     [TestFixture]
     public class JobItemTypeServiceTests
     {
-        private ICollection<JobItemType> jobItemTypes = new List<JobItemType>()
+        private readonly ICollection<JobItemType> jobItemTypes = new List<JobItemType>()
         {
             new()
             {
@@ -74,7 +74,7 @@
 
             var result = await service.GetAllAsync();
 
-            Assert.That(result.Count, Is.EqualTo(this.jobItemTypes.Count));
+            Assert.That(result, Has.Count.EqualTo(this.jobItemTypes.Count));
         }
 
         [Test]
@@ -85,7 +85,7 @@
 
             var result = await service.GetAllSelectAsync();
 
-            Assert.That(result.Count, Is.EqualTo(this.jobItemTypes.Count));
+            Assert.That(result, Has.Count.EqualTo(this.jobItemTypes.Count));
         }
 
         [Test]

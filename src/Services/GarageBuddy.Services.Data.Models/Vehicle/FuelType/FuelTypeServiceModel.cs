@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Vehicle.FuelType
 {
     using System.ComponentModel.DataAnnotations;
+
     using Base;
 
     using GarageBuddy.Data.Models.Vehicle;

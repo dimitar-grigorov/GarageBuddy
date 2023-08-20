@@ -27,19 +27,19 @@
     {
         private readonly ICollection<Brand> brandNotes = new List<Brand>()
         {
-            new()
+            new ()
             {
                 Id = Guid.Parse("2bfff802-5afb-4bbb-96b3-27c98161ff00"),
                 BrandName = "Brand 1",
                 IsDeleted = false,
             },
-            new()
+            new ()
             {
                 Id = Guid.Parse("9983bb6a-1c02-4d43-b9ba-cf3723d0932a"),
                 BrandName = "Brand 2",
                 IsDeleted = true,
             },
-            new()
+            new ()
             {
                 Id = Guid.Parse("e94ed14e-ad6e-4a31-a362-047c7eca1b19"),
                 BrandName = "Brand 3",

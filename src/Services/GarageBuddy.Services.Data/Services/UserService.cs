@@ -50,6 +50,11 @@
             }
 
             var user = await this.userManager.FindByNameAsync(username);
+            if (user == null)
+            {
+                return SignInResult.Failed;
+            }
+
             var result = await this.signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
             return result;
         }
@@ -68,8 +73,12 @@
             }
 
             var user = await this.userManager.FindByEmailAsync(email);
-            var result = await this.signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
+            if (user == null)
+            {
+                return SignInResult.Failed;
+            }
 
+            var result = await this.signInManager.PasswordSignInAsync(user, password, isPersistent, lockoutOnFailure);
             return result;
         }
 
@@ -198,8 +207,8 @@
                 .Select(c => new UserSelectServiceModel
                 {
                     Id = c.Id.ToString(),
-                    FullName = c.UserName,
-                    Email = c.Email,
+                    FullName = c.UserName ?? string.Empty,
+                    Email = c.Email ?? string.Empty,
                 })
                 .OrderBy(c => c.FullName)
                 .ThenBy(c => c.Email)
@@ -218,8 +227,8 @@
                 var userModel = new UserServiceModel
                 {
                     Id = user.Id,
-                    Email = user.Email,
-                    UserName = user.UserName,
+                    Email = user.Email ?? string.Empty,
+                    UserName = user.UserName ?? string.Empty,
                     Roles = userRoles,
                 };
                 userModels.Add(userModel);
@@ -245,7 +254,7 @@
         public async Task<IEnumerable<string>> GetAllRolesAsync()
         {
             var roles = await this.roleManager.Roles.ToListAsync();
-            return roles.Select(r => r.Name);
+            return roles.Select(r => r.Name ?? string.Empty);
         }
 
         public async Task EditAsync(UserServiceModel model)

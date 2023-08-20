@@ -1,25 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" />
-  </ItemGroup>
+	<PropertyGroup>
+		<CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+	</PropertyGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="..\..\stylecop.json" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="2.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
     <PackageReference Include="Sendgrid" Version="9.28.1" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
 

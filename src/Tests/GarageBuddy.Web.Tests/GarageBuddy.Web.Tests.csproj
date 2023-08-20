@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -9,19 +9,21 @@
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
     <UserSecretsId>4466ca8d-3fb2-4a47-b62e-74021a16c9da</UserSecretsId>
   </PropertyGroup>
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" />
-  </ItemGroup>
+  	<ItemGroup>
+		<AdditionalFiles Include="..\..\stylecop.json" />
+	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.21" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.10" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="xunit" Version="2.5.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.0">
       <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>

@@ -96,6 +96,7 @@
                 model.Brands = await this.brandService.GetAllSelectAsync();
                 return View(model);
             }
+
             SanitizeModel(model);
             var serviceModel = mapper.Map<BrandModelServiceModel>(model);
             var result = await this.brandModelService.CreateAsync(serviceModel);

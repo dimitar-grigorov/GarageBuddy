@@ -1,6 +1,7 @@
 ﻿namespace GarageBuddy.Services.Data.Models.Vehicle.BrandModel
 {
     using System;
+
     using AutoMapper;
 
     using Base;
