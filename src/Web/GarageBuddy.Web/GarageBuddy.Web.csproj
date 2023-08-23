@@ -59,7 +59,7 @@
 		<Content Update="Configurations\database.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Update="Configurations\email.json">
+		<Content Update="Configurations\mail.json">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Configurations\logger.json">

@@ -23,7 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Data\GarageBuddy.Data.Models\GarageBuddy.Data.Models.csproj" />
     <ProjectReference Include="..\..\GarageBuddy.Common\GarageBuddy.Common.csproj" />
     <ProjectReference Include="..\..\Services\GarageBuddy.Services.Data.Models\GarageBuddy.Services.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\GarageBuddy.Services.Mapping\GarageBuddy.Services.Mapping.csproj" />
