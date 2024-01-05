@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/github/license/dimitar-grigorov/GarageBuddy.svg)](LICENSE)
 
 **Garage Buddy** is a comprehensive, open source garage management system built on the [ASP.NET Core MVC](https://learn.microsoft.com/en-us/aspnet/core/mvc/overview?view=aspnetcore-6.0) platform. Designed to cater to the needs of auto mechanics and workshops, Garage Buddy simplifies the process of managing service records and parts for every customer's car. Everything can be easily tracked and organized within the application.
-
+Continuing development.
 ## Key Features
 
 - **Cloud-Based Solution**: Garage Buddy is a fully-featured, cloud-based application, eliminating the need for complex installations. Mechanics can access the system by simply navigating to the login page using their web browser and entering their login details. This ensures hassle-free accessibility from anywhere with an internet connection.
