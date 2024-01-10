@@ -15,7 +15,7 @@
 
 - **User Management**: Garage Buddy supports multiple user accounts, allowing mechanics and employees to have their own personalized access. Adding additional users is a breeze, making it convenient for your solution to grow as your business expands.
 
-- **Service Tracking**: Keep a detailed log of every service performed on a customer's vehicle. From routine maintenance to complex repairs, Garage Buddy helps you maintain a complete history of each car, ensuring better customer service.
+- **Service Tracking**: Keep a detailed log of every service performed on a customer's vehicle. From routine maintenance to complex repairs, Garage Buddy helps you maintain a complete history of each car, ensuring better customer service. (Work in progress)
 
 ## Install and Run
 
